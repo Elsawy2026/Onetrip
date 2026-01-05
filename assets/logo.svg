@@ -1,28 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="450" height="140" viewBox="0 0 450 140">
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="200" viewBox="0 0 500 200">
   <defs>
-    <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-      <circle cx="10" cy="10" r="1.5" fill="rgba(255,255,255,0.15)"/>
+    <pattern id="stars" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="15" cy="15" r="1.5" fill="rgba(255,255,255,0.4)"/>
     </pattern>
   </defs>
   
-  <!-- Background -->
-  <rect width="450" height="140" fill="#1a1a2e"/>
-  <rect width="450" height="140" fill="url(#dots)"/>
+  <!-- Background - Night Sky -->
+  <rect width="500" height="200" fill="#0f0c29"/>
+  <rect width="500" height="200" fill="url(#stars)"/>
   
-  <!-- EXPRESS (Light Gray) -->
-  <text x="30" y="60" font-family="Arial Black, sans-serif" font-size="42" font-weight="900" fill="#E0E0E0" letter-spacing="3">EXPRESS</text>
+  <!-- Orange Circle with White Center (Start Point) -->
+  <circle cx="30" cy="30" r="12" fill="white" stroke="#FF6B35" stroke-width="3"/>
   
-  <!-- Trip (Orange) -->
-  <text x="240" y="60" font-family="Arial Black, sans-serif" font-size="42" font-weight="900" fill="#FF6B35" letter-spacing="2">Trip</text>
+  <!-- Curved Path Line -->
+  <path d="M 30 30 Q 80 50 120 70 Q 160 90 200 100" stroke="#FF6B35" stroke-width="4" fill="none" stroke-linecap="round"/>
   
-  <!-- One with Map Pin (White) -->
-  <!-- Map Pin for O -->
-  <g transform="translate(360, 25)">
-    <path d="M 0 0 L -10 20 L 10 20 Z" fill="#FFFFFF"/>
-    <circle cx="0" cy="0" r="22" fill="#FFFFFF"/>
-    <circle cx="0" cy="0" r="12" fill="#1a1a2e"/>
+  <!-- ONE (Blue) -->
+  <text x="50" y="50" font-family="Arial Black, sans-serif" font-size="36" font-weight="900" fill="#1a5fc9">ON<tspan fill="#1a5fc9">E</tspan></text>
+  <path d="M 110 30 L 125 40 L 110 50" fill="#1a5fc9" stroke="#1a5fc9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- TRIP (Orange) -->
+  <text x="50" y="85" font-family="Arial Black, sans-serif" font-size="36" font-weight="900" fill="#FF6B35">TRIP</text>
+  
+  <!-- EXPRESS (Green) -->
+  <text x="50" y="120" font-family="Arial Black, sans-serif" font-size="36" font-weight="900" fill="#00C9A7">EXPRESS</text>
+  
+  <!-- Arabic Text: التوصيل كما ينبغي أن يكون -->
+  <g transform="translate(50, 150)">
+    <!-- Green Highlight Background -->
+    <path d="M 0 0 L 380 0 L 400 25 L 390 30 L 10 30 L 0 25 Z" fill="#1B5E20" opacity="0.6" stroke="#4CAF50" stroke-width="2"/>
+    <!-- Arabic Text -->
+    <text x="5" y="22" font-family="Tajawal, Arial, sans-serif" font-size="20" font-weight="700" fill="#FF6B35">التوصيل كما ينبغي أن يكون</text>
   </g>
-  
-  <!-- ne -->
-  <text x="390" y="60" font-family="Arial Black, sans-serif" font-size="42" font-weight="900" fill="#FFFFFF">ne</text>
 </svg>
