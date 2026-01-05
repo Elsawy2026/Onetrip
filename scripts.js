@@ -1,6 +1,4 @@
-/* ================================
-   OneTrip Express - Premium Scripts
-   ================================ */
+/* OneTrip Express - Scripts */
 
 document.addEventListener('DOMContentLoaded', () => {
     // Preloader
@@ -11,81 +9,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1500);
     });
 
-    // Custom Cursor
-    const cursor = document.querySelector('.cursor');
-    const cursorFollower = document.querySelector('.cursor-follower');
-
-    if (cursor && cursorFollower) {
-        let mouseX = 0, mouseY = 0;
-        let cursorX = 0, cursorY = 0;
-        let followerX = 0, followerY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        function animateCursor() {
-            cursorX += (mouseX - cursorX) * 0.2;
-            cursorY += (mouseY - cursorY) * 0.2;
-            followerX += (mouseX - followerX) * 0.1;
-            followerY += (mouseY - followerY) * 0.1;
-
-            cursor.style.left = cursorX + 'px';
-            cursor.style.top = cursorY + 'px';
-            cursorFollower.style.left = followerX + 'px';
-            cursorFollower.style.top = followerY + 'px';
-
-            requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
-
-        // Cursor hover effect
-        const hoverElements = document.querySelectorAll('a, button, input, textarea, select, .service-card, .info-card, .benefit');
-        hoverElements.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'translate(-50%, -50%) scale(2)';
-                cursorFollower.style.transform = 'translate(-50%, -50%) scale(1.5)';
-                cursorFollower.style.borderColor = 'var(--primary)';
-            });
-            el.addEventListener('mouseleave', () => {
-                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-                cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
-                cursorFollower.style.borderColor = 'var(--white)';
-            });
-        });
-    }
-
-    // Navigation Scroll
+    // Navigation Scroll Effect
     const nav = document.getElementById('nav');
-    let lastScroll = 0;
-
     window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
-        
-        if (currentScroll > 50) {
+        if (window.pageYOffset > 50) {
             nav.classList.add('scrolled');
         } else {
             nav.classList.remove('scrolled');
         }
-
-        lastScroll = currentScroll;
     });
 
-    // Navigation Toggle (Mobile)
+    // Mobile Navigation Toggle
     window.toggleNav = function() {
-        const navMenu = document.getElementById('navMenu');
-        navMenu.classList.toggle('active');
+        document.getElementById('navMenu').classList.toggle('active');
     };
 
-    // Close nav when clicking on link
+    // Close nav on link click
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', () => {
             document.getElementById('navMenu').classList.remove('active');
         });
     });
 
-    // Active nav link on scroll
+    // Active Navigation on Scroll
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('.nav-link');
 
@@ -130,8 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Intersection Observer for counters
-    const statsSection = document.querySelector('.hero-stats');
+    // Intersection Observer for Counters
+    const statsSection = document.querySelector('.stats');
     if (statsSection) {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -165,11 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (careersForm) {
         careersForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            
-            const formData = new FormData(careersForm);
-            const data = Object.fromEntries(formData);
-            
-            // Show success message
             showNotification('تم إرسال طلبك بنجاح! سنتواصل معك قريباً', 'success');
             careersForm.reset();
         });
@@ -178,27 +119,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (contactForm) {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            
-            const formData = new FormData(contactForm);
-            const data = Object.fromEntries(formData);
-            
-            // Show success message
             showNotification('تم إرسال رسالتك بنجاح!', 'success');
             contactForm.reset();
         });
     }
 
-    // File Upload Visual Feedback
+    // File Upload Visual
     const fileInput = document.getElementById('cvFile');
-    const fileUpload = document.getElementById('fileUpload');
-    
-    if (fileInput && fileUpload) {
+    if (fileInput) {
         fileInput.addEventListener('change', (e) => {
             const fileName = e.target.files[0]?.name;
-            if (fileName) {
-                fileUpload.querySelector('.file-content span').textContent = fileName;
-                fileUpload.style.borderColor = 'var(--primary)';
-                fileUpload.style.background = 'rgba(99, 102, 241, 0.1)';
+            const label = fileInput.nextElementSibling;
+            if (fileName && label) {
+                label.querySelector('span').textContent = fileName;
             }
         });
     }
@@ -212,13 +145,12 @@ document.addEventListener('DOMContentLoaded', () => {
             <span>${message}</span>
         `;
         
-        // Style the notification
         Object.assign(notification.style, {
             position: 'fixed',
             top: '100px',
             left: '50%',
             transform: 'translateX(-50%)',
-            background: type === 'success' ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #6366f1, #4f46e5)',
+            background: type === 'success' ? '#10b981' : '#F7941D',
             color: 'white',
             padding: '16px 30px',
             borderRadius: '12px',
@@ -227,14 +159,13 @@ document.addEventListener('DOMContentLoaded', () => {
             gap: '12px',
             fontSize: '1rem',
             fontWeight: '600',
-            boxShadow: '0 10px 40px rgba(0,0,0,0.3)',
+            boxShadow: '0 10px 40px rgba(0,0,0,0.2)',
             zIndex: '10000',
             animation: 'slideDown 0.5s ease'
         });
         
         document.body.appendChild(notification);
         
-        // Remove after 4 seconds
         setTimeout(() => {
             notification.style.animation = 'slideUp 0.5s ease forwards';
             setTimeout(() => notification.remove(), 500);
@@ -255,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.head.appendChild(style);
 
-    // Smooth Scroll for anchor links
+    // Smooth Scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
@@ -266,8 +197,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Reveal animations on scroll
-    const revealElements = document.querySelectorAll('.service-card, .feature, .benefit, .info-card');
+    // Reveal Animations
+    const revealElements = document.querySelectorAll('.service-card, .about-card, .benefit-item, .info-item');
     
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry, index) => {
@@ -282,34 +213,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     revealElements.forEach(el => {
         el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'all 0.6s ease';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'all 0.5s ease';
         revealObserver.observe(el);
-    });
-
-    // Parallax effect for gradient spheres
-    document.addEventListener('mousemove', (e) => {
-        const spheres = document.querySelectorAll('.gradient-sphere');
-        const x = (e.clientX / window.innerWidth - 0.5) * 30;
-        const y = (e.clientY / window.innerHeight - 0.5) * 30;
-
-        spheres.forEach((sphere, index) => {
-            const speed = (index + 1) * 0.5;
-            sphere.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
-        });
-    });
-
-    // Partners orbit pause on hover
-    const orbits = document.querySelectorAll('.orbit-ring');
-    const partnerNodes = document.querySelectorAll('.partner-node');
-
-    partnerNodes.forEach(node => {
-        node.addEventListener('mouseenter', () => {
-            orbits.forEach(orbit => orbit.style.animationPlayState = 'paused');
-        });
-        node.addEventListener('mouseleave', () => {
-            orbits.forEach(orbit => orbit.style.animationPlayState = 'running');
-        });
     });
 
     console.log('🚀 OneTrip Express - Ready!');

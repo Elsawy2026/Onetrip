@@ -13,19 +13,11 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Custom Cursor -->
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
-
     <!-- Preloader -->
     <div class="preloader" id="preloader">
         <div class="loader">
-            <div class="loader-inner">
-                <div class="loader-line-wrap"><div class="loader-line"></div></div>
-                <div class="loader-line-wrap"><div class="loader-line"></div></div>
-                <div class="loader-line-wrap"><div class="loader-line"></div></div>
-            </div>
-            <span class="loader-text">OneTrip Express</span>
+            <img src="assets/logo.svg" alt="OneTrip Express" class="loader-logo">
+            <div class="loader-bar"><div class="loader-progress"></div></div>
         </div>
     </div>
 
@@ -33,20 +25,18 @@
     <nav class="nav" id="nav">
         <div class="nav-container">
             <a href="#" class="nav-logo">
-                <span class="logo-icon"><i class="fas fa-location-dot"></i></span>
-                <span class="logo-text">OneTrip<span>Express</span></span>
+                <img src="assets/logo.svg" alt="OneTrip Express">
             </a>
             <div class="nav-menu" id="navMenu">
                 <a href="#home" class="nav-link active">الرئيسية</a>
                 <a href="#about" class="nav-link">من نحن</a>
-                <a href="#values" class="nav-link">قيمنا</a>
                 <a href="#services" class="nav-link">خدماتنا</a>
                 <a href="#partners" class="nav-link">شركاؤنا</a>
-                <a href="#careers" class="nav-link">التوظيف</a>
+                <a href="#careers" class="nav-link">الوظائف</a>
                 <a href="#contact" class="nav-link">تواصل معنا</a>
             </div>
             <div class="nav-actions">
-                <button class="nav-cta">ابدأ الآن</button>
+                <button class="lang-btn">EN</button>
                 <button class="nav-toggle" onclick="toggleNav()">
                     <span></span><span></span><span></span>
                 </button>
@@ -57,467 +47,186 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-bg">
-            <div class="gradient-sphere sphere-1"></div>
-            <div class="gradient-sphere sphere-2"></div>
-            <div class="gradient-sphere sphere-3"></div>
-            <div class="grid-overlay"></div>
-            <div class="particles" id="particles"></div>
+            <div class="stars"></div>
+            <div class="stars2"></div>
+            <div class="stars3"></div>
         </div>
         
         <div class="hero-container">
+            <div class="hero-visual">
+                <div class="delivery-illustration">
+                    <div class="location-pin">
+                        <i class="fas fa-location-dot"></i>
+                    </div>
+                    <div class="delivery-circle">
+                        <i class="fas fa-truck-fast"></i>
+                    </div>
+                    <div class="route-line line-1"></div>
+                    <div class="route-line line-2"></div>
+                    <div class="end-point"></div>
+                </div>
+            </div>
+            
             <div class="hero-content">
                 <div class="hero-badge">
-                    <span class="badge-dot"></span>
-                    <span>الشريك اللوجستي الأول في المملكة</span>
+                    <span>التوصيل كما ينبغي أن يكون</span>
                 </div>
                 
-                <h1 class="hero-title">
-                    <span class="title-line">نوصّل</span>
-                    <span class="title-line gradient-text">أحلامك</span>
-                    <span class="title-line">بسرعة البرق</span>
-                </h1>
+                <h1 class="hero-title">OneTrip Express</h1>
+                <h2 class="hero-subtitle">التوصيل الذكي</h2>
                 
                 <p class="hero-desc">
-                    منصة التوصيل الذكية التي تجمع بين السرعة والدقة والاحترافية
-                    <br>تجربة استثنائية مدعومة بأحدث التقنيات
+                    في عالم لا يعرف التباطؤ، تبرز OneTrip Express كمزود لخدمة توصيل تجمع
+                    بين السرعة والدقة والاحترافية، مقدّمة لك تجربة استثنائية مدعومة بالتقنية الحديثة.
                 </p>
                 
                 <div class="hero-actions">
                     <a href="#contact" class="btn-primary">
+                        <i class="fas fa-paper-plane"></i>
                         <span>تواصل معنا</span>
-                        <i class="fas fa-arrow-left"></i>
                     </a>
-                    <a href="#services" class="btn-secondary">
-                        <span>اكتشف خدماتنا</span>
+                    <a href="#careers" class="btn-secondary">
+                        <i class="fas fa-users"></i>
+                        <span>انضم إلينا</span>
                     </a>
-                </div>
-                
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <div class="stat-icon"><i class="fas fa-box"></i></div>
-                        <div class="stat-content">
-                            <span class="stat-number" data-target="50">0</span><span class="stat-suffix">K+</span>
-                            <span class="stat-label">طلب شهرياً</span>
-                        </div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-icon"><i class="fas fa-handshake"></i></div>
-                        <div class="stat-content">
-                            <span class="stat-number" data-target="15">0</span><span class="stat-suffix">+</span>
-                            <span class="stat-label">شريك نجاح</span>
-                        </div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-icon"><i class="fas fa-star"></i></div>
-                        <div class="stat-content">
-                            <span class="stat-number" data-target="99">0</span><span class="stat-suffix">%</span>
-                            <span class="stat-label">رضا العملاء</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="hero-visual">
-                <div class="hero-mockup">
-                    <div class="mockup-glow"></div>
-                    <div class="mockup-main">
-                        <div class="app-preview">
-                            <div class="app-header">
-                                <span class="app-title">OneTrip</span>
-                                <div class="app-status online"></div>
-                            </div>
-                            <div class="app-body">
-                                <div class="delivery-card">
-                                    <div class="delivery-icon pulse">
-                                        <i class="fas fa-motorcycle"></i>
-                                    </div>
-                                    <div class="delivery-info">
-                                        <span class="delivery-status">جاري التوصيل</span>
-                                        <span class="delivery-time">5 دقائق</span>
-                                    </div>
-                                    <div class="delivery-progress">
-                                        <div class="progress-bar"></div>
-                                    </div>
-                                </div>
-                                <div class="route-visual">
-                                    <div class="route-point start"><i class="fas fa-store"></i></div>
-                                    <div class="route-line-animated"></div>
-                                    <div class="route-point end"><i class="fas fa-home"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="floating-elements">
-                        <div class="float-badge badge-1">
-                            <i class="fas fa-bolt"></i>
-                            <span>سريع</span>
-                        </div>
-                        <div class="float-badge badge-2">
-                            <i class="fas fa-shield-check"></i>
-                            <span>آمن</span>
-                        </div>
-                        <div class="float-badge badge-3">
-                            <i class="fas fa-clock"></i>
-                            <span>24/7</span>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
         
         <div class="scroll-indicator">
             <div class="mouse"><div class="wheel"></div></div>
-            <span>اكتشف المزيد</span>
         </div>
     </section>
 
-    <!-- About Section - New Amazing Design -->
-    <section class="about" id="about">
-        <div class="about-bg">
-            <div class="about-shape shape-1"></div>
-            <div class="about-shape shape-2"></div>
-        </div>
-        
+    <!-- Stats Section -->
+    <section class="stats">
         <div class="container">
-            <div class="about-header">
-                <span class="section-badge">
-                    <i class="fas fa-building"></i>
-                    <span>من نحن</span>
-                </span>
-                <h2 class="section-title-large">
-                    نحن <span class="text-gradient">OneTrip Express</span>
-                    <br>شريكك في رحلة النجاح
-                </h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-box"></i></div>
+                    <div class="stat-number" data-target="50">0</div>
+                    <div class="stat-label">ألف طلب شهرياً</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-handshake"></i></div>
+                    <div class="stat-number" data-target="15">0</div>
+                    <div class="stat-label">شريك نجاح</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-city"></i></div>
+                    <div class="stat-number" data-target="20">0</div>
+                    <div class="stat-label">مدينة</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-star"></i></div>
+                    <div class="stat-number" data-target="99">0</div>
+                    <div class="stat-label">% رضا العملاء</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">من نحن</span>
+                <h2 class="section-title">شريكك في رحلة <span>النجاح</span></h2>
             </div>
             
-            <div class="about-showcase">
-                <div class="about-main-card">
-                    <div class="main-card-bg"></div>
-                    <div class="main-card-content">
-                        <div class="about-image">
-                            <div class="image-frame">
-                                <div class="frame-corner top-right"></div>
-                                <div class="frame-corner bottom-left"></div>
-                                <div class="image-content">
-                                    <i class="fas fa-truck-fast"></i>
-                                </div>
-                            </div>
-                            <div class="image-badge">
-                                <span class="badge-number">5+</span>
-                                <span class="badge-text">سنوات خبرة</span>
-                            </div>
+            <div class="about-grid">
+                <div class="about-content">
+                    <p class="about-text">
+                        نحن <strong>OneTrip Express</strong>، شركة سعودية رائدة في مجال التوصيل والخدمات اللوجستية. 
+                        نؤمن بأن كل رحلة توصيل هي قصة نجاح جديدة.
+                    </p>
+                    <p class="about-text">
+                        نعمل على ربط الشركات والمتاجر بعملائهم من خلال منظومة توصيل متكاملة تعتمد على 
+                        أحدث التقنيات وفريق عمل محترف يضمن وصول طلباتكم بأمان وسرعة.
+                    </p>
+                    
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                            <span>تغطية شاملة في جميع مدن المملكة</span>
                         </div>
-                        <div class="about-text">
-                            <p class="about-intro">
-                                شركة سعودية رائدة في مجال التوصيل والخدمات اللوجستية، نؤمن بأن كل رحلة توصيل هي قصة نجاح جديدة.
-                            </p>
-                            <p class="about-desc">
-                                نعمل على ربط الشركات والمتاجر بعملائهم من خلال منظومة توصيل متكاملة تعتمد على أحدث التقنيات وفريق عمل محترف يضمن وصول طلباتكم بأمان وسرعة.
-                            </p>
-                            <div class="about-highlights">
-                                <div class="highlight">
-                                    <i class="fas fa-check-circle"></i>
-                                    <span>تغطية شاملة في جميع مدن المملكة</span>
-                                </div>
-                                <div class="highlight">
-                                    <i class="fas fa-check-circle"></i>
-                                    <span>فريق عمل مدرب ومحترف</span>
-                                </div>
-                                <div class="highlight">
-                                    <i class="fas fa-check-circle"></i>
-                                    <span>تقنيات تتبع متقدمة</span>
-                                </div>
-                            </div>
+                        <div class="about-feature">
+                            <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                            <span>فريق عمل مدرب ومحترف</span>
+                        </div>
+                        <div class="about-feature">
+                            <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                            <span>تقنيات تتبع متقدمة</span>
                         </div>
                     </div>
                 </div>
                 
-                <div class="about-features-grid">
-                    <div class="about-feature-card">
-                        <div class="feature-icon-wrapper">
-                            <div class="icon-bg"></div>
-                            <i class="fas fa-eye"></i>
-                        </div>
+                <div class="about-cards">
+                    <div class="about-card">
+                        <div class="card-icon"><i class="fas fa-eye"></i></div>
                         <h3>رؤيتنا</h3>
-                        <p>أن نكون الخيار الأول والأفضل في مجال التوصيل الذكي في المملكة العربية السعودية</p>
+                        <p>أن نكون الخيار الأول والأفضل في مجال التوصيل الذكي في المملكة</p>
                     </div>
-                    
-                    <div class="about-feature-card">
-                        <div class="feature-icon-wrapper">
-                            <div class="icon-bg"></div>
-                            <i class="fas fa-bullseye"></i>
-                        </div>
+                    <div class="about-card">
+                        <div class="card-icon"><i class="fas fa-bullseye"></i></div>
                         <h3>رسالتنا</h3>
-                        <p>تقديم تجربة توصيل استثنائية تدعم نمو شركائنا وتلبي تطلعات عملائهم</p>
+                        <p>تقديم تجربة توصيل استثنائية تدعم نمو شركائنا</p>
                     </div>
-                    
-                    <div class="about-feature-card">
-                        <div class="feature-icon-wrapper">
-                            <div class="icon-bg"></div>
-                            <i class="fas fa-rocket"></i>
-                        </div>
+                    <div class="about-card">
+                        <div class="card-icon"><i class="fas fa-rocket"></i></div>
                         <h3>هدفنا</h3>
-                        <p>التوسع المستمر لتغطية كل منطقة في المملكة مع الحفاظ على أعلى معايير الجودة</p>
+                        <p>التوسع لتغطية كل منطقة في المملكة بأعلى معايير الجودة</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Values Section - Stunning Design -->
-    <section class="values" id="values">
-        <div class="values-bg">
-            <div class="values-gradient"></div>
-        </div>
-        
-        <div class="container">
-            <div class="section-header center">
-                <span class="section-badge light">
-                    <i class="fas fa-gem"></i>
-                    <span>قيمنا</span>
-                </span>
-                <h2 class="section-title-large light">
-                    قيم تقود <span class="text-gradient">نجاحنا</span>
-                </h2>
-                <p class="section-subtitle">مبادئ راسخة تحدد هويتنا وتوجه كل قرار نتخذه</p>
-            </div>
-            
-            <div class="values-showcase">
-                <div class="values-grid">
-                    <div class="value-card" data-index="01">
-                        <div class="value-card-inner">
-                            <div class="value-front">
-                                <div class="value-icon">
-                                    <i class="fas fa-bolt"></i>
-                                </div>
-                                <h3>السرعة</h3>
-                                <p>نؤمن بأن الوقت هو أثمن ما يملكه عملاؤنا</p>
-                            </div>
-                            <div class="value-back">
-                                <p>نضمن توصيل طلباتكم في أسرع وقت ممكن مع الحفاظ على جودة الخدمة. فريقنا جاهز على مدار الساعة لخدمتكم.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="value-card" data-index="02">
-                        <div class="value-card-inner">
-                            <div class="value-front">
-                                <div class="value-icon">
-                                    <i class="fas fa-shield-halved"></i>
-                                </div>
-                                <h3>الأمان</h3>
-                                <p>حماية طلباتكم أولويتنا القصوى</p>
-                            </div>
-                            <div class="value-back">
-                                <p>نتعامل مع كل طلب بعناية فائقة ونضمن وصوله بحالة ممتازة. تتبع مباشر وتأمين شامل على جميع الشحنات.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="value-card" data-index="03">
-                        <div class="value-card-inner">
-                            <div class="value-front">
-                                <div class="value-icon">
-                                    <i class="fas fa-handshake-angle"></i>
-                                </div>
-                                <h3>الموثوقية</h3>
-                                <p>وعد نلتزم به في كل رحلة توصيل</p>
-                            </div>
-                            <div class="value-back">
-                                <p>نسبة التزام تتجاوز 99% في مواعيد التسليم. شركاؤنا يثقون بنا لأننا نفي بوعودنا دائماً.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="value-card" data-index="04">
-                        <div class="value-card-inner">
-                            <div class="value-front">
-                                <div class="value-icon">
-                                    <i class="fas fa-lightbulb"></i>
-                                </div>
-                                <h3>الابتكار</h3>
-                                <p>نبحث دائماً عن طرق أفضل</p>
-                            </div>
-                            <div class="value-back">
-                                <p>نستخدم أحدث التقنيات ونطور حلولاً مبتكرة لتحسين تجربة التوصيل باستمرار.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="value-card" data-index="05">
-                        <div class="value-card-inner">
-                            <div class="value-front">
-                                <div class="value-icon">
-                                    <i class="fas fa-users"></i>
-                                </div>
-                                <h3>الشراكة</h3>
-                                <p>نجاحكم هو نجاحنا</p>
-                            </div>
-                            <div class="value-back">
-                                <p>نعتبر أنفسنا امتداداً لفريق عملكم. نعمل معاً لتحقيق أهدافكم ودعم نمو أعمالكم.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="value-card" data-index="06">
-                        <div class="value-card-inner">
-                            <div class="value-front">
-                                <div class="value-icon">
-                                    <i class="fas fa-medal"></i>
-                                </div>
-                                <h3>التميز</h3>
-                                <p>معايير عالية في كل تفصيل</p>
-                            </div>
-                            <div class="value-back">
-                                <p>نسعى للتميز في كل جانب من جوانب عملنا. من خدمة العملاء إلى التسليم النهائي.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section - Premium Design -->
+    <!-- Services Section -->
     <section class="services" id="services">
         <div class="container">
             <div class="section-header center">
-                <span class="section-badge">
-                    <i class="fas fa-cubes"></i>
-                    <span>خدماتنا</span>
-                </span>
-                <h2 class="section-title-large">
-                    ماذا <span class="text-gradient">نقدم</span> لكم؟
-                </h2>
-                <p class="section-subtitle">حلول توصيل متكاملة مصممة خصيصاً لدعم نمو أعمالكم</p>
+                <span class="section-badge">خدماتنا</span>
+                <h2 class="section-title">ماذا <span>نقدم</span> لكم؟</h2>
+                <p class="section-desc">حلول توصيل متكاملة مصممة خصيصاً لدعم نمو أعمالكم</p>
             </div>
             
-            <div class="services-showcase">
-                <!-- Main Featured Service -->
-                <div class="service-featured">
-                    <div class="featured-bg">
-                        <div class="featured-pattern"></div>
-                    </div>
-                    <div class="featured-content">
-                        <div class="featured-icon">
-                            <i class="fas fa-truck-fast"></i>
-                        </div>
-                        <div class="featured-text">
-                            <h3>التوصيل الفوري</h3>
-                            <p>خدمة توصيل سريعة داخل المدن خلال دقائق معدودة. مثالية للمطاعم والمتاجر التي تحتاج توصيل عاجل.</p>
-                            <ul class="featured-list">
-                                <li><i class="fas fa-check"></i> توصيل خلال 30-60 دقيقة</li>
-                                <li><i class="fas fa-check"></i> تتبع مباشر للطلب</li>
-                                <li><i class="fas fa-check"></i> إشعارات فورية</li>
-                            </ul>
-                        </div>
-                        <div class="featured-visual">
-                            <div class="speed-meter">
-                                <div class="meter-fill"></div>
-                                <span class="meter-label">سرعة فائقة</span>
-                            </div>
-                        </div>
-                    </div>
+            <div class="services-grid">
+                <div class="service-card featured">
+                    <div class="service-icon"><i class="fas fa-bolt"></i></div>
+                    <h3>التوصيل الفوري</h3>
+                    <p>توصيل سريع داخل المدن خلال 30-60 دقيقة</p>
+                    <span class="service-tag">الأكثر طلباً</span>
                 </div>
                 
-                <!-- Services Grid -->
-                <div class="services-grid">
-                    <div class="service-card">
-                        <div class="service-card-header">
-                            <div class="service-number">01</div>
-                            <div class="service-icon">
-                                <i class="fas fa-store"></i>
-                            </div>
-                        </div>
-                        <h3>حلول المطاعم</h3>
-                        <p>دعم تشغيلي متكامل للمطاعم والكافيهات مع إدارة الطلبات وتنسيق التوصيل</p>
-                        <div class="service-footer">
-                            <span class="service-tag">الأكثر طلباً</span>
-                        </div>
-                    </div>
-                    
-                    <div class="service-card">
-                        <div class="service-card-header">
-                            <div class="service-number">02</div>
-                            <div class="service-icon">
-                                <i class="fas fa-route"></i>
-                            </div>
-                        </div>
-                        <h3>إدارة الأساطيل</h3>
-                        <p>حلول متكاملة لإدارة أسطول التوصيل الخاص بك مع لوحة تحكم متقدمة</p>
-                        <div class="service-footer">
-                            <span class="service-tag">للشركات</span>
-                        </div>
-                    </div>
-                    
-                    <div class="service-card">
-                        <div class="service-card-header">
-                            <div class="service-number">03</div>
-                            <div class="service-icon">
-                                <i class="fas fa-map-location-dot"></i>
-                            </div>
-                        </div>
-                        <h3>التتبع المباشر</h3>
-                        <p>تتبع الطلبات لحظة بلحظة مع إشعارات فورية للعميل والمتجر</p>
-                        <div class="service-footer">
-                            <span class="service-tag">تقنية متقدمة</span>
-                        </div>
-                    </div>
-                    
-                    <div class="service-card">
-                        <div class="service-card-header">
-                            <div class="service-number">04</div>
-                            <div class="service-icon">
-                                <i class="fas fa-file-signature"></i>
-                            </div>
-                        </div>
-                        <h3>عقود مرنة</h3>
-                        <p>شراكات مبنية على الأداء بعقود مرنة تناسب حجم عملك</p>
-                        <div class="service-footer">
-                            <span class="service-tag">بدون التزام</span>
-                        </div>
-                    </div>
-                    
-                    <div class="service-card">
-                        <div class="service-card-header">
-                            <div class="service-number">05</div>
-                            <div class="service-icon">
-                                <i class="fas fa-headset"></i>
-                            </div>
-                        </div>
-                        <h3>دعم متواصل</h3>
-                        <p>فريق دعم متخصص متاح على مدار الساعة لحل أي مشكلة فوراً</p>
-                        <div class="service-footer">
-                            <span class="service-tag">24/7</span>
-                        </div>
-                    </div>
-                    
-                    <div class="service-card">
-                        <div class="service-card-header">
-                            <div class="service-number">06</div>
-                            <div class="service-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                        </div>
-                        <h3>تقارير وتحليلات</h3>
-                        <p>تقارير مفصلة وتحليلات ذكية لمساعدتك في اتخاذ قرارات أفضل</p>
-                        <div class="service-footer">
-                            <span class="service-tag">رؤى ذكية</span>
-                        </div>
-                    </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-store"></i></div>
+                    <h3>حلول المطاعم</h3>
+                    <p>دعم تشغيلي متكامل للمطاعم والكافيهات</p>
                 </div>
-            </div>
-            
-            <div class="services-cta">
-                <div class="cta-box">
-                    <div class="cta-content">
-                        <h3>هل لديك متطلبات خاصة؟</h3>
-                        <p>نقدم حلول مخصصة تناسب احتياجات عملك بالضبط</p>
-                    </div>
-                    <a href="#contact" class="btn-primary">
-                        <span>تواصل معنا</span>
-                        <i class="fas fa-arrow-left"></i>
-                    </a>
+                
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-route"></i></div>
+                    <h3>إدارة الأساطيل</h3>
+                    <p>حلول متكاملة لإدارة أسطول التوصيل</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-map-location-dot"></i></div>
+                    <h3>التتبع المباشر</h3>
+                    <p>تتبع الطلبات لحظة بلحظة مع إشعارات فورية</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-file-signature"></i></div>
+                    <h3>عقود مرنة</h3>
+                    <p>شراكات مبنية على الأداء بعقود مرنة</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-headset"></i></div>
+                    <h3>دعم متواصل</h3>
+                    <p>فريق دعم متخصص متاح 24/7</p>
                 </div>
             </div>
         </div>
@@ -525,54 +234,39 @@
 
     <!-- Partners Section -->
     <section class="partners" id="partners">
-        <div class="partners-bg">
-            <div class="glow-orb orb-1"></div>
-            <div class="glow-orb orb-2"></div>
-        </div>
-        
         <div class="container">
             <div class="section-header center light">
-                <span class="section-badge light">
-                    <i class="fas fa-handshake"></i>
-                    <span>شركاؤنا</span>
-                </span>
-                <h2 class="section-title-large light">
-                    نفتخر بثقة <span class="text-gradient">الكبار</span>
-                </h2>
-                <p class="section-subtitle">شراكات استراتيجية مع أكبر الشركات في المملكة</p>
+                <span class="section-badge">شركاؤنا</span>
+                <h2 class="section-title">نفتخر بثقة <span>الكبار</span></h2>
+                <p class="section-desc">شراكات استراتيجية مع أكبر الشركات في المملكة</p>
             </div>
             
-            <div class="partners-showcase">
-                <div class="partners-orbit">
-                    <div class="orbit-center">
-                        <div class="center-logo">
-                            <i class="fas fa-handshake"></i>
-                        </div>
-                        <div class="pulse-ring"></div>
-                        <div class="pulse-ring delay-1"></div>
-                        <div class="pulse-ring delay-2"></div>
-                    </div>
-                    
-                    <div class="orbit-ring ring-1">
-                        <div class="partner-node" style="--angle: 0deg;"><img src="assets/partners/jahez.svg" alt="Jahez"></div>
-                        <div class="partner-node" style="--angle: 72deg;"><img src="assets/partners/hungerstation.svg" alt="HungerStation"></div>
-                        <div class="partner-node" style="--angle: 144deg;"><img src="assets/partners/keeta.svg" alt="Keeta"></div>
-                        <div class="partner-node" style="--angle: 216deg;"><img src="assets/partners/mrsool.svg" alt="Mrsool"></div>
-                        <div class="partner-node" style="--angle: 288deg;"><img src="assets/partners/chefz.svg" alt="The Chefz"></div>
-                    </div>
-                    
-                    <div class="orbit-ring ring-2">
-                        <div class="partner-node" style="--angle: 45deg;"><img src="assets/partners/toyou.svg" alt="ToYou"></div>
-                        <div class="partner-node" style="--angle: 135deg;"><img src="assets/partners/smsa.svg" alt="SMSA"></div>
-                        <div class="partner-node" style="--angle: 225deg;"><img src="assets/partners/aramex.svg" alt="Aramex"></div>
-                        <div class="partner-node" style="--angle: 315deg;"><img src="assets/partners/naqel.svg" alt="Naqel"></div>
-                    </div>
+            <div class="partners-marquee">
+                <div class="marquee-content">
+                    <div class="partner-logo"><img src="assets/partners/jahez.svg" alt="Jahez"></div>
+                    <div class="partner-logo"><img src="assets/partners/hungerstation.svg" alt="HungerStation"></div>
+                    <div class="partner-logo"><img src="assets/partners/keeta.svg" alt="Keeta"></div>
+                    <div class="partner-logo"><img src="assets/partners/mrsool.svg" alt="Mrsool"></div>
+                    <div class="partner-logo"><img src="assets/partners/chefz.svg" alt="The Chefz"></div>
+                    <div class="partner-logo"><img src="assets/partners/toyou.svg" alt="ToYou"></div>
+                    <div class="partner-logo"><img src="assets/partners/smsa.svg" alt="SMSA"></div>
+                    <div class="partner-logo"><img src="assets/partners/aramex.svg" alt="Aramex"></div>
+                    <div class="partner-logo"><img src="assets/partners/naqel.svg" alt="Naqel"></div>
+                    <!-- Duplicate for seamless loop -->
+                    <div class="partner-logo"><img src="assets/partners/jahez.svg" alt="Jahez"></div>
+                    <div class="partner-logo"><img src="assets/partners/hungerstation.svg" alt="HungerStation"></div>
+                    <div class="partner-logo"><img src="assets/partners/keeta.svg" alt="Keeta"></div>
+                    <div class="partner-logo"><img src="assets/partners/mrsool.svg" alt="Mrsool"></div>
+                    <div class="partner-logo"><img src="assets/partners/chefz.svg" alt="The Chefz"></div>
                 </div>
             </div>
             
             <div class="partners-cta">
                 <p>هل تريد أن تصبح شريكاً؟</p>
-                <a href="#contact" class="btn-primary light">تواصل معنا</a>
+                <a href="#contact" class="btn-primary">
+                    <span>تواصل معنا</span>
+                    <i class="fas fa-arrow-left"></i>
+                </a>
             </div>
         </div>
     </section>
@@ -582,109 +276,76 @@
         <div class="container">
             <div class="careers-wrapper">
                 <div class="careers-content">
-                    <span class="section-badge">
-                        <i class="fas fa-user-plus"></i>
-                        <span>انضم إلينا</span>
-                    </span>
-                    <h2 class="section-title-large">
-                        كن جزءاً من <span class="text-gradient">فريقنا</span>
-                    </h2>
-                    <p class="section-subtitle">
+                    <span class="section-badge">انضم إلينا</span>
+                    <h2 class="section-title">كن جزءاً من <span>فريقنا</span></h2>
+                    <p class="section-desc">
                         نبحث عن أفراد متميزين يشاركوننا الشغف بتقديم أفضل خدمة
                     </p>
                     
-                    <div class="benefits-grid">
-                        <div class="benefit-card">
-                            <div class="benefit-icon">
-                                <i class="fas fa-money-bill-wave"></i>
-                            </div>
-                            <h4>رواتب تنافسية</h4>
-                            <p>نقدم رواتب ومكافآت تنافسية</p>
+                    <div class="benefits-list">
+                        <div class="benefit-item">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span>رواتب تنافسية</span>
                         </div>
-                        <div class="benefit-card">
-                            <div class="benefit-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <h4>فرص للتطور</h4>
-                            <p>مسار واضح للتطور الوظيفي</p>
+                        <div class="benefit-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>فرص للتطور</span>
                         </div>
-                        <div class="benefit-card">
-                            <div class="benefit-icon">
-                                <i class="fas fa-heart"></i>
-                            </div>
-                            <h4>تأمين صحي</h4>
-                            <p>تأمين صحي شامل لك ولعائلتك</p>
+                        <div class="benefit-item">
+                            <i class="fas fa-heart"></i>
+                            <span>تأمين صحي</span>
                         </div>
-                        <div class="benefit-card">
-                            <div class="benefit-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <h4>ساعات مرنة</h4>
-                            <p>مرونة في أوقات العمل</p>
+                        <div class="benefit-item">
+                            <i class="fas fa-clock"></i>
+                            <span>ساعات مرنة</span>
                         </div>
                     </div>
                 </div>
                 
                 <div class="careers-form-wrapper">
-                    <div class="form-header">
+                    <div class="form-card">
                         <h3>تقديم طلب توظيف</h3>
-                        <p>املأ النموذج وسنتواصل معك قريباً</p>
-                    </div>
-                    <form class="careers-form" id="careersForm">
-                        <div class="form-row">
+                        <form class="careers-form" id="careersForm">
                             <div class="form-group">
-                                <input type="text" name="fullName" required placeholder=" ">
-                                <label>الاسم الكامل</label>
-                                <span class="form-icon"><i class="fas fa-user"></i></span>
+                                <input type="text" name="fullName" required placeholder="الاسم الكامل">
+                                <i class="fas fa-user"></i>
                             </div>
                             <div class="form-group">
-                                <input type="tel" name="phone" required placeholder=" ">
-                                <label>رقم الهاتف</label>
-                                <span class="form-icon"><i class="fas fa-phone"></i></span>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <input type="email" name="email" required placeholder=" ">
-                                <label>البريد الإلكتروني</label>
-                                <span class="form-icon"><i class="fas fa-envelope"></i></span>
+                                <input type="tel" name="phone" required placeholder="رقم الهاتف">
+                                <i class="fas fa-phone"></i>
                             </div>
                             <div class="form-group">
-                                <input type="text" name="city" required placeholder=" ">
-                                <label>المدينة</label>
-                                <span class="form-icon"><i class="fas fa-location-dot"></i></span>
+                                <input type="email" name="email" required placeholder="البريد الإلكتروني">
+                                <i class="fas fa-envelope"></i>
                             </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <select name="position" required>
-                                <option value="">اختر الوظيفة</option>
-                                <option value="driver">سائق توصيل</option>
-                                <option value="supervisor">مشرف عمليات</option>
-                                <option value="operations">موظف عمليات</option>
-                                <option value="customer_service">خدمة عملاء</option>
-                                <option value="other">أخرى</option>
-                            </select>
-                            <span class="form-icon"><i class="fas fa-briefcase"></i></span>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="file-upload" id="fileUpload">
+                            <div class="form-group">
+                                <input type="text" name="city" required placeholder="المدينة">
+                                <i class="fas fa-location-dot"></i>
+                            </div>
+                            <div class="form-group">
+                                <select name="position" required>
+                                    <option value="">اختر الوظيفة</option>
+                                    <option value="driver">سائق توصيل</option>
+                                    <option value="supervisor">مشرف عمليات</option>
+                                    <option value="operations">موظف عمليات</option>
+                                    <option value="customer_service">خدمة عملاء</option>
+                                    <option value="other">أخرى</option>
+                                </select>
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <div class="form-group file-group">
                                 <input type="file" name="cv" id="cvFile" accept=".pdf,.jpg,.jpeg,.png">
-                                <div class="file-content">
+                                <label for="cvFile">
                                     <i class="fas fa-cloud-upload-alt"></i>
                                     <span>ارفع السيرة الذاتية</span>
-                                    <small>PDF أو صورة (حد أقصى 5MB)</small>
-                                </div>
+                                </label>
                             </div>
-                        </div>
-                        
-                        <button type="submit" class="submit-btn">
-                            <span>إرسال الطلب</span>
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </form>
+                            <button type="submit" class="submit-btn">
+                                <span>إرسال الطلب</span>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -695,31 +356,28 @@
         <div class="container">
             <div class="contact-wrapper">
                 <div class="contact-info">
-                    <span class="section-badge light">
-                        <i class="fas fa-comments"></i>
-                        <span>تواصل معنا</span>
-                    </span>
-                    <h2 class="section-title-large light">نسعد بخدمتكم</h2>
-                    <p class="section-subtitle">فريق الدعم لدينا متاح للإجابة على استفساراتكم</p>
+                    <span class="section-badge light">تواصل معنا</span>
+                    <h2 class="section-title light">نسعد <span>بخدمتكم</span></h2>
+                    <p class="section-desc light">فريق الدعم لدينا متاح للإجابة على استفساراتكم</p>
                     
-                    <div class="info-cards">
-                        <div class="info-card">
+                    <div class="info-list">
+                        <div class="info-item">
                             <div class="info-icon"><i class="fas fa-phone"></i></div>
-                            <div class="info-content">
+                            <div>
                                 <span>الهاتف</span>
                                 <a href="tel:920032104">920032104</a>
                             </div>
                         </div>
-                        <div class="info-card">
+                        <div class="info-item">
                             <div class="info-icon"><i class="fas fa-envelope"></i></div>
-                            <div class="info-content">
+                            <div>
                                 <span>البريد</span>
                                 <a href="mailto:info@onetrip.sa">info@onetrip.sa</a>
                             </div>
                         </div>
-                        <div class="info-card">
+                        <div class="info-item">
                             <div class="info-icon"><i class="fas fa-location-dot"></i></div>
-                            <div class="info-content">
+                            <div>
                                 <span>العنوان</span>
                                 <p>حي اليرموك، الرياض</p>
                             </div>
@@ -737,22 +395,23 @@
                 <div class="contact-form-wrapper">
                     <form class="contact-form" id="contactForm">
                         <div class="form-group">
-                            <input type="text" name="name" required placeholder=" ">
-                            <label>الاسم</label>
-                            <span class="form-icon"><i class="fas fa-user"></i></span>
+                            <input type="text" name="name" required placeholder="الاسم">
+                            <i class="fas fa-user"></i>
                         </div>
                         <div class="form-group">
-                            <input type="email" name="email" required placeholder=" ">
-                            <label>البريد الإلكتروني</label>
-                            <span class="form-icon"><i class="fas fa-envelope"></i></span>
+                            <input type="email" name="email" required placeholder="البريد الإلكتروني">
+                            <i class="fas fa-envelope"></i>
                         </div>
                         <div class="form-group">
-                            <textarea name="message" rows="5" required placeholder=" "></textarea>
-                            <label>رسالتك</label>
+                            <input type="text" name="subject" required placeholder="الموضوع">
+                            <i class="fas fa-tag"></i>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" rows="4" required placeholder="رسالتك"></textarea>
                         </div>
                         <button type="submit" class="submit-btn">
                             <span>إرسال</span>
-                            <i class="fas fa-arrow-left"></i>
+                            <i class="fas fa-paper-plane"></i>
                         </button>
                     </form>
                 </div>
@@ -766,8 +425,7 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <a href="#" class="footer-logo">
-                        <span class="logo-icon"><i class="fas fa-location-dot"></i></span>
-                        <span class="logo-text">OneTrip<span>Express</span></span>
+                        <img src="assets/logo.svg" alt="OneTrip Express">
                     </a>
                     <p>التوصيل كما ينبغي أن يكون</p>
                     <div class="footer-social">
@@ -781,9 +439,9 @@
                     <h4>روابط سريعة</h4>
                     <a href="#home">الرئيسية</a>
                     <a href="#about">من نحن</a>
-                    <a href="#values">قيمنا</a>
                     <a href="#services">خدماتنا</a>
-                    <a href="#careers">التوظيف</a>
+                    <a href="#partners">شركاؤنا</a>
+                    <a href="#careers">الوظائف</a>
                 </div>
                 
                 <div class="footer-links">
