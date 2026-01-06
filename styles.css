@@ -328,12 +328,13 @@ body {
 
 .hero-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 60px;
     align-items: center;
-    padding: 120px 0 80px;
+    padding: 100px 0 60px;
     position: relative;
     z-index: 2;
+    min-height: calc(100vh - 100px);
 }
 
 .hero-content {
@@ -487,206 +488,27 @@ body {
 .hero-visual {
     position: relative;
     animation: fadeInRight 0.8s ease 0.2s backwards;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.hero-illustration {
-    position: relative;
+.hero-illustration-wrapper {
     width: 100%;
-    max-width: 550px;
+    max-width: 650px;
     margin: 0 auto;
 }
 
-.hero-card {
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: var(--radius-2xl);
-    padding: 40px;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--gradient-primary);
-}
-
-.hero-map {
+.hero-main-illustration {
     width: 100%;
-    height: 350px;
-    background: linear-gradient(135deg, rgba(30,42,74,0.5) 0%, rgba(15,22,40,0.8) 100%);
-    border-radius: var(--radius-xl);
-    position: relative;
-    overflow: hidden;
+    height: auto;
+    filter: drop-shadow(0 20px 60px rgba(247, 148, 29, 0.15));
+    transition: var(--transition);
 }
 
-.map-grid {
-    position: absolute;
-    inset: 0;
-    background-image: 
-        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-    background-size: 40px 40px;
-}
-
-/* Route Animation */
-.route-svg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.route-path {
-    fill: none;
-    stroke: url(#routeGradient);
-    stroke-width: 3;
-    stroke-dasharray: 1000;
-    stroke-dashoffset: 1000;
-    animation: drawRoute 4s ease-in-out infinite;
-    filter: drop-shadow(0 0 8px var(--primary-glow));
-}
-
-@keyframes drawRoute {
-    0% { stroke-dashoffset: 1000; }
-    50% { stroke-dashoffset: 0; }
-    100% { stroke-dashoffset: -1000; }
-}
-
-/* Location Pins */
-.pin {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    border-radius: 50% 50% 50% 0;
-    transform: rotate(-45deg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: pinBounce 2s ease-in-out infinite;
-}
-
-.pin i {
-    transform: rotate(45deg);
-    color: var(--white);
-    font-size: 1rem;
-}
-
-.pin-1 {
-    top: 15%;
-    left: 15%;
-    background: var(--primary);
-    box-shadow: 0 4px 20px var(--primary-glow);
-    animation-delay: 0s;
-}
-
-.pin-2 {
-    top: 40%;
-    right: 20%;
-    background: var(--accent);
-    box-shadow: 0 4px 20px var(--accent-glow);
-    animation-delay: 0.5s;
-}
-
-.pin-3 {
-    bottom: 25%;
-    left: 35%;
-    background: var(--primary);
-    box-shadow: 0 4px 20px var(--primary-glow);
-    animation-delay: 1s;
-}
-
-@keyframes pinBounce {
-    0%, 100% { transform: rotate(-45deg) translateY(0); }
-    50% { transform: rotate(-45deg) translateY(-8px); }
-}
-
-/* Delivery Truck */
-.truck {
-    position: absolute;
-    top: 30%;
-    left: 30%;
-    width: 56px;
-    height: 56px;
-    background: var(--white);
-    border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-lg);
-    animation: moveTruck 8s ease-in-out infinite;
-    z-index: 10;
-}
-
-.truck i {
-    font-size: 1.5rem;
-    color: var(--primary);
-}
-
-@keyframes moveTruck {
-    0% { left: 15%; top: 20%; }
-    25% { left: 60%; top: 35%; }
-    50% { left: 45%; top: 60%; }
-    75% { left: 25%; top: 45%; }
-    100% { left: 15%; top: 20%; }
-}
-
-/* Floating Stats */
-.float-stat {
-    position: absolute;
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: var(--radius-lg);
-    padding: 12px 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    animation: floatStat 3s ease-in-out infinite;
-}
-
-.float-stat-1 {
-    top: -20px;
-    right: 20px;
-    animation-delay: 0s;
-}
-
-.float-stat-2 {
-    bottom: -20px;
-    left: 20px;
-    animation-delay: 1s;
-}
-
-@keyframes floatStat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-.float-stat-icon {
-    width: 40px;
-    height: 40px;
-    background: var(--gradient-primary);
-    border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--white);
-}
-
-.float-stat-text h4 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--white);
-}
-
-.float-stat-text p {
-    font-size: 0.8rem;
-    color: var(--gray-400);
+.hero-main-illustration:hover {
+    transform: scale(1.02);
+    filter: drop-shadow(0 30px 80px rgba(247, 148, 29, 0.2));
 }
 
 /* ===== PARTNERS MARQUEE ===== */
