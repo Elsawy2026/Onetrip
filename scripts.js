@@ -1,13 +1,15 @@
 // ==========================================
-// OneTrip Express - Ultimate Edition
-// Clean, Modern, Professional JavaScript
+// OneTrip Express - Premium Edition
+// Professional JavaScript
 // ==========================================
 
 // ===== PRELOADER =====
 window.addEventListener('load', () => {
     setTimeout(() => {
         document.getElementById('preloader').classList.add('hidden');
-    }, 1500);
+        // Start counter animations after preloader
+        startCounterAnimations();
+    }, 1200);
 });
 
 // ===== NAVIGATION =====
@@ -16,22 +18,14 @@ const navLinks = document.querySelectorAll('.nav-link');
 const navMenu = document.getElementById('navMenu');
 
 // Scroll Effect
-let lastScroll = 0;
 window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll > 50) {
+    if (window.pageYOffset > 50) {
         nav.classList.add('scrolled');
     } else {
         nav.classList.remove('scrolled');
     }
     
-    lastScroll = currentScroll;
-    
-    // Active Navigation on Scroll
     updateActiveNav();
-    
-    // Back to Top Button
     updateBackTop();
 });
 
@@ -54,7 +48,7 @@ function updateActiveNav() {
     
     sections.forEach(section => {
         const sectionHeight = section.offsetHeight;
-        const sectionTop = section.offsetTop - 120;
+        const sectionTop = section.offsetTop - 150;
         const sectionId = section.getAttribute('id');
         
         if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
@@ -73,11 +67,9 @@ function toggleLanguage() {
     const newLang = currentLang === 'ar' ? 'en' : 'ar';
     const newDir = newLang === 'ar' ? 'rtl' : 'ltr';
     
-    // Update HTML attributes
     html.setAttribute('lang', newLang);
     html.setAttribute('dir', newDir);
     
-    // Save to localStorage
     localStorage.setItem('lang', newLang);
     localStorage.setItem('dir', newDir);
     
@@ -93,29 +85,26 @@ function toggleLanguage() {
         }
     });
     
-    // Update placeholders
-    document.querySelectorAll('[data-ar-placeholder], [data-en-placeholder]').forEach(el => {
-        if (newLang === 'ar' && el.dataset.arPlaceholder) {
-            el.placeholder = el.dataset.arPlaceholder;
-        } else if (newLang === 'en' && el.dataset.enPlaceholder) {
-            el.placeholder = el.dataset.enPlaceholder;
-        }
-    });
-    
     // Update button text
     document.getElementById('langBtn').textContent = newLang === 'ar' ? 'EN' : 'AR';
+    
+    // Update CTA arrow direction
+    document.querySelectorAll('.btn i.fa-arrow-left, .btn i.fa-arrow-right').forEach(icon => {
+        if (newLang === 'en') {
+            icon.classList.remove('fa-arrow-left');
+            icon.classList.add('fa-arrow-right');
+        } else {
+            icon.classList.remove('fa-arrow-right');
+            icon.classList.add('fa-arrow-left');
+        }
+    });
 }
 
 // Load saved language preference
 window.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('lang');
-    const savedDir = localStorage.getItem('dir');
-    
-    if (savedLang && savedDir) {
-        const html = document.documentElement;
-        if (html.getAttribute('lang') !== savedLang) {
-            toggleLanguage();
-        }
+    if (savedLang && savedLang !== document.documentElement.getAttribute('lang')) {
+        toggleLanguage();
     }
 });
 
@@ -152,213 +141,234 @@ backTop.addEventListener('click', () => {
     });
 });
 
+// ===== COUNTER ANIMATIONS =====
+function animateCounter(element, target, suffix = '') {
+    const duration = 2000;
+    const startTime = performance.now();
+    
+    function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Ease out cubic
+        const easeProgress = 1 - Math.pow(1 - progress, 3);
+        const current = Math.floor(easeProgress * target);
+        
+        element.textContent = current + suffix;
+        
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        } else {
+            element.textContent = target + suffix;
+        }
+    }
+    
+    requestAnimationFrame(update);
+}
+
+function startCounterAnimations() {
+    const counters = document.querySelectorAll('[data-count]');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const element = entry.target;
+                const target = parseInt(element.dataset.count);
+                const suffix = element.dataset.suffix || '';
+                
+                animateCounter(element, target, suffix);
+                observer.unobserve(element);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    counters.forEach(counter => observer.observe(counter));
+}
+
 // ===== CONTACT FORM =====
 const contactForm = document.getElementById('contactForm');
 
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const formData = new FormData(contactForm);
-    const data = Object.fromEntries(formData);
-    
-    // Show success notification
-    showNotification('تم إرسال رسالتك بنجاح! سنتواصل معك قريباً', 'success');
-    
-    // Reset form
-    contactForm.reset();
-    
-    // In production, send to backend
-    console.log('Form submitted:', data);
-});
-
-// ===== NOTIFICATION SYSTEM =====
-function showNotification(message, type = 'success') {
-    // Remove existing notification
-    const existing = document.querySelector('.notification');
-    if (existing) {
-        existing.remove();
-    }
-    
-    // Create notification
-    const notification = document.createElement('div');
-    notification.className = `notification ${type}`;
-    notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 24px;
-        background: ${type === 'success' ? '#00D9A5' : '#F7941D'};
-        color: white;
-        padding: 16px 24px;
-        border-radius: 12px;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-        z-index: 10000;
-        animation: slideInRight 0.3s ease;
-        max-width: 400px;
-        font-weight: 500;
-    `;
-    
-    // RTL support
-    if (document.dir === 'rtl') {
-        notification.style.right = 'auto';
-        notification.style.left = '24px';
-    }
-    
-    notification.textContent = message;
-    document.body.appendChild(notification);
-    
-    // Auto remove after 4 seconds
-    setTimeout(() => {
-        notification.style.animation = 'slideOutRight 0.3s ease';
-        setTimeout(() => notification.remove(), 300);
-    }, 4000);
+if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(contactForm);
+        const data = Object.fromEntries(formData);
+        
+        // Show success modal
+        showSuccessModal();
+        
+        // Reset form
+        contactForm.reset();
+        
+        console.log('Form submitted:', data);
+    });
 }
 
-// Add animation keyframes
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideInRight {
-        from {
-            transform: translateX(400px);
-            opacity: 0;
+// ===== SUCCESS MODAL =====
+function showSuccessModal() {
+    // Remove existing modal
+    const existingModal = document.querySelector('.success-modal-overlay');
+    if (existingModal) existingModal.remove();
+    
+    const isArabic = document.documentElement.lang === 'ar';
+    
+    const modalHTML = `
+        <div class="success-modal-overlay">
+            <div class="success-modal">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>${isArabic ? 'شكراً لك!' : 'Thank You!'}</h3>
+                <p>${isArabic ? 'تم إرسال رسالتك بنجاح' : 'Your message has been sent successfully'}</p>
+                <p class="success-subtitle">${isArabic ? 'سيتم التواصل معك في أقرب وقت ممكن' : 'We will contact you as soon as possible'}</p>
+                <button class="success-btn" onclick="closeSuccessModal()">${isArabic ? 'حسناً' : 'OK'}</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // Add modal styles
+    const style = document.createElement('style');
+    style.id = 'modal-styles';
+    style.textContent = `
+        .success-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            animation: fadeIn 0.3s ease;
         }
-        to {
-            transform: translateX(0);
-            opacity: 1;
+        
+        .success-modal {
+            background: linear-gradient(135deg, #1E2A4A 0%, #0F1628 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            padding: 48px;
+            text-align: center;
+            max-width: 400px;
+            margin: 20px;
+            animation: scaleIn 0.3s ease;
         }
-    }
-    
-    @keyframes slideOutRight {
-        from {
-            transform: translateX(0);
-            opacity: 1;
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #00D9A5 0%, #00FFB8 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
         }
-        to {
-            transform: translateX(400px);
-            opacity: 0;
+        
+        .success-icon i {
+            font-size: 2.5rem;
+            color: white;
         }
-    }
+        
+        .success-modal h3 {
+            font-size: 1.75rem;
+            color: white;
+            margin-bottom: 12px;
+        }
+        
+        .success-modal p {
+            color: #94A3B8;
+            margin-bottom: 8px;
+        }
+        
+        .success-subtitle {
+            font-size: 0.9rem;
+            margin-bottom: 24px !important;
+        }
+        
+        .success-btn {
+            background: linear-gradient(135deg, #F7941D 0%, #FFB347 100%);
+            color: white;
+            border: none;
+            padding: 14px 48px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .success-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(247, 148, 29, 0.3);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+    `;
     
-    .social-links {
-        display: flex;
-        gap: 12px;
-        margin-top: 24px;
+    if (!document.getElementById('modal-styles')) {
+        document.head.appendChild(style);
     }
-    
-    .social-link {
-        width: 40px;
-        height: 40px;
-        background: rgba(247, 148, 29, 0.1);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--primary);
-        text-decoration: none;
-        transition: all 0.3s;
+}
+
+function closeSuccessModal() {
+    const modal = document.querySelector('.success-modal-overlay');
+    if (modal) {
+        modal.style.animation = 'fadeIn 0.3s ease reverse';
+        setTimeout(() => modal.remove(), 300);
     }
-    
-    .social-link:hover {
-        background: var(--primary);
-        color: white;
-        transform: translateY(-3px);
-    }
-    
-    .scroll-indicator {
-        position: absolute;
-        bottom: 40px;
-        left: 50%;
-        transform: translateX(-50%);
-        animation: bounce 2s infinite;
-        opacity: 0.6;
-    }
-    
-    .mouse {
-        width: 24px;
-        height: 36px;
-        border: 2px solid var(--gray-400);
-        border-radius: 12px;
-        position: relative;
-    }
-    
-    .wheel {
-        width: 3px;
-        height: 8px;
-        background: var(--primary);
-        border-radius: 2px;
-        position: absolute;
-        top: 8px;
-        left: 50%;
-        transform: translateX(-50%);
-        animation: scroll 1.5s infinite;
-    }
-    
-    @keyframes scroll {
-        0% { transform: translateX(-50%) translateY(0); opacity: 1; }
-        100% { transform: translateX(-50%) translateY(12px); opacity: 0; }
-    }
-`;
-document.head.appendChild(style);
+}
 
 // ===== REVEAL ANIMATIONS =====
 const observerOptions = {
     threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
+    rootMargin: '0px 0px -50px 0px'
 };
 
-const observer = new IntersectionObserver((entries) => {
+const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
-            observer.unobserve(entry.target);
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+            revealObserver.unobserve(entry.target);
         }
     });
 }, observerOptions);
 
 // Observe elements
 document.addEventListener('DOMContentLoaded', () => {
-    const elementsToAnimate = document.querySelectorAll('.service-card, .value-card, .partner-card, .about-card');
-    elementsToAnimate.forEach(el => {
+    const elementsToAnimate = document.querySelectorAll('.service-card, .partner-card, .about-card, .feature-item, .stat-item');
+    
+    elementsToAnimate.forEach((el, index) => {
         el.style.opacity = '0';
-        observer.observe(el);
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = `all 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`;
+        revealObserver.observe(el);
     });
 });
 
-// ===== COUNTER ANIMATION =====
-function animateCounter(element, target, duration = 2000) {
-    let start = 0;
-    const increment = target / (duration / 16);
-    
-    const timer = setInterval(() => {
-        start += increment;
-        if (start >= target) {
-            element.textContent = target + (element.dataset.suffix || '');
-            clearInterval(timer);
-        } else {
-            element.textContent = Math.floor(start) + (element.dataset.suffix || '');
-        }
-    }, 16);
+// ===== MARQUEE HOVER PAUSE =====
+const marquee = document.querySelector('.marquee-content');
+if (marquee) {
+    marquee.addEventListener('mouseenter', () => {
+        marquee.style.animationPlayState = 'paused';
+    });
+    marquee.addEventListener('mouseleave', () => {
+        marquee.style.animationPlayState = 'running';
+    });
 }
 
-// Animate stats on scroll
-const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const value = entry.target.querySelector('.hero-stat-value');
-            const target = value.textContent.replace(/[^0-9]/g, '');
-            const suffix = value.textContent.replace(/[0-9]/g, '');
-            
-            value.dataset.suffix = suffix;
-            animateCounter(value, parseInt(target));
-            statsObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.5 });
-
-document.querySelectorAll('.hero-stat').forEach(stat => {
-    statsObserver.observe(stat);
-});
-
 // ===== CONSOLE MESSAGE =====
-console.log('%c🚀 OneTrip Express', 'font-size: 20px; font-weight: bold; color: #F7941D;');
-console.log('%cالتوصيل كما ينبغي أن يكون', 'font-size: 14px; color: #1E2A4A;');
-console.log('%cDeveloped with ❤️ for excellence', 'font-size: 12px; color: #00D9A5;');
+console.log('%c🚀 OneTrip Express', 'font-size: 24px; font-weight: bold; color: #F7941D;');
+console.log('%cشريكك اللوجستي الموثوق', 'font-size: 14px; color: #00D9A5;');
+console.log('%cDeveloped with ❤️ for excellence', 'font-size: 12px; color: #64748B;');
