@@ -1,288 +1,374 @@
-// ===================================
-// One Trip Express - Scripts
-// Light Theme - Clean & Professional
-// ===================================
+// ==========================================
+// OneTrip Express - Premium Edition
+// Professional JavaScript
+// ==========================================
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Hide preloader
+// ===== PRELOADER =====
+window.addEventListener('load', () => {
     setTimeout(() => {
-        const preloader = document.getElementById('preloader');
-        if (preloader) {
-            preloader.classList.add('hidden');
-            setTimeout(() => preloader.style.display = 'none', 500);
-        }
-    }, 1500);
-    
-    // Initialize all components
-    initNavigation();
-    initLanguage();
-    initScrollEffects();
-    initCounters();
-    initFormHandler();
+        document.getElementById('preloader').classList.add('hidden');
+        // Start counter animations after preloader
+        startCounterAnimations();
+    }, 1200);
 });
 
 // ===== NAVIGATION =====
-function initNavigation() {
-    const navbar = document.getElementById('navbar');
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    // Scroll effect
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-        
-        // Update active nav link based on scroll position
-        updateActiveNavLink();
-        
-        // Back to top button
-        const backTop = document.getElementById('backTop');
-        if (backTop) {
-            if (window.scrollY > 300) {
-                backTop.classList.add('visible');
-            } else {
-                backTop.classList.remove('visible');
-            }
-        }
-    });
-    
-    // Smooth scroll for nav links
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-            
-            if (targetSection) {
-                targetSection.scrollIntoView({ behavior: 'smooth' });
-                
-                // Close mobile menu
-                document.getElementById('navMenu').classList.remove('active');
-            }
-        });
-    });
-}
+const nav = document.getElementById('nav');
+const navLinks = document.querySelectorAll('.nav-link');
+const navMenu = document.getElementById('navMenu');
 
-function updateActiveNavLink() {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
+// Scroll Effect
+window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 50) {
+        nav.classList.add('scrolled');
+    } else {
+        nav.classList.remove('scrolled');
+    }
     
-    let currentSection = '';
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop - 100;
-        const sectionHeight = section.offsetHeight;
-        
-        if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
-            currentSection = section.getAttribute('id');
-        }
-    });
-    
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === '#' + currentSection) {
-            link.classList.add('active');
-        }
-    });
-}
+    updateActiveNav();
+    updateBackTop();
+});
 
-// Mobile navigation toggle
+// Toggle Mobile Navigation
 function toggleNav() {
-    const navMenu = document.getElementById('navMenu');
     navMenu.classList.toggle('active');
 }
 
-// Scroll to top
-function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+// Close nav on link click (mobile)
+navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+    });
+});
 
-// ===== LANGUAGE =====
-function initLanguage() {
-    const savedLang = localStorage.getItem('language') || 'ar';
-    setLanguage(savedLang);
-}
-
-function toggleLanguage() {
-    const currentLang = document.documentElement.lang;
-    const newLang = currentLang === 'ar' ? 'en' : 'ar';
-    setLanguage(newLang);
-    localStorage.setItem('language', newLang);
-}
-
-function setLanguage(lang) {
-    document.documentElement.lang = lang;
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-    document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
+// Update Active Navigation
+function updateActiveNav() {
+    const sections = document.querySelectorAll('section[id]');
+    const scrollY = window.pageYOffset;
     
-    // Update toggle button
-    const langBtn = document.getElementById('langToggle');
-    if (langBtn) {
-        langBtn.textContent = lang === 'ar' ? 'EN' : 'عربي';
-    }
-    
-    // Update all text elements
-    document.querySelectorAll('[data-ar][data-en]').forEach(el => {
-        const text = el.getAttribute(lang === 'ar' ? 'data-ar' : 'data-en');
-        if (text) {
-            el.textContent = text;
+    sections.forEach(section => {
+        const sectionHeight = section.offsetHeight;
+        const sectionTop = section.offsetTop - 150;
+        const sectionId = section.getAttribute('id');
+        
+        if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelector(`.nav-link[href="#${sectionId}"]`)?.classList.add('active');
         }
     });
 }
 
-// ===== SCROLL EFFECTS =====
-function initScrollEffects() {
-    // Reveal on scroll
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-    };
+// ===== LANGUAGE TOGGLE =====
+function toggleLanguage() {
+    const html = document.documentElement;
+    const currentLang = html.getAttribute('lang');
+    const newLang = currentLang === 'ar' ? 'en' : 'ar';
+    const newDir = newLang === 'ar' ? 'rtl' : 'ltr';
+    
+    html.setAttribute('lang', newLang);
+    html.setAttribute('dir', newDir);
+    
+    localStorage.setItem('lang', newLang);
+    localStorage.setItem('dir', newDir);
+    
+    // Update all bilingual elements
+    document.querySelectorAll('[data-ar], [data-en]').forEach(el => {
+        const arText = el.dataset.ar;
+        const enText = el.dataset.en;
+        
+        if (newLang === 'ar' && arText) {
+            el.innerHTML = arText;
+        } else if (newLang === 'en' && enText) {
+            el.innerHTML = enText;
+        }
+    });
+    
+    // Update button text
+    document.getElementById('langBtn').textContent = newLang === 'ar' ? 'EN' : 'AR';
+    
+    // Update CTA arrow direction
+    document.querySelectorAll('.btn i.fa-arrow-left, .btn i.fa-arrow-right').forEach(icon => {
+        if (newLang === 'en') {
+            icon.classList.remove('fa-arrow-left');
+            icon.classList.add('fa-arrow-right');
+        } else {
+            icon.classList.remove('fa-arrow-right');
+            icon.classList.add('fa-arrow-left');
+        }
+    });
+}
+
+// Load saved language preference
+window.addEventListener('DOMContentLoaded', () => {
+    const savedLang = localStorage.getItem('lang');
+    if (savedLang && savedLang !== document.documentElement.getAttribute('lang')) {
+        toggleLanguage();
+    }
+});
+
+// ===== SMOOTH SCROLLING =====
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// ===== BACK TO TOP BUTTON =====
+const backTop = document.getElementById('backTop');
+
+function updateBackTop() {
+    if (window.pageYOffset > 500) {
+        backTop.classList.add('visible');
+    } else {
+        backTop.classList.remove('visible');
+    }
+}
+
+backTop.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
+// ===== COUNTER ANIMATIONS =====
+function animateCounter(element, target, suffix = '') {
+    const duration = 2000;
+    const startTime = performance.now();
+    
+    function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Ease out cubic
+        const easeProgress = 1 - Math.pow(1 - progress, 3);
+        const current = Math.floor(easeProgress * target);
+        
+        element.textContent = current + suffix;
+        
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        } else {
+            element.textContent = target + suffix;
+        }
+    }
+    
+    requestAnimationFrame(update);
+}
+
+function startCounterAnimations() {
+    const counters = document.querySelectorAll('[data-count]');
     
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('revealed');
-            }
-        });
-    }, observerOptions);
-    
-    // Observe cards and elements
-    document.querySelectorAll('.service-card, .partner-card, .about-card, .value-card, .feature-item').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'all 0.6s ease';
-        observer.observe(el);
-    });
-    
-    // Add revealed class styles
-    const style = document.createElement('style');
-    style.textContent = `
-        .revealed {
-            opacity: 1 !important;
-            transform: translateY(0) !important;
-        }
-    `;
-    document.head.appendChild(style);
-}
-
-// ===== COUNTERS =====
-function initCounters() {
-    const counters = document.querySelectorAll('[data-count]');
-    
-    const counterObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateCounter(entry.target);
-                counterObserver.unobserve(entry.target);
+                const element = entry.target;
+                const target = parseInt(element.dataset.count);
+                const suffix = element.dataset.suffix || '';
+                
+                animateCounter(element, target, suffix);
+                observer.unobserve(element);
             }
         });
     }, { threshold: 0.5 });
     
-    counters.forEach(counter => counterObserver.observe(counter));
+    counters.forEach(counter => observer.observe(counter));
 }
 
-function animateCounter(element) {
-    const target = parseInt(element.getAttribute('data-count'));
-    const duration = 2000;
-    const step = target / (duration / 16);
-    let current = 0;
+// ===== CONTACT FORM =====
+const contactForm = document.getElementById('contactForm');
+
+if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(contactForm);
+        const data = Object.fromEntries(formData);
+        
+        // Show success modal
+        showSuccessModal();
+        
+        // Reset form
+        contactForm.reset();
+        
+        console.log('Form submitted:', data);
+    });
+}
+
+// ===== SUCCESS MODAL =====
+function showSuccessModal() {
+    // Remove existing modal
+    const existingModal = document.querySelector('.success-modal-overlay');
+    if (existingModal) existingModal.remove();
     
-    const timer = setInterval(() => {
-        current += step;
-        if (current >= target) {
-            clearInterval(timer);
-            current = target;
+    const isArabic = document.documentElement.lang === 'ar';
+    
+    const modalHTML = `
+        <div class="success-modal-overlay">
+            <div class="success-modal">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>${isArabic ? 'شكراً لك!' : 'Thank You!'}</h3>
+                <p>${isArabic ? 'تم إرسال رسالتك بنجاح' : 'Your message has been sent successfully'}</p>
+                <p class="success-subtitle">${isArabic ? 'سيتم التواصل معك في أقرب وقت ممكن' : 'We will contact you as soon as possible'}</p>
+                <button class="success-btn" onclick="closeSuccessModal()">${isArabic ? 'حسناً' : 'OK'}</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // Add modal styles
+    const style = document.createElement('style');
+    style.id = 'modal-styles';
+    style.textContent = `
+        .success-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            animation: fadeIn 0.3s ease;
         }
-        element.textContent = formatNumber(Math.floor(current)) + '+';
-    }, 16);
-}
-
-function formatNumber(num) {
-    return num.toLocaleString('en-US');
-}
-
-// ===== FORM HANDLER =====
-function initFormHandler() {
-    const form = document.getElementById('contactForm');
+        
+        .success-modal {
+            background: linear-gradient(135deg, #1E2A4A 0%, #0F1628 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            padding: 48px;
+            text-align: center;
+            max-width: 400px;
+            margin: 20px;
+            animation: scaleIn 0.3s ease;
+        }
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #00D9A5 0%, #00FFB8 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+        
+        .success-icon i {
+            font-size: 2.5rem;
+            color: white;
+        }
+        
+        .success-modal h3 {
+            font-size: 1.75rem;
+            color: white;
+            margin-bottom: 12px;
+        }
+        
+        .success-modal p {
+            color: #94A3B8;
+            margin-bottom: 8px;
+        }
+        
+        .success-subtitle {
+            font-size: 0.9rem;
+            margin-bottom: 24px !important;
+        }
+        
+        .success-btn {
+            background: linear-gradient(135deg, #F7941D 0%, #FFB347 100%);
+            color: white;
+            border: none;
+            padding: 14px 48px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .success-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(247, 148, 29, 0.3);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+    `;
     
-    if (form) {
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const formData = new FormData(form);
-            const submitBtn = form.querySelector('.submit-btn');
-            const originalText = submitBtn.innerHTML;
-            
-            // Show loading
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>جاري الإرسال...</span>';
-            submitBtn.disabled = true;
-            
-            // Simulate sending
-            await new Promise(resolve => setTimeout(resolve, 1500));
-            
-            // Show success
-            showNotification('تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.', 'success');
-            
-            // Reset
-            form.reset();
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-        });
+    if (!document.getElementById('modal-styles')) {
+        document.head.appendChild(style);
     }
 }
 
-// Notification
-function showNotification(message, type = 'info') {
-    // Remove existing
-    const existing = document.querySelector('.notification');
-    if (existing) existing.remove();
-    
-    const notification = document.createElement('div');
-    notification.className = 'notification';
-    notification.innerHTML = `
-        <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
-        <span>${message}</span>
-    `;
-    
-    notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: ${type === 'success' ? '#10B981' : '#3B82F6'};
-        color: white;
-        padding: 16px 28px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        font-weight: 500;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-        z-index: 9999;
-        animation: slideDown 0.4s ease;
-    `;
-    
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-    `;
-    document.head.appendChild(style);
-    
-    document.body.appendChild(notification);
-    
-    setTimeout(() => {
-        notification.style.animation = 'slideDown 0.4s ease reverse';
-        setTimeout(() => notification.remove(), 400);
-    }, 4000);
+function closeSuccessModal() {
+    const modal = document.querySelector('.success-modal-overlay');
+    if (modal) {
+        modal.style.animation = 'fadeIn 0.3s ease reverse';
+        setTimeout(() => modal.remove(), 300);
+    }
 }
 
-// Global functions for onclick handlers
-window.toggleLanguage = toggleLanguage;
-window.toggleNav = toggleNav;
-window.scrollToTop = scrollToTop;
+// ===== REVEAL ANIMATIONS =====
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, observerOptions);
+
+// Observe elements
+document.addEventListener('DOMContentLoaded', () => {
+    const elementsToAnimate = document.querySelectorAll('.service-card, .partner-card, .about-card, .feature-item, .stat-item');
+    
+    elementsToAnimate.forEach((el, index) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = `all 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`;
+        revealObserver.observe(el);
+    });
+});
+
+// ===== MARQUEE HOVER PAUSE =====
+const marquee = document.querySelector('.marquee-content');
+if (marquee) {
+    marquee.addEventListener('mouseenter', () => {
+        marquee.style.animationPlayState = 'paused';
+    });
+    marquee.addEventListener('mouseleave', () => {
+        marquee.style.animationPlayState = 'running';
+    });
+}
+
+// ===== CONSOLE MESSAGE =====
+console.log('%c🚀 OneTrip Express', 'font-size: 24px; font-weight: bold; color: #F7941D;');
+console.log('%cشريكك اللوجستي الموثوق', 'font-size: 14px; color: #00D9A5;');
+console.log('%cDeveloped with ❤️ for excellence', 'font-size: 12px; color: #64748B;');
