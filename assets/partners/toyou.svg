@@ -1,5 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 40" fill="none">
-  <circle cx="20" cy="20" r="11" fill="#FF9800"/>
-  <path d="M 20 13 L 20 20 L 25 23" stroke="white" stroke-width="2" stroke-linecap="round"/>
-  <text x="38" y="26" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#FF9800">ToYou</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" fill="none">
+  <rect width="200" height="100" rx="12" fill="#0A2240"/>
+  <!-- Arrow icon -->
+  <polygon points="30,50 55,30 55,42 80,42 80,58 55,58 55,70" fill="#00BFA5"/>
+  <polygon points="40,50 55,38 55,46 70,46 70,54 55,54 55,62" fill="#7FDBCA"/>
+  <!-- Text -->
+  <text x="95" y="45" font-family="Arial, sans-serif" font-size="22" fill="#7FDBCA" font-weight="300">TO_</text>
+  <text x="95" y="75" font-family="Arial, sans-serif" font-size="28" fill="#00BFA5" font-weight="700">YOU</text>
 </svg>

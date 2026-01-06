@@ -1,5 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40" fill="none">
-  <path d="M 15 20 Q 20 8 25 20 Q 30 8 35 20" stroke="#D32F2F" stroke-width="3" fill="none"/>
-  <rect x="18" y="20" width="14" height="8" rx="2" fill="#D32F2F"/>
-  <text x="42" y="26" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#D32F2F">The Chefs</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" fill="none">
+  <!-- Top orange half -->
+  <rect y="0" width="200" height="50" fill="#F7941D"/>
+  <!-- Bottom purple half -->
+  <rect y="50" width="200" height="50" rx="0 0 12 12" fill="#4B2D7F"/>
+  <!-- Round corners -->
+  <rect width="200" height="100" rx="12" fill="none" stroke="none"/>
+  <clipPath id="roundCorners">
+    <rect width="200" height="100" rx="12"/>
+  </clipPath>
+  <g clip-path="url(#roundCorners)">
+    <rect y="0" width="200" height="50" fill="#F7941D"/>
+    <rect y="50" width="200" height="50" fill="#4B2D7F"/>
+  </g>
+  <text x="100" y="42" font-family="Arial Black, sans-serif" font-size="24" font-weight="900" fill="white" text-anchor="middle" font-style="italic">THE</text>
+  <text x="100" y="78" font-family="Arial Black, sans-serif" font-size="32" font-weight="900" fill="#F7941D" text-anchor="middle" font-style="italic">CHEFZ</text>
 </svg>

@@ -6,15 +6,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
-    /* Brand Colors */
+    /* Brand Colors - Based on Logo */
     --primary: #F7941D;
     --primary-light: #FFB347;
     --primary-dark: #E07D0A;
     --primary-glow: rgba(247, 148, 29, 0.3);
     
-    --secondary: #1E2A4A;
-    --secondary-light: #2D3E66;
-    --secondary-dark: #0F1628;
+    --secondary: #4B3FD4;
+    --secondary-light: #6B5FE4;
+    --secondary-dark: #3B2FC4;
+    --secondary-glow: rgba(75, 63, 212, 0.3);
+    
+    --dark: #0A1628;
+    --dark-light: #152238;
     
     --accent: #00D9A5;
     --accent-light: #00FFB8;
@@ -35,8 +39,9 @@
     
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, #F7941D 0%, #FFB347 100%);
-    --gradient-dark: linear-gradient(135deg, #1E2A4A 0%, #0F1628 100%);
-    --gradient-hero: linear-gradient(180deg, #0F1628 0%, #1E2A4A 50%, #0F1628 100%);
+    --gradient-secondary: linear-gradient(135deg, #4B3FD4 0%, #6B5FE4 100%);
+    --gradient-dark: linear-gradient(135deg, #0A1628 0%, #152238 100%);
+    --gradient-hero: linear-gradient(180deg, #0A1628 0%, #152238 50%, #0A1628 100%);
     --gradient-card: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
     
     /* Shadows */
@@ -722,16 +727,15 @@ body {
 }
 
 .partner-logo {
-    height: 40px;
-    opacity: 0.5;
-    filter: grayscale(100%) brightness(2);
+    height: 50px;
+    width: auto;
+    border-radius: var(--radius-md);
     transition: var(--transition);
     flex-shrink: 0;
 }
 
 .partner-logo:hover {
-    opacity: 1;
-    filter: grayscale(0%) brightness(1);
+    transform: scale(1.1);
 }
 
 /* ===== FEATURES BAR ===== */
@@ -1047,8 +1051,8 @@ body {
 
 .partners-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
 }
 
 .partner-card {
@@ -1070,16 +1074,15 @@ body {
 }
 
 .partner-card img {
-    height: 50px;
-    object-fit: contain;
-    filter: grayscale(100%) brightness(2);
-    opacity: 0.6;
+    width: 100%;
+    max-width: 140px;
+    height: auto;
+    border-radius: var(--radius-md);
     transition: var(--transition);
 }
 
 .partner-card:hover img {
-    filter: grayscale(0%) brightness(1);
-    opacity: 1;
+    transform: scale(1.05);
 }
 
 .partner-card h4 {

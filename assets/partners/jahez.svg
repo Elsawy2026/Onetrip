@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40" fill="none">
-  <text x="10" y="28" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#FF6B00">جاهز</text>
-  <text x="65" y="28" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#333">JAHEZ</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" fill="none">
+  <rect width="200" height="100" rx="12" fill="#E31E24"/>
+  <text x="100" y="62" font-family="Arial Rounded MT Bold, Arial, sans-serif" font-size="38" font-weight="bold" fill="white" text-anchor="middle">Jahez</text>
 </svg>

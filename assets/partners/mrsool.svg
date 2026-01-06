@@ -1,5 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 40" fill="none">
-  <rect x="8" y="8" width="24" height="24" rx="12" fill="#7C4DFF"/>
-  <path d="M 20 14 L 20 20 L 26 20" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-  <text x="38" y="26" font-family="Arial, sans-serif" font-size="19" font-weight="bold" fill="#7C4DFF">Mrsool</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" fill="none">
+  <defs>
+    <linearGradient id="mrsoolGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#B8E986"/>
+      <stop offset="100%" style="stop-color:#00BFA5"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="100" rx="12" fill="url(#mrsoolGrad)"/>
+  <!-- M Icon -->
+  <path d="M 30 35 L 30 65 M 30 35 L 45 55 L 60 35 M 60 35 L 60 65" 
+        fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="45" cy="30" r="5" fill="white"/>
+  <!-- Text -->
+  <text x="85" y="45" font-family="Arial, sans-serif" font-size="14" fill="white" font-weight="600">مرسsatisfiedول</text>
+  <text x="85" y="70" font-family="Arial, sans-serif" font-size="20" fill="white" font-weight="700">MRSOOL</text>
 </svg>
