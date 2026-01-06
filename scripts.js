@@ -415,17 +415,82 @@ const revealObserver = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Observe elements
+// Observe elements with BOOM effect
 document.addEventListener('DOMContentLoaded', () => {
-    const elementsToAnimate = document.querySelectorAll('.service-card, .partner-card, .about-card, .feature-item, .stat-item');
+    const elementsToAnimate = document.querySelectorAll('.service-card, .partner-card, .about-card, .feature-item, .stat-item, .value-card, .benefit-item, .contact-item');
     
     elementsToAnimate.forEach((el, index) => {
         el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = `all 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`;
+        el.style.transform = 'translateY(50px) scale(0.9)';
+        el.style.transition = `all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) ${index * 0.1}s`;
         revealObserver.observe(el);
     });
+    
+    // Add magnetic effect to icons
+    addMagneticEffect();
+    
+    // Add parallax to hero
+    addParallaxEffect();
+    
+    // Add ripple effect to buttons
+    addRippleEffect();
 });
+
+// Magnetic effect for icons
+function addMagneticEffect() {
+    const magneticElements = document.querySelectorAll('.about-card-icon, .value-icon, .contact-icon, .benefit-icon');
+    
+    magneticElements.forEach(el => {
+        el.addEventListener('mousemove', (e) => {
+            const rect = el.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px) scale(1.1)`;
+        });
+        
+        el.addEventListener('mouseleave', () => {
+            el.style.transform = 'translate(0, 0) scale(1)';
+        });
+    });
+}
+
+// Parallax effect for hero
+function addParallaxEffect() {
+    const hero = document.querySelector('.hero');
+    const heroIllustration = document.querySelector('.hero-main-illustration');
+    
+    if (hero && heroIllustration) {
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            if (scrolled < window.innerHeight) {
+                heroIllustration.style.transform = `translateY(${scrolled * 0.15}px)`;
+            }
+        });
+    }
+}
+
+// Ripple effect for buttons
+function addRippleEffect() {
+    const buttons = document.querySelectorAll('.btn-primary, .submit-btn');
+    
+    buttons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple-effect';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            
+            btn.appendChild(ripple);
+            
+            setTimeout(() => ripple.remove(), 600);
+        });
+    });
+}
 
 // ===== MARQUEE ANIMATION - GUARANTEED TO WORK =====
 (function() {
