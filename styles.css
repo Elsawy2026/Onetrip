@@ -1120,8 +1120,8 @@ body {
 .form-group textarea {
     width: 100%;
     padding: 14px 18px;
-    background: rgba(247, 148, 29, 0.08);
-    border: 1px solid rgba(247, 148, 29, 0.2);
+    background: rgba(75, 63, 212, 0.06);
+    border: 1px solid rgba(75, 63, 212, 0.2);
     border-radius: var(--radius-md);
     font-family: inherit;
     font-size: 1rem;
@@ -1131,15 +1131,15 @@ body {
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-    color: rgba(30, 41, 59, 0.5);
+    color: rgba(75, 63, 212, 0.5);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--primary);
-    background: rgba(247, 148, 29, 0.12);
-    box-shadow: 0 0 0 3px rgba(247, 148, 29, 0.1);
+    border-color: #4B3FD4;
+    background: rgba(75, 63, 212, 0.1);
+    box-shadow: 0 0 0 3px rgba(75, 63, 212, 0.15);
 }
 
 .form-group textarea {
