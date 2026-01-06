@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <defs>
+    <linearGradient id="bgGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0A1628"/>
+      <stop offset="100%" style="stop-color:#1a2744"/>
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#F7941D"/>
+      <stop offset="100%" style="stop-color:#FFB347"/>
+    </linearGradient>
+    <linearGradient id="roadGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#2a3a5c"/>
+      <stop offset="100%" style="stop-color:#1a2744"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="300" rx="20" fill="url(#bgGrad1)"/>
+  
+  <!-- Stars -->
+  <circle cx="50" cy="40" r="2" fill="#FFB347" opacity="0.8"/>
+  <circle cx="120" cy="60" r="1.5" fill="#FFB347" opacity="0.6"/>
+  <circle cx="350" cy="50" r="2" fill="#FFB347" opacity="0.7"/>
+  <circle cx="300" cy="80" r="1" fill="#FFB347" opacity="0.5"/>
+  <circle cx="80" cy="100" r="1.5" fill="#FFB347" opacity="0.6"/>
+  
+  <!-- Speed Lines -->
+  <rect x="30" y="150" width="60" height="4" rx="2" fill="url(#orangeGrad)" opacity="0.8"/>
+  <rect x="50" y="165" width="80" height="3" rx="1.5" fill="url(#orangeGrad)" opacity="0.6"/>
+  <rect x="40" y="178" width="50" height="3" rx="1.5" fill="url(#orangeGrad)" opacity="0.4"/>
+  <rect x="60" y="190" width="70" height="2" rx="1" fill="url(#orangeGrad)" opacity="0.3"/>
+  
+  <!-- Road -->
+  <path d="M 0 250 Q 200 220 400 250 L 400 300 L 0 300 Z" fill="url(#roadGrad)"/>
+  <rect x="80" y="258" width="40" height="6" rx="3" fill="#F7941D" opacity="0.8"/>
+  <rect x="160" y="255" width="40" height="6" rx="3" fill="#F7941D" opacity="0.6"/>
+  <rect x="240" y="252" width="40" height="6" rx="3" fill="#F7941D" opacity="0.5"/>
+  <rect x="320" y="250" width="40" height="6" rx="3" fill="#F7941D" opacity="0.4"/>
+  
+  <!-- Truck Body -->
+  <rect x="150" y="160" width="140" height="70" rx="8" fill="url(#orangeGrad)"/>
+  <rect x="290" y="180" width="60" height="50" rx="6" fill="#1a2744"/>
+  <rect x="295" y="185" width="50" height="35" rx="4" fill="#4B3FD4" opacity="0.6"/>
+  
+  <!-- Truck Details -->
+  <rect x="160" y="175" width="50" height="8" rx="4" fill="white" opacity="0.3"/>
+  <rect x="160" y="190" width="70" height="6" rx="3" fill="white" opacity="0.2"/>
+  <rect x="160" y="202" width="40" height="6" rx="3" fill="white" opacity="0.2"/>
+  
+  <!-- Wheels -->
+  <circle cx="190" cy="235" r="20" fill="#1a2744"/>
+  <circle cx="190" cy="235" r="12" fill="#2a3a5c"/>
+  <circle cx="190" cy="235" r="5" fill="#F7941D"/>
+  
+  <circle cx="310" cy="235" r="20" fill="#1a2744"/>
+  <circle cx="310" cy="235" r="12" fill="#2a3a5c"/>
+  <circle cx="310" cy="235" r="5" fill="#F7941D"/>
+  
+  <!-- Motion blur effect -->
+  <ellipse cx="120" cy="200" rx="30" ry="15" fill="#F7941D" opacity="0.1"/>
+  <ellipse cx="100" cy="200" rx="20" ry="10" fill="#F7941D" opacity="0.15"/>
+  
+  <!-- Clock Icon -->
+  <circle cx="340" cy="80" r="30" fill="#F7941D" opacity="0.2"/>
+  <circle cx="340" cy="80" r="22" fill="url(#orangeGrad)"/>
+  <circle cx="340" cy="80" r="18" fill="#0A1628"/>
+  <line x1="340" y1="80" x2="340" y2="68" stroke="#F7941D" stroke-width="3" stroke-linecap="round"/>
+  <line x1="340" y1="80" x2="350" y2="85" stroke="#F7941D" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="340" cy="80" r="3" fill="#F7941D"/>
+</svg>
+

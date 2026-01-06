@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0A1628"/>
+      <stop offset="100%" style="stop-color:#1a2744"/>
+    </linearGradient>
+    <linearGradient id="orange2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F7941D"/>
+      <stop offset="100%" style="stop-color:#FFB347"/>
+    </linearGradient>
+    <linearGradient id="purple2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4B3FD4"/>
+      <stop offset="100%" style="stop-color:#6B5FE4"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="300" rx="20" fill="url(#bg2)"/>
+  
+  <!-- Grid Pattern -->
+  <line x1="0" y1="100" x2="400" y2="100" stroke="#2a3a5c" stroke-width="0.5" opacity="0.3"/>
+  <line x1="0" y1="150" x2="400" y2="150" stroke="#2a3a5c" stroke-width="0.5" opacity="0.3"/>
+  <line x1="0" y1="200" x2="400" y2="200" stroke="#2a3a5c" stroke-width="0.5" opacity="0.3"/>
+  <line x1="100" y1="0" x2="100" y2="300" stroke="#2a3a5c" stroke-width="0.5" opacity="0.3"/>
+  <line x1="200" y1="0" x2="200" y2="300" stroke="#2a3a5c" stroke-width="0.5" opacity="0.3"/>
+  <line x1="300" y1="0" x2="300" y2="300" stroke="#2a3a5c" stroke-width="0.5" opacity="0.3"/>
+  
+  <!-- Restaurant Icon -->
+  <rect x="40" y="60" width="80" height="90" rx="10" fill="url(#orange2)" opacity="0.9"/>
+  <rect x="50" y="70" width="25" height="30" rx="5" fill="white" opacity="0.3"/>
+  <rect x="85" y="70" width="25" height="30" rx="5" fill="white" opacity="0.3"/>
+  <rect x="55" y="110" width="50" height="8" rx="4" fill="white" opacity="0.4"/>
+  <rect x="60" y="125" width="40" height="6" rx="3" fill="white" opacity="0.3"/>
+  <!-- Fork & Knife -->
+  <line x1="65" y1="75" x2="65" y2="95" stroke="white" stroke-width="3" stroke-linecap="round"/>
+  <path d="M 95 75 Q 100 85 95 95" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/>
+  
+  <!-- Store Icon -->
+  <rect x="160" y="40" width="80" height="100" rx="10" fill="url(#purple2)" opacity="0.9"/>
+  <path d="M 160 70 L 200 50 L 240 70" stroke="white" stroke-width="4" fill="none"/>
+  <rect x="175" y="80" width="20" height="25" rx="3" fill="white" opacity="0.3"/>
+  <rect x="205" y="80" width="20" height="25" rx="3" fill="white" opacity="0.3"/>
+  <rect x="185" y="115" width="30" height="20" rx="3" fill="white" opacity="0.4"/>
+  
+  <!-- Digital Platform Icon -->
+  <rect x="280" y="50" width="90" height="70" rx="8" fill="#2a3a5c"/>
+  <rect x="285" y="55" width="80" height="50" rx="5" fill="url(#orange2)" opacity="0.8"/>
+  <rect x="295" y="65" width="30" height="6" rx="3" fill="white" opacity="0.5"/>
+  <rect x="295" y="78" width="50" height="4" rx="2" fill="white" opacity="0.3"/>
+  <rect x="295" y="88" width="40" height="4" rx="2" fill="white" opacity="0.3"/>
+  <rect x="310" y="110" width="40" height="8" rx="4" fill="#1a2744"/>
+  
+  <!-- Connection Lines -->
+  <path d="M 120 105 Q 140 130 160 100" stroke="#F7941D" stroke-width="2" stroke-dasharray="5,5" fill="none"/>
+  <path d="M 240 90 Q 260 110 280 85" stroke="#F7941D" stroke-width="2" stroke-dasharray="5,5" fill="none"/>
+  
+  <!-- Central Hub -->
+  <circle cx="200" cy="200" r="50" fill="url(#orange2)" opacity="0.2"/>
+  <circle cx="200" cy="200" r="35" fill="url(#orange2)"/>
+  <circle cx="200" cy="200" r="25" fill="#0A1628"/>
+  <!-- Hub Icon -->
+  <circle cx="200" cy="200" r="8" fill="#F7941D"/>
+  <line x1="200" y1="180" x2="200" y2="175" stroke="#F7941D" stroke-width="3" stroke-linecap="round"/>
+  <line x1="200" y1="220" x2="200" y2="225" stroke="#F7941D" stroke-width="3" stroke-linecap="round"/>
+  <line x1="180" y1="200" x2="175" y2="200" stroke="#F7941D" stroke-width="3" stroke-linecap="round"/>
+  <line x1="220" y1="200" x2="225" y2="200" stroke="#F7941D" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Delivery Points -->
+  <circle cx="80" cy="220" r="15" fill="url(#purple2)"/>
+  <circle cx="320" cy="230" r="15" fill="url(#purple2)"/>
+  <circle cx="200" cy="270" r="15" fill="url(#purple2)"/>
+  
+  <!-- Connection to hub -->
+  <line x1="165" y1="200" x2="95" y2="220" stroke="#4B3FD4" stroke-width="2" opacity="0.6"/>
+  <line x1="235" y1="200" x2="305" y2="230" stroke="#4B3FD4" stroke-width="2" opacity="0.6"/>
+  <line x1="200" y1="235" x2="200" y2="255" stroke="#4B3FD4" stroke-width="2" opacity="0.6"/>
+  
+  <!-- Location pins on delivery points -->
+  <path d="M 80 215 L 80 225 M 75 220 L 85 220" stroke="white" stroke-width="2"/>
+  <path d="M 320 225 L 320 235 M 315 230 L 325 230" stroke="white" stroke-width="2"/>
+  <path d="M 200 265 L 200 275 M 195 270 L 205 270" stroke="white" stroke-width="2"/>
+</svg>
+

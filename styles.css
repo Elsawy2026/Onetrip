@@ -931,80 +931,117 @@ body {
 
 /* ===== SERVICES SECTION ===== */
 .services {
-    background: var(--gray-800);
+    background: var(--secondary);
 }
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 28px;
+    margin-bottom: 28px;
 }
 
 .service-card {
-    background: var(--gray-900);
-    border: 1px solid rgba(255,255,255,0.05);
+    background: var(--white);
     border-radius: var(--radius-xl);
-    padding: 36px;
-    transition: var(--transition);
-    position: relative;
     overflow: hidden;
-}
-
-.service-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--gradient-primary);
-    transform: scaleX(0);
     transition: var(--transition);
-}
-
-.service-card:hover::before {
-    transform: scaleX(1);
+    box-shadow: var(--shadow-lg);
 }
 
 .service-card:hover {
     transform: translateY(-10px);
-    border-color: var(--primary);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.2);
 }
 
-.service-icon {
-    width: 72px;
-    height: 72px;
-    background: rgba(247, 148, 29, 0.1);
-    border: 2px solid rgba(247, 148, 29, 0.2);
-    border-radius: var(--radius-lg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--primary);
-    font-size: 2rem;
-    margin-bottom: 28px;
+.service-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.service-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     transition: var(--transition);
 }
 
-.service-card:hover .service-icon {
-    background: var(--gradient-primary);
-    color: var(--white);
-    border-color: transparent;
-    transform: scale(1.1) rotate(5deg);
+.service-card:hover .service-image img {
+    transform: scale(1.05);
 }
 
-.service-card h3 {
-    font-size: 1.25rem;
+.service-content {
+    padding: 28px;
+    background: var(--white);
+}
+
+.service-content h3 {
+    font-size: 1.15rem;
     font-weight: 700;
-    color: var(--white);
-    margin-bottom: 14px;
+    color: var(--secondary);
+    margin-bottom: 12px;
+    line-height: 1.4;
 }
 
-.service-card p {
+.service-content p {
     font-size: 0.95rem;
-    color: var(--gray-400);
+    color: var(--gray-600);
     line-height: 1.7;
+}
+
+/* Full Width Service Card */
+.service-card-full {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    transition: var(--transition);
+}
+
+.service-card-full:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+}
+
+.service-image-full {
+    height: 280px;
+    overflow: hidden;
+}
+
+.service-image-full img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.service-card-full:hover .service-image-full img {
+    transform: scale(1.05);
+}
+
+.service-content-full {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--white);
+}
+
+.service-content-full h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--secondary);
+    margin-bottom: 16px;
+    line-height: 1.4;
+}
+
+.service-content-full p {
+    font-size: 1.05rem;
+    color: var(--gray-600);
+    line-height: 1.8;
 }
 
 /* ===== STATS SECTION ===== */
@@ -1590,6 +1627,14 @@ body {
         grid-template-columns: repeat(2, 1fr);
     }
     
+    .service-card-full {
+        grid-template-columns: 1fr;
+    }
+    
+    .service-image-full {
+        height: 220px;
+    }
+    
     .partners-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -1658,6 +1703,18 @@ body {
     .features-grid,
     .values-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .service-card-full {
+        grid-template-columns: 1fr;
+    }
+    
+    .service-image-full {
+        height: 200px;
+    }
+    
+    .service-content-full {
+        padding: 28px;
     }
     
     .partners-grid {
