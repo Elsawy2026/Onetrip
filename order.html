@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اطلب خدمتك | One Trip Express</title>
+    <meta name="description" content="اطلب خدمة التوصيل من One Trip Express - توصيل سريع وآمن داخل المملكة">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=4.0">
+    <style>
+        .page-hero {
+            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+            padding: 140px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-hero-bg {
+            position: absolute;
+            inset: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(247,148,29,0.05)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .page-hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: white;
+        }
+        
+        .page-hero-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(247, 148, 29, 0.2);
+            border: 1px solid rgba(247, 148, 29, 0.3);
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            color: #F7941D;
+            margin-bottom: 24px;
+        }
+        
+        .page-hero-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+        
+        .page-hero-title .highlight {
+            color: #F7941D;
+        }
+        
+        .page-hero-desc {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .order-page-section {
+            padding: 80px 0;
+            background: #F8FAFC;
+        }
+        
+        .order-page-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            align-items: start;
+        }
+        
+        .order-benefits h2 {
+            font-size: 1.75rem;
+            margin-bottom: 30px;
+            color: #1E293B;
+        }
+        
+        .benefit-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .benefit-item {
+            display: flex;
+            align-items: start;
+            gap: 16px;
+            padding: 20px;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #E2E8F0;
+            transition: all 0.3s ease;
+        }
+        
+        .benefit-item:hover {
+            border-color: #F7941D;
+            transform: translateX(-5px);
+            box-shadow: 0 10px 30px rgba(247, 148, 29, 0.1);
+        }
+        
+        .benefit-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(145deg, #FFB347 0%, #F7941D 50%, #E07D0A 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+        
+        .benefit-content h4 {
+            font-size: 1rem;
+            color: #1E293B;
+            margin-bottom: 4px;
+        }
+        
+        .benefit-content p {
+            font-size: 0.9rem;
+            color: #64748B;
+        }
+        
+        .order-form-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.08);
+        }
+        
+        .order-form-card h3 {
+            font-size: 1.5rem;
+            color: #1E293B;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        .order-form-card .form-subtitle {
+            text-align: center;
+            color: #64748B;
+            margin-bottom: 30px;
+        }
+        
+        .form-row {
+            margin-bottom: 20px;
+        }
+        
+        .form-row.two-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #334155;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #F7941D;
+            box-shadow: 0 0 0 3px rgba(247, 148, 29, 0.1);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(145deg, #FFB347 0%, #F7941D 50%, #E07D0A 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(247, 148, 29, 0.4);
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 20px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        
+        .back-link:hover {
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .order-page-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row.two-cols {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-hero-title {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/logo.svg" alt="One Trip Express">
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
+                <a href="index.html#about" class="nav-link" data-ar="من نحن" data-en="About">من نحن</a>
+                <a href="index.html#services" class="nav-link" data-ar="ماذا نقدم" data-en="Services">ماذا نقدم</a>
+                <a href="index.html#partners" class="nav-link" data-ar="شركاؤنا" data-en="Partners">شركاؤنا</a>
+                <a href="careers.html" class="nav-link" data-ar="الوظائف" data-en="Careers">الوظائف</a>
+                <a href="index.html#contact" class="nav-link" data-ar="تواصل معنا" data-en="Contact">تواصل معنا</a>
+            </div>
+            <div class="nav-actions">
+                <button class="lang-btn" id="langBtn" onclick="toggleLanguage()">English</button>
+                <button class="nav-toggle" onclick="toggleNav()">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="page-hero-bg"></div>
+        <div class="container">
+            <div class="page-hero-content" data-aos="fade-up">
+                <a href="index.html" class="back-link">
+                    <i class="fas fa-arrow-right"></i>
+                    <span data-ar="العودة للرئيسية" data-en="Back to Home">العودة للرئيسية</span>
+                </a>
+                <span class="page-hero-badge" data-ar="اطلب خدمتك" data-en="Request Service">اطلب خدمتك</span>
+                <h1 class="page-hero-title" data-ar="اطلب <span class='highlight'>خدمتك الآن</span>" data-en="Request Your <span class='highlight'>Service Now</span>">اطلب <span class="highlight">خدمتك الآن</span></h1>
+                <p class="page-hero-desc" data-ar="املأ النموذج أدناه وسيتواصل معك فريقنا خلال دقائق" data-en="Fill out the form below and our team will contact you within minutes">
+                    املأ النموذج أدناه وسيتواصل معك فريقنا خلال دقائق
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Form Section -->
+    <section class="order-page-section">
+        <div class="container">
+            <div class="order-page-grid">
+                <div class="order-benefits" data-aos="fade-right">
+                    <h2 data-ar="لماذا تختارنا؟" data-en="Why Choose Us?">لماذا تختارنا؟</h2>
+                    
+                    <div class="benefit-list">
+                        <div class="benefit-item">
+                            <div class="benefit-icon"><i class="fas fa-rocket"></i></div>
+                            <div class="benefit-content">
+                                <h4 data-ar="توصيل سريع" data-en="Fast Delivery">توصيل سريع</h4>
+                                <p data-ar="توصيل خلال ساعات داخل المدن" data-en="Delivery within hours inside cities">توصيل خلال ساعات داخل المدن</p>
+                            </div>
+                        </div>
+                        
+                        <div class="benefit-item">
+                            <div class="benefit-icon"><i class="fas fa-shield-halved"></i></div>
+                            <div class="benefit-content">
+                                <h4 data-ar="شحن آمن" data-en="Safe Shipping">شحن آمن</h4>
+                                <p data-ar="شحناتك مؤمنة ضد أي ضرر" data-en="Your shipments are insured against damage">شحناتك مؤمنة ضد أي ضرر</p>
+                            </div>
+                        </div>
+                        
+                        <div class="benefit-item">
+                            <div class="benefit-icon"><i class="fas fa-location-dot"></i></div>
+                            <div class="benefit-content">
+                                <h4 data-ar="تتبع لحظي" data-en="Live Tracking">تتبع لحظي</h4>
+                                <p data-ar="تابع شحنتك لحظة بلحظة" data-en="Track your shipment in real-time">تابع شحنتك لحظة بلحظة</p>
+                            </div>
+                        </div>
+                        
+                        <div class="benefit-item">
+                            <div class="benefit-icon"><i class="fas fa-headset"></i></div>
+                            <div class="benefit-content">
+                                <h4 data-ar="دعم 24/7" data-en="24/7 Support">دعم 24/7</h4>
+                                <p data-ar="فريق دعم متاح على مدار الساعة" data-en="Support team available around the clock">فريق دعم متاح على مدار الساعة</p>
+                            </div>
+                        </div>
+                        
+                        <div class="benefit-item">
+                            <div class="benefit-icon"><i class="fas fa-tags"></i></div>
+                            <div class="benefit-content">
+                                <h4 data-ar="أسعار تنافسية" data-en="Competitive Prices">أسعار تنافسية</h4>
+                                <p data-ar="أفضل الأسعار في السوق" data-en="Best prices in the market">أفضل الأسعار في السوق</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="order-form-card" data-aos="fade-left">
+                    <h3 data-ar="نموذج طلب الخدمة" data-en="Service Request Form">نموذج طلب الخدمة</h3>
+                    <p class="form-subtitle" data-ar="جميع الحقول مطلوبة *" data-en="All fields are required *">جميع الحقول مطلوبة *</p>
+                    
+                    <form id="orderForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label data-ar="نوع الخدمة" data-en="Service Type">نوع الخدمة</label>
+                                <select name="serviceType" required>
+                                    <option value="" data-ar="اختر الخدمة" data-en="Select Service">اختر الخدمة</option>
+                                    <option value="fast" data-ar="توصيل سريع (داخل المدينة)" data-en="Fast Delivery (Same City)">توصيل سريع (داخل المدينة)</option>
+                                    <option value="shipping" data-ar="شحن داخلي (بين المدن)" data-en="Internal Shipping (Between Cities)">شحن داخلي (بين المدن)</option>
+                                    <option value="business" data-ar="خدمات شركات" data-en="Business Solutions">خدمات شركات</option>
+                                    <option value="fleet" data-ar="إدارة أساطيل" data-en="Fleet Management">إدارة أساطيل</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row two-cols">
+                            <div class="form-group">
+                                <label data-ar="نقطة الاستلام" data-en="Pickup Location">نقطة الاستلام</label>
+                                <input type="text" name="pickup" required placeholder="المدينة / الحي / العنوان">
+                            </div>
+                            <div class="form-group">
+                                <label data-ar="نقطة التسليم" data-en="Delivery Location">نقطة التسليم</label>
+                                <input type="text" name="delivery" required placeholder="المدينة / الحي / العنوان">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row two-cols">
+                            <div class="form-group">
+                                <label data-ar="حجم الشحنة" data-en="Shipment Size">حجم الشحنة</label>
+                                <select name="size">
+                                    <option value="small" data-ar="صغير (أقل من 5 كجم)" data-en="Small (under 5kg)">صغير (أقل من 5 كجم)</option>
+                                    <option value="medium" data-ar="متوسط (5-20 كجم)" data-en="Medium (5-20kg)">متوسط (5-20 كجم)</option>
+                                    <option value="large" data-ar="كبير (أكثر من 20 كجم)" data-en="Large (over 20kg)">كبير (أكثر من 20 كجم)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label data-ar="التاريخ المطلوب" data-en="Preferred Date">التاريخ المطلوب</label>
+                                <input type="date" name="date" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row two-cols">
+                            <div class="form-group">
+                                <label data-ar="الاسم الكامل" data-en="Full Name">الاسم الكامل</label>
+                                <input type="text" name="name" required placeholder="أدخل اسمك الكامل">
+                            </div>
+                            <div class="form-group">
+                                <label data-ar="رقم الجوال" data-en="Phone Number">رقم الجوال</label>
+                                <input type="tel" name="phone" required placeholder="05XXXXXXXX">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label data-ar="البريد الإلكتروني" data-en="Email">البريد الإلكتروني</label>
+                                <input type="email" name="email" placeholder="example@email.com">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label data-ar="ملاحظات إضافية" data-en="Additional Notes">ملاحظات إضافية</label>
+                                <textarea name="notes" rows="4" placeholder="أي تفاصيل إضافية عن الشحنة..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <span data-ar="إرسال الطلب" data-en="Submit Request">إرسال الطلب</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p data-ar="جميع الحقوق محفوظة لشركة" data-en="All rights reserved to">جميع الحقوق محفوظة لشركة <strong>One Trip Express</strong> – 2025</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true
+        });
+        
+        // Language Toggle
+        function toggleLanguage() {
+            const html = document.documentElement;
+            const isArabic = html.lang === 'ar';
+            
+            html.lang = isArabic ? 'en' : 'ar';
+            html.dir = isArabic ? 'ltr' : 'rtl';
+            document.getElementById('langBtn').textContent = isArabic ? 'العربية' : 'English';
+            
+            document.querySelectorAll('[data-ar][data-en]').forEach(el => {
+                el.textContent = isArabic ? el.dataset.en : el.dataset.ar;
+                if (el.placeholder) {
+                    el.placeholder = isArabic ? el.dataset.en : el.dataset.ar;
+                }
+            });
+            
+            document.querySelectorAll('[data-ar]').forEach(el => {
+                if (el.innerHTML.includes('<span')) {
+                    el.innerHTML = isArabic ? el.dataset.en : el.dataset.ar;
+                }
+            });
+        }
+        
+        // Nav Toggle
+        function toggleNav() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+        
+        // Form Submit
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const isArabic = document.documentElement.lang === 'ar';
+            alert(isArabic ? 'تم إرسال طلبك بنجاح! سيتم التواصل معك قريباً.' : 'Your request has been submitted! We will contact you soon.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
+
