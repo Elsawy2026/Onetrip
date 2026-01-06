@@ -424,8 +424,6 @@ body {
 .marquee-content {
     display: flex;
     gap: 0;
-    -webkit-animation: marquee 20s linear infinite;
-    animation: marquee 20s linear infinite;
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
     will-change: transform;
@@ -433,9 +431,9 @@ body {
     backface-visibility: hidden;
 }
 
-.marquee-content:hover {
-    -webkit-animation-play-state: running;
-    animation-play-state: running;
+.marquee-content.animated {
+    -webkit-animation: marquee 20s linear infinite;
+    animation: marquee 20s linear infinite;
 }
 
 @-webkit-keyframes marquee {

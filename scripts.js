@@ -357,36 +357,58 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// ===== MARQUEE ANIMATION FIX FOR MOBILE =====
-const marquee = document.querySelector('.marquee-content');
-if (marquee) {
-    // Check if mobile device
+// ===== MARQUEE ANIMATION - JAVASCRIPT FOR MOBILE =====
+(function() {
+    const marquee = document.querySelector('.marquee-content');
+    if (!marquee) return;
+    
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
     
+    // Use JavaScript animation for mobile, CSS for desktop
     if (isMobile) {
-        // Force animation on mobile
-        marquee.style.webkitAnimation = 'marquee 15s linear infinite';
-        marquee.style.animation = 'marquee 15s linear infinite';
-        marquee.style.webkitTransform = 'translateZ(0)';
-        marquee.style.transform = 'translateZ(0)';
+        let position = 0;
+        const speed = 1; // pixels per frame
+        let marqueeWidth = 0;
         
-        // Ensure animation is running
-        setTimeout(() => {
-            marquee.style.animationPlayState = 'running';
-            marquee.style.webkitAnimationPlayState = 'running';
-        }, 100);
-    }
-    
-    // Hover pause (desktop only)
-    if (!isMobile) {
+        // Calculate width after images load
+        function initMarquee() {
+            marqueeWidth = marquee.scrollWidth / 2;
+            
+            function animate() {
+                position -= speed;
+                
+                if (Math.abs(position) >= marqueeWidth) {
+                    position = 0;
+                }
+                
+                marquee.style.transform = `translate3d(${position}px, 0, 0)`;
+                marquee.style.webkitTransform = `translate3d(${position}px, 0, 0)`;
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+        }
+        
+        // Wait for images to load
+        if (document.readyState === 'loading') {
+            window.addEventListener('load', initMarquee);
+        } else {
+            setTimeout(initMarquee, 100);
+        }
+    } else {
+        // Use CSS animation for desktop
+        marquee.classList.add('animated');
+        
         marquee.addEventListener('mouseenter', () => {
             marquee.style.animationPlayState = 'paused';
         });
+        
         marquee.addEventListener('mouseleave', () => {
             marquee.style.animationPlayState = 'running';
         });
     }
-}
+})();
 
 // ===== CONSOLE MESSAGE =====
 console.log('%c🚀 OneTrip Express', 'font-size: 24px; font-weight: bold; color: #F7941D;');
