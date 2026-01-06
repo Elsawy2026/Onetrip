@@ -854,31 +854,33 @@ body {
     background: var(--gray-900);
 }
 
-.about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
+.about-highlight {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 60px;
+    padding: 40px;
+    background: rgba(247, 148, 29, 0.05);
+    border: 1px solid rgba(247, 148, 29, 0.2);
+    border-radius: var(--radius-2xl);
 }
 
-.about-content h3 {
+.about-highlight h3 {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--white);
-    margin-bottom: 20px;
+    color: var(--primary);
+    margin-bottom: 16px;
 }
 
-.about-text {
-    font-size: 1.05rem;
-    color: var(--gray-400);
+.about-highlight p {
+    font-size: 1.1rem;
+    color: var(--gray-300);
     line-height: 1.8;
-    margin-bottom: 32px;
 }
 
-.about-cards {
+.about-cards-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
 }
 
 .about-card {
@@ -1083,12 +1085,81 @@ body {
 .partner-card h4 {
     font-size: 1rem;
     font-weight: 600;
-    color: var(--gray-400);
+    color: var(--white);
     transition: var(--transition);
+    margin-bottom: 8px;
+}
+
+.partner-card p {
+    font-size: 0.85rem;
+    color: var(--gray-400);
+    line-height: 1.6;
+    text-align: center;
 }
 
 .partner-card:hover h4 {
+    color: var(--primary);
+}
+
+/* ===== VALUES SECTION ===== */
+.values {
+    background: var(--gray-800);
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.value-card {
+    background: var(--gray-900);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: var(--radius-xl);
+    padding: 36px 28px;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.value-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.value-icon {
+    width: 72px;
+    height: 72px;
+    background: rgba(247, 148, 29, 0.1);
+    border: 2px solid rgba(247, 148, 29, 0.2);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size: 1.8rem;
+    margin: 0 auto 24px;
+    transition: var(--transition);
+}
+
+.value-card:hover .value-icon {
+    background: var(--gradient-primary);
     color: var(--white);
+    border-color: transparent;
+    transform: scale(1.1);
+}
+
+.value-card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 12px;
+}
+
+.value-card p {
+    font-size: 0.95rem;
+    color: var(--gray-400);
+    line-height: 1.6;
 }
 
 /* ===== CTA SECTION ===== */
@@ -1488,7 +1559,6 @@ body {
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
     .hero-container,
-    .about-grid,
     .contact-grid {
         grid-template-columns: 1fr;
         gap: 60px;
@@ -1517,8 +1587,13 @@ body {
     }
     
     .stats-grid,
-    .features-grid {
+    .features-grid,
+    .values-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .about-cards-grid {
+        grid-template-columns: 1fr;
     }
     
     .footer-grid {
@@ -1570,9 +1645,10 @@ body {
     }
     
     .services-grid,
-    .about-cards,
+    .about-cards-grid,
     .stats-grid,
-    .features-grid {
+    .features-grid,
+    .values-grid {
         grid-template-columns: 1fr;
     }
     
