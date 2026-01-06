@@ -942,8 +942,12 @@ section, .section {
 
 .hero-illustration-wrapper {
     width: 100%;
-    max-width: 620px;
+    max-width: 520px;
     position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(247, 148, 29, 0.2);
+    border: 2px solid rgba(247, 148, 29, 0.3);
 }
 
 .hero-glow {
@@ -968,8 +972,8 @@ section, .section {
 .hero-main-illustration {
     width: 100%;
     height: auto;
-    filter: drop-shadow(0 20px 60px rgba(247, 148, 29, 0.2));
-    animation: heroFloat 6s ease-in-out infinite;
+    display: block;
+    border-radius: 20px;
 }
 
 @keyframes heroFloat {
@@ -3539,19 +3543,71 @@ section, .section {
         animation: none;
     }
     
-    /* Fix hero overflow */
+    /* Fix hero for mobile */
     .hero {
         overflow: hidden;
+        padding-bottom: 40px;
+    }
+    
+    .hero-container {
+        flex-direction: column;
+        text-align: center;
+        padding: 80px 0 40px;
+        gap: 30px;
+    }
+    
+    .hero-content {
+        order: 1;
+    }
+    
+    .hero-visual {
+        order: 2;
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
     }
     
     .hero-illustration-wrapper {
         max-width: 100%;
         overflow: hidden;
+        border-radius: 20px;
     }
     
     .hero-main-illustration {
         animation: none;
         max-width: 100%;
+        width: 100%;
+        height: auto;
+        border-radius: 16px;
+    }
+    
+    .hero-glow {
+        display: none;
+    }
+    
+    .floating-stat-card {
+        display: none !important;
+    }
+    
+    .hero-trust {
+        justify-content: center;
+    }
+    
+    .hero-trust-logos {
+        justify-content: center;
+    }
+    
+    .hero-trust-logos img {
+        height: 24px;
+    }
+    
+    .hero-actions {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .hero-badge {
+        justify-content: center;
     }
     
     .nav-menu {
