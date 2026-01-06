@@ -418,32 +418,38 @@ body {
 .marquee-wrapper {
     display: flex;
     overflow: hidden;
+    position: relative;
+    width: 100%;
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 5%, black 95%, transparent);
     mask-image: linear-gradient(90deg, transparent, black 5%, black 95%, transparent);
 }
 
 .marquee-content {
-    display: flex;
+    display: inline-flex;
     gap: 0;
+    white-space: nowrap;
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
     will-change: transform;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    -webkit-animation: marquee 30s linear infinite;
+    animation: marquee 30s linear infinite;
 }
 
-.marquee-content.animated {
-    -webkit-animation: marquee 20s linear infinite;
-    animation: marquee 20s linear infinite;
+.marquee-content.js-animated {
+    -webkit-animation: none;
+    animation: none;
 }
 
 @-webkit-keyframes marquee {
-    0% { -webkit-transform: translateX(0); transform: translateX(0); }
-    100% { -webkit-transform: translateX(-50%); transform: translateX(-50%); }
+    0% { -webkit-transform: translate3d(0, 0, 0); transform: translate3d(0, 0, 0); }
+    100% { -webkit-transform: translate3d(-33.333%, 0, 0); transform: translate3d(-33.333%, 0, 0); }
 }
 
 @keyframes marquee {
-    0% { -webkit-transform: translateX(0); transform: translateX(0); }
-    100% { -webkit-transform: translateX(-50%); transform: translateX(-50%); }
+    0% { -webkit-transform: translate3d(0, 0, 0); transform: translate3d(0, 0, 0); }
+    100% { -webkit-transform: translate3d(-33.333%, 0, 0); transform: translate3d(-33.333%, 0, 0); }
 }
 
 .partner-logo {

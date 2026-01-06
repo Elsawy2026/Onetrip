@@ -357,57 +357,97 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// ===== MARQUEE ANIMATION - JAVASCRIPT FOR MOBILE =====
+// ===== MARQUEE ANIMATION - GUARANTEED TO WORK =====
 (function() {
-    const marquee = document.querySelector('.marquee-content');
+    const marquee = document.querySelector('#marqueeContent');
     if (!marquee) return;
     
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+    let position = 0;
+    let isPaused = false;
+    let marqueeWidth = 0;
+    let animationId = null;
     
-    // Use JavaScript animation for mobile, CSS for desktop
-    if (isMobile) {
-        let position = 0;
-        const speed = 1; // pixels per frame
-        let marqueeWidth = 0;
+    function initMarquee() {
+        // Disable CSS animation
+        marquee.classList.add('js-animated');
         
-        // Calculate width after images load
-        function initMarquee() {
-            marqueeWidth = marquee.scrollWidth / 2;
-            
-            function animate() {
-                position -= speed;
-                
-                if (Math.abs(position) >= marqueeWidth) {
-                    position = 0;
-                }
-                
-                marquee.style.transform = `translate3d(${position}px, 0, 0)`;
-                marquee.style.webkitTransform = `translate3d(${position}px, 0, 0)`;
-                
-                requestAnimationFrame(animate);
+        // Calculate the width of one set (we have 4 sets, so divide by 4)
+        const logos = marquee.querySelectorAll('.partner-logo');
+        const firstSet = logos.length / 4;
+        const firstLogo = logos[0];
+        
+        if (firstLogo) {
+            const logoWidth = firstLogo.offsetWidth + 40; // width + padding
+            marqueeWidth = logoWidth * firstSet;
+        } else {
+            marqueeWidth = marquee.scrollWidth / 4;
+        }
+        
+        function animate() {
+            if (isPaused) {
+                animationId = requestAnimationFrame(animate);
+                return;
             }
             
-            animate();
+            position -= 1.5; // Smooth speed
+            
+            // Reset when we've moved one set (33.33% of total)
+            if (Math.abs(position) >= marqueeWidth) {
+                position = 0;
+            }
+            
+            marquee.style.transform = `translate3d(${position}px, 0, 0)`;
+            marquee.style.webkitTransform = `translate3d(${position}px, 0, 0)`;
+            
+            animationId = requestAnimationFrame(animate);
         }
         
-        // Wait for images to load
-        if (document.readyState === 'loading') {
-            window.addEventListener('load', initMarquee);
-        } else {
-            setTimeout(initMarquee, 100);
+        // Start animation
+        animate();
+        
+        // Pause on hover (desktop only)
+        if (window.innerWidth > 768) {
+            marquee.addEventListener('mouseenter', () => {
+                isPaused = true;
+            });
+            
+            marquee.addEventListener('mouseleave', () => {
+                isPaused = false;
+            });
+        }
+    }
+    
+    // Wait for images to load
+    const images = marquee.querySelectorAll('img');
+    let loadedImages = 0;
+    
+    if (images.length > 0) {
+        images.forEach(img => {
+            if (img.complete) {
+                loadedImages++;
+            } else {
+                img.addEventListener('load', () => {
+                    loadedImages++;
+                    if (loadedImages === images.length) {
+                        setTimeout(initMarquee, 100);
+                    }
+                });
+            }
+        });
+        
+        if (loadedImages === images.length) {
+            setTimeout(initMarquee, 200);
         }
     } else {
-        // Use CSS animation for desktop
-        marquee.classList.add('animated');
-        
-        marquee.addEventListener('mouseenter', () => {
-            marquee.style.animationPlayState = 'paused';
-        });
-        
-        marquee.addEventListener('mouseleave', () => {
-            marquee.style.animationPlayState = 'running';
-        });
+        setTimeout(initMarquee, 200);
     }
+    
+    // Fallback: start after 1 second regardless
+    setTimeout(() => {
+        if (!animationId) {
+            initMarquee();
+        }
+    }, 1000);
 })();
 
 // ===== CONSOLE MESSAGE =====
