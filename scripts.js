@@ -371,17 +371,20 @@ document.addEventListener('DOMContentLoaded', () => {
         // Disable CSS animation
         marquee.classList.add('js-animated');
         
-        // Calculate the width of one set (we have 4 sets, so divide by 4)
+        // Calculate the width of one set (we have 8 sets, so divide by 8)
         const logos = marquee.querySelectorAll('.partner-logo');
-        const firstSet = logos.length / 4;
-        const firstLogo = logos[0];
+        const totalLogos = logos.length;
+        const logosPerSet = totalLogos / 8;
         
-        if (firstLogo) {
-            const logoWidth = firstLogo.offsetWidth + 40; // width + padding
-            marqueeWidth = logoWidth * firstSet;
-        } else {
-            marqueeWidth = marquee.scrollWidth / 4;
+        // Calculate width of one complete set
+        let setWidth = 0;
+        for (let i = 0; i < logosPerSet; i++) {
+            if (logos[i]) {
+                setWidth += logos[i].offsetWidth + 40; // width + padding
+            }
         }
+        
+        marqueeWidth = setWidth;
         
         function animate() {
             if (isPaused) {
@@ -389,9 +392,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             
-            position -= 1.5; // Smooth speed
+            position -= 2; // Smooth speed
             
-            // Reset when we've moved one set (33.33% of total)
+            // Reset when we've moved one set (12.5% of total = 1/8)
             if (Math.abs(position) >= marqueeWidth) {
                 position = 0;
             }
