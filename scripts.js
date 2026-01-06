@@ -588,6 +588,103 @@ function addRippleEffect() {
     }, 1000);
 })();
 
+// ===== TILT EFFECT FOR CARDS =====
+function addTiltEffect() {
+    const cards = document.querySelectorAll('.about-card, .service-card, .partner-card, .value-card');
+    
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 20;
+            const rotateY = (centerX - x) / 20;
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+        });
+    });
+}
+
+// ===== GLOWING CURSOR EFFECT =====
+function addGlowingCursor() {
+    const glowCursor = document.createElement('div');
+    glowCursor.className = 'glow-cursor';
+    document.body.appendChild(glowCursor);
+    
+    document.addEventListener('mousemove', (e) => {
+        glowCursor.style.left = e.clientX + 'px';
+        glowCursor.style.top = e.clientY + 'px';
+    });
+}
+
+// ===== TYPING EFFECT FOR HERO =====
+function typeWriter(element, text, speed = 50) {
+    let i = 0;
+    element.innerHTML = '';
+    
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        }
+    }
+    type();
+}
+
+// ===== COUNTER WITH BOOM EFFECT =====
+function animateCounterBoom(element, target, suffix = '') {
+    const duration = 2500;
+    const startTime = performance.now();
+    
+    function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Elastic easing for BOOM effect
+        const c4 = (2 * Math.PI) / 3;
+        const easeProgress = progress === 1 
+            ? 1 
+            : Math.pow(2, -10 * progress) * Math.sin((progress * 10 - 0.75) * c4) + 1;
+        
+        const current = Math.floor(easeProgress * target);
+        element.textContent = current + suffix;
+        
+        // Add scale effect
+        const scale = 1 + (1 - progress) * 0.2;
+        element.style.transform = `scale(${scale})`;
+        
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        } else {
+            element.textContent = target + suffix;
+            element.style.transform = 'scale(1)';
+            
+            // BOOM flash effect
+            element.classList.add('counter-boom');
+            setTimeout(() => element.classList.remove('counter-boom'), 500);
+        }
+    }
+    
+    requestAnimationFrame(update);
+}
+
+// Initialize all effects
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        addTiltEffect();
+        // addGlowingCursor(); // Uncomment for cursor effect
+    }, 1500);
+});
+
 // ===== CONSOLE MESSAGE =====
 console.log('%c🚀 OneTrip Express', 'font-size: 24px; font-weight: bold; color: #F7941D;');
 console.log('%cشريكك اللوجستي الموثوق', 'font-size: 14px; color: #00D9A5;');

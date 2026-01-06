@@ -11,7 +11,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="styles.css?v=2.5">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=3.0">
 </head>
 <body>
     <!-- Preloader -->
@@ -57,20 +59,20 @@
         <div class="container">
             <div class="hero-container">
                 <div class="hero-content">
-                    <div class="hero-badge">
+                    <div class="hero-badge" data-aos="fade-down" data-aos-delay="200">
                         <i class="fas fa-truck-fast"></i>
                         <span data-ar="التوصيل كما ينبغي أن يكون" data-en="Delivery as it should be">التوصيل كما ينبغي أن يكون</span>
                     </div>
                     
-                    <h1 class="hero-title">
+                    <h1 class="hero-title" data-aos="fade-up" data-aos-delay="400">
                         <span class="highlight">One Trip</span> Express
                     </h1>
                     
-                    <p class="hero-subtitle" data-ar="في عالم لا يعرف التباطؤ، تبرز One Trip Express (التوصيل الذكي) كمزود لخدمة توصيل تجمع بين السرعة والدقة والاحترافية، مقدّمة لك تجربة استثنائية مدعومة بالتقنية الحديثة." data-en="In a fast-paced world, One Trip Express (Smart Delivery) emerges as a delivery service provider combining speed, precision, and professionalism, offering you an exceptional experience powered by modern technology.">
+                    <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="600" data-ar="في عالم لا يعرف التباطؤ، تبرز One Trip Express (التوصيل الذكي) كمزود لخدمة توصيل تجمع بين السرعة والدقة والاحترافية، مقدّمة لك تجربة استثنائية مدعومة بالتقنية الحديثة." data-en="In a fast-paced world, One Trip Express (Smart Delivery) emerges as a delivery service provider combining speed, precision, and professionalism, offering you an exceptional experience powered by modern technology.">
                         في عالم لا يعرف التباطؤ، تبرز One Trip Express (التوصيل الذكي) كمزود لخدمة توصيل تجمع بين السرعة والدقة والاحترافية، مقدّمة لك تجربة استثنائية مدعومة بالتقنية الحديثة.
                     </p>
                     
-                    <div class="hero-actions">
+                    <div class="hero-actions" data-aos="fade-up" data-aos-delay="800">
                         <a href="https://wa.me/966920032104" class="btn btn-primary" target="_blank">
                             <i class="fab fa-whatsapp"></i>
                             <span data-ar="قناة الواتس اب" data-en="WhatsApp Channel">قناة الواتس اب</span>
@@ -97,8 +99,9 @@
                     </div>
                 </div>
                 
-                <div class="hero-visual">
+                <div class="hero-visual" data-aos="zoom-in" data-aos-delay="500">
                     <div class="hero-illustration-wrapper">
+                        <div class="hero-glow"></div>
                         <img src="assets/hero-illustration.svg" alt="One Trip Express Delivery" class="hero-main-illustration">
                     </div>
                 </div>
@@ -198,7 +201,7 @@
     <!-- About Section -->
     <section class="section about" id="about">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header" data-aos="fade-up">
                 <span class="section-badge" data-ar="One Trip Express" data-en="One Trip Express">One Trip Express</span>
                 <h2 class="section-title" data-ar="من <span class='highlight'>نحن</span>" data-en="About <span class='highlight'>Us</span>">من <span class="highlight">نحن</span></h2>
                 <p class="section-desc" data-ar="نحن One Trip Express، شركة سعودية تقدم خدمات توصيل داخل المدن وحلول لوجستية متكاملة للأفراد والشركات، معتمدة على تقنيات متقدمة وأنظمة تشغيل عالية الكفاءة. نلتزم بتقديم خدمات تعكس احترافية شركائنا وتعزز صورة علاماتهم التجارية." data-en="We are One Trip Express, a Saudi company providing city delivery services and integrated logistics solutions for individuals and businesses, relying on advanced technologies and highly efficient operating systems. We are committed to providing services that reflect the professionalism of our partners and enhance their brand image.">
@@ -213,7 +216,7 @@
             </div>
             
             <div class="about-cards-grid">
-                <div class="about-card">
+                <div class="about-card" data-aos="flip-left" data-aos-delay="100">
                     <div class="about-card-image">
                         <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=200&fit=crop" alt="رؤيتنا">
                     </div>
@@ -223,7 +226,7 @@
                         <p data-ar="أن نكون الخيار الأول في مجال التوصيل داخل المدن، والاسم الذي يتبادر إلى الذهن عند البحث عن حلول توصيل ذكية، مرنة، وسريعة." data-en="To be the first choice in city delivery, the name that comes to mind when looking for smart, flexible, and fast delivery solutions.">أن نكون الخيار الأول في مجال التوصيل داخل المدن، والاسم الذي يتبادر إلى الذهن عند البحث عن حلول توصيل ذكية، مرنة، وسريعة.</p>
                     </div>
                 </div>
-                <div class="about-card">
+                <div class="about-card" data-aos="flip-up" data-aos-delay="200">
                     <div class="about-card-image">
                         <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=200&fit=crop" alt="رسالتنا">
                     </div>
@@ -233,7 +236,7 @@
                         <p data-ar="نوفّر تجربة توصيل موثوقة وسلسة تدعم نمو أعمال شركائنا، تبدأ من لحظة الانطلاق وتنتهي عند باب العميل." data-en="We provide a reliable and seamless delivery experience that supports our partners' business growth, from launch to customer doorstep.">نوفّر تجربة توصيل موثوقة وسلسة تدعم نمو أعمال شركائنا، تبدأ من لحظة الانطلاق وتنتهي عند باب العميل.</p>
                     </div>
                 </div>
-                <div class="about-card">
+                <div class="about-card" data-aos="flip-right" data-aos-delay="300">
                     <div class="about-card-image">
                         <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=200&fit=crop" alt="هدفنا">
                     </div>
@@ -256,7 +259,7 @@
             </div>
             
             <div class="values-grid">
-                <div class="value-card">
+                <div class="value-card" data-aos="zoom-in-up" data-aos-delay="100">
                     <div class="value-card-image">
                         <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=300&h=150&fit=crop" alt="الاعتمادية">
                     </div>
@@ -266,7 +269,7 @@
                         <p data-ar="نفي بوعدنا ونعمل بثقة" data-en="We keep our promises and work with confidence">نفي بوعدنا ونعمل بثقة</p>
                     </div>
                 </div>
-                <div class="value-card">
+                <div class="value-card" data-aos="zoom-in-up" data-aos-delay="200">
                     <div class="value-card-image">
                         <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=300&h=150&fit=crop" alt="الابتكار">
                     </div>
@@ -276,7 +279,7 @@
                         <p data-ar="نبحث دائمًا عن طرق جديدة لتحسين خدماتنا" data-en="We are always looking for new ways to improve our services">نبحث دائمًا عن طرق جديدة لتحسين خدماتنا</p>
                     </div>
                 </div>
-                <div class="value-card">
+                <div class="value-card" data-aos="zoom-in-up" data-aos-delay="300">
                     <div class="value-card-image">
                         <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=300&h=150&fit=crop" alt="الجودة">
                     </div>
@@ -286,7 +289,7 @@
                         <p data-ar="نضع معايير عالية في كل عملية توصيل" data-en="We set high standards in every delivery operation">نضع معايير عالية في كل عملية توصيل</p>
                     </div>
                 </div>
-                <div class="value-card">
+                <div class="value-card" data-aos="zoom-in-up" data-aos-delay="400">
                     <div class="value-card-image">
                         <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=300&h=150&fit=crop" alt="الاحترافية">
                     </div>
@@ -312,7 +315,7 @@
             </div>
             
             <div class="services-grid">
-                <div class="service-card">
+                <div class="service-card" data-aos="fade-up-right" data-aos-delay="100">
                     <div class="service-image">
                         <img src="assets/services/delivery-fast.svg" alt="توصيل فوري">
                     </div>
@@ -322,7 +325,7 @@
                     </div>
                 </div>
                 
-                <div class="service-card">
+                <div class="service-card" data-aos="fade-up-left" data-aos-delay="200">
                     <div class="service-image">
                         <img src="assets/services/logistics.svg" alt="حلول لوجستية">
                     </div>
@@ -332,7 +335,7 @@
                     </div>
                 </div>
                 
-                <div class="service-card">
+                <div class="service-card" data-aos="fade-up-right" data-aos-delay="300">
                     <div class="service-image">
                         <img src="assets/services/fleet.svg" alt="إدارة أساطيل">
                     </div>
@@ -342,7 +345,7 @@
                     </div>
                 </div>
                 
-                <div class="service-card">
+                <div class="service-card" data-aos="fade-up-left" data-aos-delay="400">
                     <div class="service-image">
                         <img src="assets/services/contracts.svg" alt="عقود مرنة">
                     </div>
@@ -392,47 +395,47 @@
             </div>
             
             <div class="partners-grid">
-                <div class="partner-card">
+                <div class="partner-card" data-aos="fade-up" data-aos-delay="100">
                     <img src="assets/partners/jahez.svg" alt="جاهز">
                     <h4 data-ar="جاهز | Jahez" data-en="Jahez">جاهز | Jahez</h4>
                     <p data-ar="نقدم لها عمليات توصيل دقيقة تلبي توقعات ملايين المستخدمين." data-en="We provide precise delivery operations that meet the expectations of millions of users.">نقدم لها عمليات توصيل دقيقة تلبي توقعات ملايين المستخدمين.</p>
                 </div>
-                <div class="partner-card">
+                <div class="partner-card" data-aos="fade-up" data-aos-delay="150">
                     <img src="assets/partners/hungerstation.svg" alt="هنقرستيشن">
                     <h4 data-ar="هنقرستيشن | HungerStation" data-en="HungerStation">هنقرستيشن | HungerStation</h4>
                     <p data-ar="نشاركهم في تقديم خدمة لوجستية موثوقة وعالية الجودة." data-en="We partner with them to provide reliable and high-quality logistics services.">نشاركهم في تقديم خدمة لوجستية موثوقة وعالية الجودة.</p>
                 </div>
-                <div class="partner-card">
+                <div class="partner-card" data-aos="fade-up" data-aos-delay="200">
                     <img src="assets/partners/keeta.svg" alt="كيتا">
                     <h4 data-ar="كيتا | KEETA" data-en="KEETA">كيتا | KEETA</h4>
                     <p data-ar="نترجم التقنية والمرونة إلى تجربة توصيل مميزة." data-en="We translate technology and flexibility into a distinctive delivery experience.">نترجم التقنية والمرونة إلى تجربة توصيل مميزة.</p>
                 </div>
-                <div class="partner-card">
+                <div class="partner-card" data-aos="fade-up" data-aos-delay="250">
                     <img src="assets/partners/mrsool.svg" alt="مرسول">
                     <h4 data-ar="مرسول | Mrsool" data-en="Mrsool">مرسول | Mrsool</h4>
                     <p data-ar="شراكة متميزة لتوفير خدمة توصيل سريعة وموثوقة." data-en="An excellent partnership to provide fast and reliable delivery service.">شراكة متميزة لتوفير خدمة توصيل سريعة وموثوقة.</p>
                 </div>
-                <div class="partner-card">
+                <div class="partner-card" data-aos="fade-up" data-aos-delay="300">
                     <img src="assets/partners/chefz.svg" alt="ذا شيفز">
                     <h4 data-ar="ذا شيفز | The Chefs" data-en="The Chefs">ذا شيفز | The Chefs</h4>
                     <p data-ar="نُوصل الإبداع والمذاق الرفيع بدقة وأناقة." data-en="We deliver creativity and fine taste with precision and elegance.">نُوصل الإبداع والمذاق الرفيع بدقة وأناقة.</p>
                 </div>
-                <div class="partner-card">
+                <div class="partner-card" data-aos="fade-up" data-aos-delay="350">
                     <img src="assets/partners/toyou.svg" alt="تو يو">
                     <h4 data-ar="تو يو | ToYou" data-en="ToYou">تو يو | ToYou</h4>
                     <p data-ar="حلول توصيل متكاملة للتجارة الإلكترونية بأعلى كفاءة." data-en="Integrated delivery solutions for e-commerce with highest efficiency.">حلول توصيل متكاملة للتجارة الإلكترونية بأعلى كفاءة.</p>
                 </div>
-                <div class="partner-card">
+                <div class="partner-card" data-aos="fade-up" data-aos-delay="400">
                     <img src="assets/partners/smsa.svg" alt="SMSA">
                     <h4 data-ar="SMSA" data-en="SMSA">SMSA</h4>
                     <p data-ar="شريك موثوق في خدمات الشحن والتوصيل السريع." data-en="A trusted partner in shipping and express delivery services.">شريك موثوق في خدمات الشحن والتوصيل السريع.</p>
                 </div>
-                <div class="partner-card">
+                <div class="partner-card" data-aos="fade-up" data-aos-delay="450">
                     <img src="assets/partners/aramex.svg" alt="أرامكس">
                     <h4 data-ar="أرامكس | Aramex" data-en="Aramex">أرامكس | Aramex</h4>
                     <p data-ar="خدمات لوجستية عالمية بمعايير احترافية." data-en="Global logistics services with professional standards.">خدمات لوجستية عالمية بمعايير احترافية.</p>
                 </div>
-                <div class="partner-card">
+                <div class="partner-card" data-aos="fade-up" data-aos-delay="500">
                     <img src="assets/partners/naqel.svg" alt="ناقل">
                     <h4 data-ar="ناقل إكسبريس | Naqel" data-en="Naqel Express">ناقل إكسبريس | Naqel</h4>
                     <p data-ar="شبكة توصيل واسعة تغطي جميع أنحاء المملكة." data-en="A wide delivery network covering all parts of the Kingdom.">شبكة توصيل واسعة تغطي جميع أنحاء المملكة.</p>
@@ -698,6 +701,18 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="scripts.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50,
+            delay: 100
+        });
+    </script>
 </body>
 </html>
