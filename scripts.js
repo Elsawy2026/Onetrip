@@ -357,15 +357,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// ===== MARQUEE HOVER PAUSE =====
+// ===== MARQUEE ANIMATION FIX FOR MOBILE =====
 const marquee = document.querySelector('.marquee-content');
 if (marquee) {
-    marquee.addEventListener('mouseenter', () => {
-        marquee.style.animationPlayState = 'paused';
-    });
-    marquee.addEventListener('mouseleave', () => {
-        marquee.style.animationPlayState = 'running';
-    });
+    // Check if mobile device
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+    
+    if (isMobile) {
+        // Force animation on mobile
+        marquee.style.webkitAnimation = 'marquee 15s linear infinite';
+        marquee.style.animation = 'marquee 15s linear infinite';
+        marquee.style.webkitTransform = 'translateZ(0)';
+        marquee.style.transform = 'translateZ(0)';
+        
+        // Ensure animation is running
+        setTimeout(() => {
+            marquee.style.animationPlayState = 'running';
+            marquee.style.webkitAnimationPlayState = 'running';
+        }, 100);
+    }
+    
+    // Hover pause (desktop only)
+    if (!isMobile) {
+        marquee.addEventListener('mouseenter', () => {
+            marquee.style.animationPlayState = 'paused';
+        });
+        marquee.addEventListener('mouseleave', () => {
+            marquee.style.animationPlayState = 'running';
+        });
+    }
 }
 
 // ===== CONSOLE MESSAGE =====

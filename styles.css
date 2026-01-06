@@ -424,17 +424,28 @@ body {
 .marquee-content {
     display: flex;
     gap: 0;
+    -webkit-animation: marquee 20s linear infinite;
     animation: marquee 20s linear infinite;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
     will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 .marquee-content:hover {
+    -webkit-animation-play-state: running;
     animation-play-state: running;
 }
 
+@-webkit-keyframes marquee {
+    0% { -webkit-transform: translateX(0); transform: translateX(0); }
+    100% { -webkit-transform: translateX(-50%); transform: translateX(-50%); }
+}
+
 @keyframes marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    0% { -webkit-transform: translateX(0); transform: translateX(0); }
+    100% { -webkit-transform: translateX(-50%); transform: translateX(-50%); }
 }
 
 .partner-logo {
@@ -1354,6 +1365,21 @@ body {
 @media (max-width: 768px) {
     .section {
         padding: 64px 0;
+    }
+    
+    /* Fix Marquee Animation on Mobile */
+    .marquee-content {
+        -webkit-animation: marquee 15s linear infinite !important;
+        animation: marquee 15s linear infinite !important;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+    
+    .marquee-wrapper {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-perspective: 1000;
+        perspective: 1000;
     }
     
     .nav-menu {
