@@ -218,6 +218,80 @@ function startCounterAnimations() {
     counters.forEach(counter => observer.observe(counter));
 }
 
+// ===== LIVE CHAT =====
+function toggleChat() {
+    const chatWidget = document.getElementById('chatWidget');
+    const chatToggle = document.getElementById('chatToggle');
+    const badge = document.querySelector('.chat-badge');
+    
+    chatWidget?.classList.toggle('active');
+    
+    if (chatWidget?.classList.contains('active')) {
+        if (badge) badge.style.display = 'none';
+    }
+}
+
+function sendQuickReply(type) {
+    const messages = {
+        pricing: 'أريد معرفة الأسعار',
+        delivery: 'كم مدة التوصيل؟',
+        order: 'أريد طلب خدمة',
+        track: 'أريد تتبع شحنتي'
+    };
+    
+    const message = encodeURIComponent(messages[type] || '');
+    window.open(`https://wa.me/966920032104?text=${message}`, '_blank');
+}
+
+// ===== TESTIMONIALS SLIDER =====
+let currentTestimonial = 0;
+const testimonials = document.querySelectorAll('.testimonial-card');
+const dots = document.querySelectorAll('.testimonial-dots .dot');
+
+function showTestimonial(index) {
+    testimonials.forEach((t, i) => {
+        t.classList.remove('active');
+        dots[i]?.classList.remove('active');
+    });
+    
+    testimonials[index]?.classList.add('active');
+    dots[index]?.classList.add('active');
+    currentTestimonial = index;
+}
+
+// Auto-rotate testimonials
+setInterval(() => {
+    if (testimonials.length > 0) {
+        currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+        showTestimonial(currentTestimonial);
+    }
+}, 5000);
+
+// ===== ORDER FORM =====
+const orderForm = document.getElementById('orderForm');
+
+if (orderForm) {
+    orderForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(orderForm);
+        const data = Object.fromEntries(formData);
+        
+        // Show success modal
+        const isArabic = document.documentElement.lang === 'ar';
+        showSuccessModal(
+            isArabic ? 'تم إرسال طلبك!' : 'Request Submitted!',
+            isArabic ? 'سيتم التواصل معك خلال دقائق' : 'We will contact you within minutes',
+            isArabic ? 'رقم الطلب: #' + Math.floor(Math.random() * 10000) : 'Order #: ' + Math.floor(Math.random() * 10000)
+        );
+        
+        // Reset form
+        orderForm.reset();
+        
+        console.log('Order submitted:', data);
+    });
+}
+
 // ===== CONTACT FORM =====
 const contactForm = document.getElementById('contactForm');
 
