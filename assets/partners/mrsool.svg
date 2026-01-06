@@ -1,10 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
-  <defs>
-    <linearGradient id="mrsoolGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#FFC107"/>
-      <stop offset="100%" style="stop-color:#FF9800"/>
-    </linearGradient>
-  </defs>
-  <circle cx="50" cy="50" r="35" fill="url(#mrsoolGrad)"/>
-  <text x="50" y="55" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a1a1a" text-anchor="middle">مرسول</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 40" fill="none">
+  <rect x="8" y="8" width="24" height="24" rx="12" fill="#7C4DFF"/>
+  <path d="M 20 14 L 20 20 L 26 20" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="38" y="26" font-family="Arial, sans-serif" font-size="19" font-weight="bold" fill="#7C4DFF">Mrsool</text>
 </svg>
