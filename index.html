@@ -3,45 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="One Trip Express - التوصيل كما ينبغي أن يكون | حلول لوجستية متكاملة للمطاعم والمتاجر في المملكة العربية السعودية">
-    <meta name="keywords" content="One Trip Express, التوصيل الذكي, خدمات لوجستية, توصيل فوري, إدارة أساطيل, السعودية">
-    <title>One Trip Express | التوصيل كما ينبغي أن يكون</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>One Trip Express | ون تريب اكسبريس</title>
+    <meta name="description" content="شركة ون تريب إكسبريس للشحن - خدمات توصيل سريعة وآمنة في جميع أنحاء المملكة">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
 </head>
 <body>
     <!-- Preloader -->
     <div class="preloader" id="preloader">
         <div class="loader">
-            <img src="assets/logo.svg" alt="One Trip Express" class="loader-logo">
+            <img src="assets/logo.svg" alt="One Trip" class="loader-logo">
             <p class="loader-text" data-ar="جاري التحميل..." data-en="Loading...">جاري التحميل...</p>
-            <div class="loader-bar"><div class="loader-progress"></div></div>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
         </div>
     </div>
 
     <!-- Navigation -->
-    <nav class="nav" id="nav">
-        <div class="nav-container">
-            <a href="#home" class="nav-logo">
+    <nav class="nav" id="navbar">
+        <div class="container nav-container">
+            <a href="#" class="nav-logo">
                 <img src="assets/logo.svg" alt="One Trip Express">
             </a>
+            
             <div class="nav-menu" id="navMenu">
                 <a href="#home" class="nav-link active" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
                 <a href="#about" class="nav-link" data-ar="من نحن" data-en="About">من نحن</a>
-                <a href="#services" class="nav-link" data-ar="ماذا نقدم" data-en="What We Offer">ماذا نقدم</a>
-                <a href="#why-us" class="nav-link" data-ar="لماذا نحن" data-en="Why Us">لماذا نحن</a>
+                <a href="#services" class="nav-link" data-ar="خدماتنا" data-en="Services">خدماتنا</a>
                 <a href="#partners" class="nav-link" data-ar="شركاؤنا" data-en="Partners">شركاؤنا</a>
-                <a href="https://wa.me/966920032104" class="nav-link" target="_blank" data-ar="قناة الواتساب" data-en="WhatsApp">قناة الواتساب</a>
                 <a href="#contact" class="nav-link" data-ar="تواصل معنا" data-en="Contact">تواصل معنا</a>
             </div>
+            
             <div class="nav-actions">
-                <button class="lang-btn" id="langBtn" onclick="toggleLanguage()">English</button>
-                <button class="nav-toggle" onclick="toggleNav()">
-                    <span></span><span></span><span></span>
+                <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">EN</button>
+                <button class="nav-toggle" id="navToggle" onclick="toggleNav()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </button>
             </div>
         </div>
@@ -53,53 +53,53 @@
             <div class="hero-grid"></div>
         </div>
         
-        <div class="container">
-            <div class="hero-container">
-                <div class="hero-content">
-                    <div class="hero-badge">
-                        <i class="fas fa-truck-fast"></i>
-                        <span data-ar="التوصيل كما ينبغي أن يكون" data-en="Delivery as it should be">التوصيل كما ينبغي أن يكون</span>
-                    </div>
-                    
-                    <h1 class="hero-title">
-                        <span class="highlight">One Trip</span> Express
-                    </h1>
-                    
-                    <p class="hero-subtitle" data-ar="في عالم لا يعرف التباطؤ، تبرز One Trip Express (التوصيل الذكي) كمزود لخدمة توصيل تجمع بين السرعة والدقة والاحترافية، مقدّمة لك تجربة استثنائية مدعومة بالتقنية الحديثة." data-en="In a fast-paced world, One Trip Express (Smart Delivery) emerges as a delivery service provider combining speed, precision, and professionalism, offering you an exceptional experience powered by modern technology.">
-                        في عالم لا يعرف التباطؤ، تبرز One Trip Express (التوصيل الذكي) كمزود لخدمة توصيل تجمع بين السرعة والدقة والاحترافية، مقدّمة لك تجربة استثنائية مدعومة بالتقنية الحديثة.
-                    </p>
-                    
-                    <div class="hero-actions">
-                        <a href="https://wa.me/966920032104" class="btn btn-primary" target="_blank">
-                            <i class="fab fa-whatsapp"></i>
-                            <span data-ar="قناة الواتس اب" data-en="WhatsApp Channel">قناة الواتس اب</span>
-                        </a>
-                        <a href="#contact" class="btn btn-secondary">
-                            <span data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</span>
-                            <i class="fas fa-arrow-left"></i>
-                        </a>
-                    </div>
-                    
-                    <div class="hero-stats">
-                        <div class="hero-stat">
-                            <div class="hero-stat-value" data-count="500">0</div>
-                            <div class="hero-stat-label" data-ar="مندوب محترف" data-en="Professional Drivers">مندوب محترف</div>
-                        </div>
-                        <div class="hero-stat">
-                            <div class="hero-stat-value">24/7</div>
-                            <div class="hero-stat-label" data-ar="دعم متواصل" data-en="Continuous Support">دعم متواصل</div>
-                        </div>
-                        <div class="hero-stat">
-                            <div class="hero-stat-value" data-count="99">0</div>
-                            <div class="hero-stat-label" data-ar="% رضا العملاء" data-en="% Customer Satisfaction">% رضا العملاء</div>
-                        </div>
-                    </div>
+        <div class="container hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-shipping-fast"></i>
+                    <span data-ar="خدمات توصيل احترافية" data-en="Professional Delivery Services">خدمات توصيل احترافية</span>
                 </div>
                 
-                <div class="hero-visual">
-                    <div class="hero-illustration-wrapper">
-                        <img src="assets/hero-illustration.svg" alt="One Trip Express Delivery" class="hero-main-illustration">
+                <h1 class="hero-title">
+                    <span data-ar="حلول شحن" data-en="Shipping Solutions">حلول شحن</span>
+                    <span class="highlight" data-ar="سريعة وآمنة" data-en="Fast & Secure">سريعة وآمنة</span>
+                    <span data-ar="لكل شحناتك" data-en="For All Shipments">لكل شحناتك</span>
+                </h1>
+                
+                <p class="hero-subtitle" data-ar="ون تريب إكسبريس شريكك الموثوق في عالم الشحن والتوصيل. نقدم خدمات لوجستية متكاملة تضمن وصول شحناتك بأمان وسرعة." data-en="One Trip Express is your trusted partner in shipping. We provide integrated logistics services ensuring your shipments arrive safely and quickly.">
+                    ون تريب إكسبريس شريكك الموثوق في عالم الشحن والتوصيل. نقدم خدمات لوجستية متكاملة تضمن وصول شحناتك بأمان وسرعة.
+                </p>
+                
+                <div class="hero-actions">
+                    <a href="#contact" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i>
+                        <span data-ar="ابدأ الآن" data-en="Get Started">ابدأ الآن</span>
+                    </a>
+                    <a href="#services" class="btn btn-secondary">
+                        <i class="fas fa-eye"></i>
+                        <span data-ar="اكتشف خدماتنا" data-en="Our Services">اكتشف خدماتنا</span>
+                    </a>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-value" data-count="50000">50,000+</div>
+                        <div class="hero-stat-label" data-ar="شحنة ناجحة" data-en="Successful Deliveries">شحنة ناجحة</div>
                     </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value" data-count="20">20+</div>
+                        <div class="hero-stat-label" data-ar="مدينة تغطية" data-en="Cities Covered">مدينة تغطية</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">99.5%</div>
+                        <div class="hero-stat-label" data-ar="رضا العملاء" data-en="Customer Satisfaction">رضا العملاء</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="hero-illustration-wrapper">
+                    <img src="https://illustrations.popsy.co/amber/delivery.svg" alt="Delivery Illustration" class="hero-main-illustration">
                 </div>
             </div>
         </div>
@@ -107,97 +107,166 @@
 
     <!-- Partners Marquee -->
     <div class="partners-marquee">
-        <p class="marquee-title" data-ar="نعمل مع أكبر منصات التوصيل في المملكة" data-en="We work with the largest delivery platforms in the Kingdom">نعمل مع أكبر منصات التوصيل في المملكة</p>
+        <p class="marquee-title" data-ar="نعمل مع أفضل شركات الشحن" data-en="We work with the best shipping companies">نعمل مع أفضل شركات الشحن</p>
         <div class="marquee-wrapper">
-            <div class="marquee-content">
-                <img src="assets/partners/jahez.svg" alt="Jahez" class="partner-logo">
-                <img src="assets/partners/hungerstation.svg" alt="HungerStation" class="partner-logo">
-                <img src="assets/partners/keeta.svg" alt="KEETA" class="partner-logo">
-                <img src="assets/partners/mrsool.svg" alt="Mrsool" class="partner-logo">
-                <img src="assets/partners/chefz.svg" alt="The Chefs" class="partner-logo">
-                <img src="assets/partners/toyou.svg" alt="ToYou" class="partner-logo">
-                <img src="assets/partners/smsa.svg" alt="SMSA" class="partner-logo">
-                <img src="assets/partners/aramex.svg" alt="Aramex" class="partner-logo">
-                <img src="assets/partners/naqel.svg" alt="Naqel Express" class="partner-logo">
-                <!-- Duplicate for seamless loop -->
-                <img src="assets/partners/jahez.svg" alt="Jahez" class="partner-logo">
-                <img src="assets/partners/hungerstation.svg" alt="HungerStation" class="partner-logo">
-                <img src="assets/partners/keeta.svg" alt="KEETA" class="partner-logo">
-                <img src="assets/partners/mrsool.svg" alt="Mrsool" class="partner-logo">
-                <img src="assets/partners/chefz.svg" alt="The Chefs" class="partner-logo">
-                <img src="assets/partners/toyou.svg" alt="ToYou" class="partner-logo">
-                <img src="assets/partners/smsa.svg" alt="SMSA" class="partner-logo">
-                <img src="assets/partners/aramex.svg" alt="Aramex" class="partner-logo">
-                <img src="assets/partners/naqel.svg" alt="Naqel Express" class="partner-logo">
+            <div class="marquee-content" id="marqueeContent">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Aramex_logo.svg/200px-Aramex_logo.svg.png" alt="Aramex" class="partner-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/DHL_Logo.svg/200px-DHL_Logo.svg.png" alt="DHL" class="partner-logo">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHJDnQldqxLT_g6JwsHAQoQaLcb3Z9QKhLAQ&s" alt="SMSA" class="partner-logo">
+                <img src="https://cdn.salla.sa/Rjolm/CfVIVB1t1xNblKQd7yAbIDPIjh1VzBgVRZ6u2Mrp.png" alt="Naqel" class="partner-logo">
+                <img src="https://cdn.salla.sa/Rjolm/6lrpRyI3tnxjVPRYYOVgzEi6cIzLBGl9hJFOx6S1.png" alt="J&T" class="partner-logo">
+                <img src="https://cdn.salla.sa/Rjolm/tKneLPDuLyAbJDqw8YGGABSo4tEOxMjAZLfJAm07.png" alt="iMile" class="partner-logo">
+                <img src="https://cdn.salla.sa/Rjolm/4aBNJk5H3EuaE8RU8qGLNqgLH5uRJuqI6Q4JCKzB.png" alt="SPL" class="partner-logo">
+                <img src="https://www.ninjavan.co/cover.png" alt="Ninja Van" class="partner-logo">
+                <!-- Duplicates for infinite scroll -->
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Aramex_logo.svg/200px-Aramex_logo.svg.png" alt="Aramex" class="partner-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/DHL_Logo.svg/200px-DHL_Logo.svg.png" alt="DHL" class="partner-logo">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHJDnQldqxLT_g6JwsHAQoQaLcb3Z9QKhLAQ&s" alt="SMSA" class="partner-logo">
+                <img src="https://cdn.salla.sa/Rjolm/CfVIVB1t1xNblKQd7yAbIDPIjh1VzBgVRZ6u2Mrp.png" alt="Naqel" class="partner-logo">
+                <img src="https://cdn.salla.sa/Rjolm/6lrpRyI3tnxjVPRYYOVgzEi6cIzLBGl9hJFOx6S1.png" alt="J&T" class="partner-logo">
+                <img src="https://cdn.salla.sa/Rjolm/tKneLPDuLyAbJDqw8YGGABSo4tEOxMjAZLfJAm07.png" alt="iMile" class="partner-logo">
+                <img src="https://cdn.salla.sa/Rjolm/4aBNJk5H3EuaE8RU8qGLNqgLH5uRJuqI6Q4JCKzB.png" alt="SPL" class="partner-logo">
+                <img src="https://www.ninjavan.co/cover.png" alt="Ninja Van" class="partner-logo">
             </div>
         </div>
     </div>
 
-    <!-- About Section -->
-    <section class="section about" id="about">
+    <!-- Features Bar -->
+    <section class="features-bar">
         <div class="container">
-            <div class="section-header">
-                <span class="section-badge" data-ar="One Trip Express" data-en="One Trip Express">One Trip Express</span>
-                <h2 class="section-title" data-ar="من <span class='highlight'>نحن</span>" data-en="About <span class='highlight'>Us</span>">من <span class="highlight">نحن</span></h2>
-                <p class="section-desc" data-ar="نحن One Trip Express، شركة سعودية تقدم خدمات توصيل داخل المدن وحلول لوجستية متكاملة للأفراد والشركات، معتمدة على تقنيات متقدمة وأنظمة تشغيل عالية الكفاءة. نلتزم بتقديم خدمات تعكس احترافية شركائنا وتعزز صورة علاماتهم التجارية." data-en="We are One Trip Express, a Saudi company providing city delivery services and integrated logistics solutions for individuals and businesses, relying on advanced technologies and highly efficient operating systems. We are committed to providing services that reflect the professionalism of our partners and enhance their brand image.">
-                    نحن One Trip Express، شركة سعودية تقدم خدمات توصيل داخل المدن وحلول لوجستية متكاملة للأفراد والشركات، معتمدة على تقنيات متقدمة وأنظمة تشغيل عالية الكفاءة. نلتزم بتقديم خدمات تعكس احترافية شركائنا وتعزز صورة علاماتهم التجارية.
-                </p>
-            </div>
-            
-            <!-- Not Just A-B Statement -->
-            <div class="about-highlight">
-                <h3 data-ar="لسنا مجرد وسيط بين النقطة (أ) والنقطة (ب)" data-en="We are not just an intermediary between point (A) and point (B)">لسنا مجرد وسيط بين النقطة (أ) والنقطة (ب)</h3>
-                <p data-ar="بل نُمثل الامتداد الطبيعي لنشاطك، والواجهة التي تعكس جودة خدماتك وتعزز ثقة عملائك." data-en="Rather, we represent the natural extension of your business, the interface that reflects the quality of your services and enhances your customers' trust.">بل نُمثل الامتداد الطبيعي لنشاطك، والواجهة التي تعكس جودة خدماتك وتعزز ثقة عملائك.</p>
-            </div>
-            
-            <div class="about-cards-grid">
-                <div class="about-card">
-                    <div class="about-card-icon"><i class="fas fa-eye"></i></div>
-                    <h4 data-ar="رؤيتنا" data-en="Our Vision">رؤيتنا</h4>
-                    <p data-ar="أن نكون الخيار الأول في مجال التوصيل داخل المدن، والاسم الذي يتبادر إلى الذهن عند البحث عن حلول توصيل ذكية، مرنة، وسريعة." data-en="To be the first choice in city delivery, the name that comes to mind when looking for smart, flexible, and fast delivery solutions.">أن نكون الخيار الأول في مجال التوصيل داخل المدن، والاسم الذي يتبادر إلى الذهن عند البحث عن حلول توصيل ذكية، مرنة، وسريعة.</p>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-truck-fast"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4 data-ar="توصيل سريع" data-en="Fast Delivery">توصيل سريع</h4>
+                        <p data-ar="خلال 24-48 ساعة" data-en="Within 24-48 hours">خلال 24-48 ساعة</p>
+                    </div>
                 </div>
-                <div class="about-card">
-                    <div class="about-card-icon"><i class="fas fa-bullseye"></i></div>
-                    <h4 data-ar="رسالتنا" data-en="Our Mission">رسالتنا</h4>
-                    <p data-ar="نوفّر تجربة توصيل موثوقة وسلسة تدعم نمو أعمال شركائنا، تبدأ من لحظة الانطلاق وتنتهي عند باب العميل." data-en="We provide a reliable and seamless delivery experience that supports our partners' business growth, from launch to customer doorstep.">نوفّر تجربة توصيل موثوقة وسلسة تدعم نمو أعمال شركائنا، تبدأ من لحظة الانطلاق وتنتهي عند باب العميل.</p>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-halved"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4 data-ar="شحن آمن" data-en="Secure Shipping">شحن آمن</h4>
+                        <p data-ar="حماية كاملة للشحنات" data-en="Full shipment protection">حماية كاملة للشحنات</p>
+                    </div>
                 </div>
-                <div class="about-card">
-                    <div class="about-card-icon"><i class="fas fa-rocket"></i></div>
-                    <h4 data-ar="هدفنا" data-en="Our Goal">هدفنا</h4>
-                    <p data-ar="نسعى للتوسع بخطى مدروسة لتغطية أكبر عدد من المدن والمناطق الحيوية، مع الحفاظ على أعلى درجات الكفاءة والاحتراف، من خلال اعتماد أحدث الأدوات والتقنيات التي تواكب متطلبات السوق المتغيرة." data-en="We seek to expand carefully to cover the largest number of cities and vital areas, while maintaining the highest levels of efficiency and professionalism, by adopting the latest tools and technologies that keep pace with changing market requirements.">نسعى للتوسع بخطى مدروسة لتغطية أكبر عدد من المدن والمناطق الحيوية، مع الحفاظ على أعلى درجات الكفاءة والاحتراف، من خلال اعتماد أحدث الأدوات والتقنيات التي تواكب متطلبات السوق المتغيرة.</p>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-location-dot"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4 data-ar="تتبع مباشر" data-en="Live Tracking">تتبع مباشر</h4>
+                        <p data-ar="متابعة لحظة بلحظة" data-en="Real-time monitoring">متابعة لحظة بلحظة</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4 data-ar="دعم 24/7" data-en="24/7 Support">دعم 24/7</h4>
+                        <p data-ar="فريق دعم متكامل" data-en="Dedicated support team">فريق دعم متكامل</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Values Section (Why Us) -->
-    <section class="section values" id="why-us">
+    <!-- About Section -->
+    <section class="section about" id="about">
         <div class="container">
             <div class="section-header">
-                <span class="section-badge" data-ar="لماذا نحن" data-en="Why Us">لماذا نحن</span>
-                <h2 class="section-title" data-ar="<span class='highlight'>قيمنا</span>" data-en="Our <span class='highlight'>Values</span>"><span class="highlight">قيمنا</span></h2>
+                <span class="section-badge" data-ar="من نحن" data-en="About Us">من نحن</span>
+                <h2 class="section-title">
+                    <span data-ar="شريكك الموثوق في" data-en="Your Trusted Partner in">شريكك الموثوق في</span>
+                    <span class="highlight" data-ar="عالم الشحن" data-en="Shipping World">عالم الشحن</span>
+                </h2>
+                <p class="section-desc" data-ar="نحن شركة سعودية متخصصة في خدمات الشحن والتوصيل، نسعى لتقديم أفضل الحلول اللوجستية بأعلى معايير الجودة والاحترافية." data-en="We are a Saudi company specialized in shipping and delivery services, striving to provide the best logistics solutions with the highest standards of quality and professionalism.">
+                    نحن شركة سعودية متخصصة في خدمات الشحن والتوصيل، نسعى لتقديم أفضل الحلول اللوجستية بأعلى معايير الجودة والاحترافية.
+                </p>
+            </div>
+            
+            <div class="about-highlight">
+                <h3 data-ar="🎯 مهمتنا" data-en="🎯 Our Mission">🎯 مهمتنا</h3>
+                <p data-ar="تسهيل عملية الشحن والتوصيل للتجار والمتاجر الإلكترونية من خلال توفير منصة متكاملة تربطهم بأفضل شركات الشحن في المملكة." data-en="Facilitating shipping and delivery for merchants and e-commerce stores by providing an integrated platform connecting them with the best shipping companies in the Kingdom.">
+                    تسهيل عملية الشحن والتوصيل للتجار والمتاجر الإلكترونية من خلال توفير منصة متكاملة تربطهم بأفضل شركات الشحن في المملكة.
+                </p>
+            </div>
+            
+            <div class="about-cards-grid">
+                <div class="about-card">
+                    <div class="about-card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4 data-ar="نمو مستمر" data-en="Continuous Growth">نمو مستمر</h4>
+                    <p data-ar="حققنا نمواً مستمراً في عدد الشحنات والعملاء منذ انطلاقتنا، بفضل التزامنا بالجودة والموثوقية." data-en="We have achieved continuous growth in shipments and customers since our launch, thanks to our commitment to quality and reliability.">
+                        حققنا نمواً مستمراً في عدد الشحنات والعملاء منذ انطلاقتنا، بفضل التزامنا بالجودة والموثوقية.
+                    </p>
+                </div>
+                <div class="about-card">
+                    <div class="about-card-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h4 data-ar="تغطية شاملة" data-en="Wide Coverage">تغطية شاملة</h4>
+                    <p data-ar="نغطي جميع مناطق المملكة العربية السعودية مع إمكانية الشحن الدولي لأكثر من 200 دولة حول العالم." data-en="We cover all regions of Saudi Arabia with international shipping to over 200 countries worldwide.">
+                        نغطي جميع مناطق المملكة العربية السعودية مع إمكانية الشحن الدولي لأكثر من 200 دولة حول العالم.
+                    </p>
+                </div>
+                <div class="about-card">
+                    <div class="about-card-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h4 data-ar="جودة عالية" data-en="High Quality">جودة عالية</h4>
+                    <p data-ar="نلتزم بأعلى معايير الجودة في جميع خدماتنا، مع ضمان رضا العملاء بنسبة تتجاوز 99%." data-en="We adhere to the highest quality standards in all our services, with customer satisfaction exceeding 99%.">
+                        نلتزم بأعلى معايير الجودة في جميع خدماتنا، مع ضمان رضا العملاء بنسبة تتجاوز 99%.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="section values">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge" data-ar="قيمنا" data-en="Our Values">قيمنا</span>
+                <h2 class="section-title">
+                    <span data-ar="القيم التي" data-en="Values That">القيم التي</span>
+                    <span class="highlight" data-ar="نعمل بها" data-en="Guide Us">نعمل بها</span>
+                </h2>
             </div>
             
             <div class="values-grid">
                 <div class="value-card">
-                    <div class="value-icon"><i class="fas fa-shield-halved"></i></div>
-                    <h3 data-ar="الاعتمادية" data-en="Reliability">الاعتمادية</h3>
-                    <p data-ar="نفي بوعدنا ونعمل بثقة" data-en="We keep our promises and work with confidence">نفي بوعدنا ونعمل بثقة</p>
+                    <div class="value-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3 data-ar="الموثوقية" data-en="Reliability">الموثوقية</h3>
+                    <p data-ar="نلتزم بوعودنا ومواعيدنا" data-en="We keep our promises">نلتزم بوعودنا ومواعيدنا</p>
                 </div>
                 <div class="value-card">
-                    <div class="value-icon"><i class="fas fa-lightbulb"></i></div>
-                    <h3 data-ar="الابتكار" data-en="Innovation">الابتكار</h3>
-                    <p data-ar="نبحث دائمًا عن طرق جديدة لتحسين خدماتنا وتطوير أدواتنا." data-en="We are always looking for new ways to improve our services and develop our tools.">نبحث دائمًا عن طرق جديدة لتحسين خدماتنا وتطوير أدواتنا.</p>
+                    <div class="value-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 data-ar="السرعة" data-en="Speed">السرعة</h3>
+                    <p data-ar="توصيل في أسرع وقت" data-en="Fastest delivery times">توصيل في أسرع وقت</p>
                 </div>
                 <div class="value-card">
-                    <div class="value-icon"><i class="fas fa-gem"></i></div>
+                    <div class="value-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
                     <h3 data-ar="الجودة" data-en="Quality">الجودة</h3>
-                    <p data-ar="نضع معايير عالية في كل عملية توصيل" data-en="We set high standards in every delivery operation">نضع معايير عالية في كل عملية توصيل</p>
+                    <p data-ar="معايير عالية دائماً" data-en="High standards always">معايير عالية دائماً</p>
                 </div>
                 <div class="value-card">
-                    <div class="value-icon"><i class="fas fa-award"></i></div>
-                    <h3 data-ar="الاحترافية" data-en="Professionalism">الاحترافية</h3>
-                    <p data-ar="نتعامل مع كل طلب بأعلى درجات الالتزام لضمان تقديم نتائج ممتازة في كل مرة." data-en="We handle every order with the highest commitment to ensure excellent results every time.">نتعامل مع كل طلب بأعلى درجات الالتزام لضمان تقديم نتائج ممتازة في كل مرة.</p>
+                    <div class="value-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 data-ar="رضا العملاء" data-en="Satisfaction">رضا العملاء</h3>
+                    <p data-ar="أولويتنا القصوى" data-en="Our top priority">أولويتنا القصوى</p>
                 </div>
             </div>
         </div>
@@ -207,79 +276,77 @@
     <section class="section services" id="services">
         <div class="container">
             <div class="section-header">
-                <span class="section-badge" data-ar="حلول مبتكرة" data-en="Innovative Solutions">حلول مبتكرة</span>
-                <h2 class="section-title" data-ar="ماذا <span class='highlight'>نقدم</span>" data-en="What We <span class='highlight'>Offer</span>">ماذا <span class="highlight">نقدم</span></h2>
-                <p class="section-desc" data-ar="نقدم حلول توصيل ذكية مصممة لتلبية احتياجات الأفراد والشركات بكفاءة عالية. نغطي التوصيل الفوري، إدارة الأساطيل، الدعم اللوجستي، والتتبع اللحظي بكل احتراف. هدفنا تقديم خدمة مرنة، دقيقة، ومبنية على نتائج واضحة تعكس جودة شركائنا." data-en="We offer smart delivery solutions designed to meet the needs of individuals and businesses with high efficiency. We cover instant delivery, fleet management, logistics support, and real-time tracking professionally. Our goal is to provide flexible, accurate service based on clear results that reflect the quality of our partners.">
-                    نقدم حلول توصيل ذكية مصممة لتلبية احتياجات الأفراد والشركات بكفاءة عالية. نغطي التوصيل الفوري، إدارة الأساطيل، الدعم اللوجستي، والتتبع اللحظي بكل احتراف. هدفنا تقديم خدمة مرنة، دقيقة، ومبنية على نتائج واضحة تعكس جودة شركائنا.
+                <span class="section-badge" data-ar="خدماتنا" data-en="Our Services">خدماتنا</span>
+                <h2 class="section-title">
+                    <span data-ar="حلول شحن" data-en="Shipping Solutions">حلول شحن</span>
+                    <span class="highlight" data-ar="متكاملة" data-en="Integrated">متكاملة</span>
+                </h2>
+                <p class="section-desc" data-ar="نقدم مجموعة شاملة من خدمات الشحن والتوصيل المصممة لتلبية احتياجاتك." data-en="We offer a comprehensive range of shipping and delivery services designed to meet your needs.">
+                    نقدم مجموعة شاملة من خدمات الشحن والتوصيل المصممة لتلبية احتياجاتك.
                 </p>
             </div>
             
             <div class="services-grid">
                 <div class="service-card">
                     <div class="service-image">
-                        <img src="assets/services/delivery-fast.svg" alt="توصيل فوري">
+                        <img src="https://illustrations.popsy.co/amber/fast-delivery.svg" alt="التوصيل السريع">
                     </div>
                     <div class="service-content">
-                        <h3 data-ar="توصيل فوري داخل المدن" data-en="Instant City Delivery">توصيل فوري داخل المدن</h3>
-                        <p data-ar="نضمن لك حلول سريعة وآمنة للوصول إلى وجهتك دون تأخير." data-en="We guarantee fast and safe solutions to reach your destination without delay.">نضمن لك حلول سريعة وآمنة للوصول إلى وجهتك دون تأخير.</p>
+                        <h3 data-ar="التوصيل السريع" data-en="Express Delivery">التوصيل السريع</h3>
+                        <p data-ar="خدمة توصيل سريعة خلال 24-48 ساعة لجميع مناطق المملكة، مع تتبع مباشر للشحنة." data-en="Fast delivery service within 24-48 hours to all regions of the Kingdom, with live shipment tracking.">
+                            خدمة توصيل سريعة خلال 24-48 ساعة لجميع مناطق المملكة، مع تتبع مباشر للشحنة.
+                        </p>
                     </div>
                 </div>
                 
                 <div class="service-card">
                     <div class="service-image">
-                        <img src="assets/services/logistics.svg" alt="حلول لوجستية">
+                        <img src="https://illustrations.popsy.co/amber/logistics.svg" alt="الشحن المحلي">
                     </div>
                     <div class="service-content">
-                        <h3 data-ar="حلول لوجستية للمطاعم، المتاجر، والمنصات الرقمية" data-en="Logistics solutions for restaurants, stores, and digital platforms">حلول لوجستية للمطاعم، المتاجر، والمنصات الرقمية</h3>
-                        <p data-ar="دعم تشغيلي يومي يعزز كفاءة أعمالك." data-en="Daily operational support that enhances your business efficiency.">دعم تشغيلي يومي يعزز كفاءة أعمالك.</p>
+                        <h3 data-ar="الشحن المحلي" data-en="Local Shipping">الشحن المحلي</h3>
+                        <p data-ar="تغطية شاملة لجميع مدن ومناطق المملكة العربية السعودية بأسعار تنافسية." data-en="Comprehensive coverage of all cities and regions of Saudi Arabia at competitive prices.">
+                            تغطية شاملة لجميع مدن ومناطق المملكة العربية السعودية بأسعار تنافسية.
+                        </p>
                     </div>
                 </div>
                 
                 <div class="service-card">
                     <div class="service-image">
-                        <img src="assets/services/fleet.svg" alt="إدارة أساطيل">
+                        <img src="https://illustrations.popsy.co/amber/truck.svg" alt="إدارة الأسطول">
                     </div>
                     <div class="service-content">
-                        <h3 data-ar="إدارة وتشغيل أساطيل توصيل خاصة للشركات" data-en="Managing and operating private delivery fleets for companies">إدارة وتشغيل أساطيل توصيل خاصة للشركات</h3>
-                        <p data-ar="خدمات مرنة ومتكاملة تساعدك على تقليل التكاليف ورفع الكفاءة." data-en="Flexible and integrated services that help you reduce costs and increase efficiency.">خدمات مرنة ومتكاملة تساعدك على تقليل التكاليف ورفع الكفاءة.</p>
+                        <h3 data-ar="إدارة الأسطول" data-en="Fleet Management">إدارة الأسطول</h3>
+                        <p data-ar="أسطول حديث ومتنوع من المركبات لتلبية جميع احتياجات الشحن المختلفة." data-en="Modern and diverse fleet of vehicles to meet all different shipping needs.">
+                            أسطول حديث ومتنوع من المركبات لتلبية جميع احتياجات الشحن المختلفة.
+                        </p>
                     </div>
                 </div>
                 
                 <div class="service-card">
                     <div class="service-image">
-                        <img src="assets/services/contracts.svg" alt="عقود مرنة">
+                        <img src="https://illustrations.popsy.co/amber/online-shopping.svg" alt="التجارة الإلكترونية">
                     </div>
                     <div class="service-content">
-                        <h3 data-ar="عقود تشغيل مرنة للشركاء التجاريين" data-en="Flexible operating contracts for business partners">عقود تشغيل مرنة للشركاء التجاريين</h3>
-                        <p data-ar="شراكات مبنية على الأداء ونتائج قابلة للقياس." data-en="Performance-based partnerships with measurable results.">شراكات مبنية على الأداء ونتائج قابلة للقياس.</p>
+                        <h3 data-ar="حلول التجارة الإلكترونية" data-en="E-commerce Solutions">حلول التجارة الإلكترونية</h3>
+                        <p data-ar="حلول متكاملة للمتاجر الإلكترونية مع ربط API وتكامل مع منصات البيع." data-en="Integrated solutions for online stores with API integration and sales platform connectivity.">
+                            حلول متكاملة للمتاجر الإلكترونية مع ربط API وتكامل مع منصات البيع.
+                        </p>
                     </div>
                 </div>
             </div>
             
-            <!-- Full Width Tracking Card -->
             <div class="service-card-full">
                 <div class="service-image-full">
-                    <img src="assets/services/tracking.svg" alt="تتبع مباشر">
+                    <img src="https://illustrations.popsy.co/amber/data-visualization.svg" alt="تتبع الشحنات">
                 </div>
                 <div class="service-content-full">
-                    <h3 data-ar="تتبع مباشر، دعم متواصل، وتقارير مفصلة" data-en="Live tracking, continuous support, and detailed reports">تتبع مباشر، دعم متواصل، وتقارير مفصلة</h3>
-                    <p data-ar="شفافية تتيح لك الإشراف على كل خطوة في العملية." data-en="Transparency that allows you to oversee every step of the process.">شفافية تتيح لك الإشراف على كل خطوة في العملية.</p>
+                    <h3 data-ar="نظام تتبع متقدم" data-en="Advanced Tracking System">نظام تتبع متقدم</h3>
+                    <p data-ar="نظام تتبع ذكي يمكّنك من متابعة شحناتك لحظة بلحظة، مع إشعارات فورية بكل تحديث. تقارير مفصلة وإحصائيات دقيقة لمساعدتك في إدارة عمليات الشحن بكفاءة." data-en="Smart tracking system that allows you to follow your shipments in real-time, with instant notifications for every update. Detailed reports and accurate statistics to help you manage shipping operations efficiently.">
+                        نظام تتبع ذكي يمكّنك من متابعة شحناتك لحظة بلحظة، مع إشعارات فورية بكل تحديث. تقارير مفصلة وإحصائيات دقيقة لمساعدتك في إدارة عمليات الشحن بكفاءة.
+                    </p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="cta-content">
-            <h2 data-ar="كن جزءًا من التجربة" data-en="Be Part of the Experience">كن جزءًا من التجربة</h2>
-            <p data-ar="سواء كنت فردًا بحاجة إلى خدمة توصيل موثوقة، أو شركة تبحث عن حلول لوجستية متطورة، فإن One Trip Express هي خيارك الأمثل. نقدم لك خدمة ترتقي إلى طموحاتك: سرعة، دقة، واحترافية." data-en="Whether you're an individual in need of reliable delivery service, or a company looking for advanced logistics solutions, One Trip Express is your optimal choice. We offer you service that lives up to your ambitions: speed, accuracy, and professionalism.">
-                سواء كنت فردًا بحاجة إلى خدمة توصيل موثوقة، أو شركة تبحث عن حلول لوجستية متطورة، فإن One Trip Express هي خيارك الأمثل. نقدم لك خدمة ترتقي إلى طموحاتك: <strong>سرعة، دقة، واحترافية</strong>.
-            </p>
-            <a href="#contact" class="btn btn-white">
-                <span data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</span>
-                <i class="fas fa-arrow-left"></i>
-            </a>
         </div>
     </section>
 
@@ -287,59 +354,63 @@
     <section class="section partners" id="partners">
         <div class="container">
             <div class="section-header">
-                <span class="section-badge" data-ar="Our Partners" data-en="Our Partners">Our Partners</span>
-                <h2 class="section-title" data-ar="شركاؤنا في <span class='highlight'>الريادة</span>" data-en="Our Partners in <span class='highlight'>Leadership</span>">شركاؤنا في <span class="highlight">الريادة</span></h2>
-                <p class="section-desc" data-ar="نقيس نجاحنا بمدى قوة العلاقات التي نبنيها مع شركائنا. نفتخر بكوننا الشريك اللوجستي الموثوق لعدد من الشركات الرائدة في المملكة. من أبرز شركائنا:" data-en="We measure our success by the strength of the relationships we build with our partners. We are proud to be the trusted logistics partner for leading companies in the Kingdom. Our key partners include:">
-                    نقيس نجاحنا بمدى قوة العلاقات التي نبنيها مع شركائنا. نفتخر بكوننا الشريك اللوجستي الموثوق لعدد من الشركات الرائدة في المملكة. من أبرز شركائنا:
+                <span class="section-badge" data-ar="شركاؤنا" data-en="Our Partners">شركاؤنا</span>
+                <h2 class="section-title">
+                    <span data-ar="نتعاون مع" data-en="We Partner With">نتعاون مع</span>
+                    <span class="highlight" data-ar="الأفضل" data-en="The Best">الأفضل</span>
+                </h2>
+                <p class="section-desc" data-ar="شراكات استراتيجية مع أفضل شركات الشحن لضمان أفضل خدمة ممكنة." data-en="Strategic partnerships with the best shipping companies to ensure the best possible service.">
+                    شراكات استراتيجية مع أفضل شركات الشحن لضمان أفضل خدمة ممكنة.
                 </p>
             </div>
             
             <div class="partners-grid">
                 <div class="partner-card">
-                    <img src="assets/partners/jahez.svg" alt="جاهز">
-                    <h4 data-ar="جاهز | Jahez" data-en="Jahez">جاهز | Jahez</h4>
-                    <p data-ar="نقدم لها عمليات توصيل دقيقة تلبي توقعات ملايين المستخدمين." data-en="We provide precise delivery operations that meet the expectations of millions of users.">نقدم لها عمليات توصيل دقيقة تلبي توقعات ملايين المستخدمين.</p>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Aramex_logo.svg/200px-Aramex_logo.svg.png" alt="Aramex">
+                    <h4>Aramex</h4>
+                    <p data-ar="شريك الشحن الدولي" data-en="International Shipping Partner">شريك الشحن الدولي</p>
                 </div>
                 <div class="partner-card">
-                    <img src="assets/partners/hungerstation.svg" alt="هنقرستيشن">
-                    <h4 data-ar="هنقرستيشن | HungerStation" data-en="HungerStation">هنقرستيشن | HungerStation</h4>
-                    <p data-ar="نشاركهم في تقديم خدمة لوجستية موثوقة وعالية الجودة." data-en="We partner with them to provide reliable and high-quality logistics services.">نشاركهم في تقديم خدمة لوجستية موثوقة وعالية الجودة.</p>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/DHL_Logo.svg/200px-DHL_Logo.svg.png" alt="DHL">
+                    <h4>DHL</h4>
+                    <p data-ar="الشحن السريع العالمي" data-en="Global Express Shipping">الشحن السريع العالمي</p>
                 </div>
                 <div class="partner-card">
-                    <img src="assets/partners/keeta.svg" alt="كيتا">
-                    <h4 data-ar="كيتا | KEETA" data-en="KEETA">كيتا | KEETA</h4>
-                    <p data-ar="نترجم التقنية والمرونة إلى تجربة توصيل مميزة." data-en="We translate technology and flexibility into a distinctive delivery experience.">نترجم التقنية والمرونة إلى تجربة توصيل مميزة.</p>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHJDnQldqxLT_g6JwsHAQoQaLcb3Z9QKhLAQ&s" alt="SMSA">
+                    <h4>SMSA Express</h4>
+                    <p data-ar="التوصيل المحلي السريع" data-en="Fast Local Delivery">التوصيل المحلي السريع</p>
                 </div>
                 <div class="partner-card">
-                    <img src="assets/partners/mrsool.svg" alt="مرسول">
-                    <h4 data-ar="مرسول | Mrsool" data-en="Mrsool">مرسول | Mrsool</h4>
-                    <p data-ar="شراكة متميزة لتوفير خدمة توصيل سريعة وموثوقة." data-en="An excellent partnership to provide fast and reliable delivery service.">شراكة متميزة لتوفير خدمة توصيل سريعة وموثوقة.</p>
+                    <img src="https://cdn.salla.sa/Rjolm/CfVIVB1t1xNblKQd7yAbIDPIjh1VzBgVRZ6u2Mrp.png" alt="Naqel">
+                    <h4>Naqel Express</h4>
+                    <p data-ar="شريك الشحن المحلي" data-en="Local Shipping Partner">شريك الشحن المحلي</p>
                 </div>
                 <div class="partner-card">
-                    <img src="assets/partners/chefz.svg" alt="ذا شيفز">
-                    <h4 data-ar="ذا شيفز | The Chefs" data-en="The Chefs">ذا شيفز | The Chefs</h4>
-                    <p data-ar="نُوصل الإبداع والمذاق الرفيع بدقة وأناقة." data-en="We deliver creativity and fine taste with precision and elegance.">نُوصل الإبداع والمذاق الرفيع بدقة وأناقة.</p>
+                    <img src="https://cdn.salla.sa/Rjolm/6lrpRyI3tnxjVPRYYOVgzEi6cIzLBGl9hJFOx6S1.png" alt="J&T Express">
+                    <h4>J&T Express</h4>
+                    <p data-ar="شريك التجارة الإلكترونية" data-en="E-commerce Partner">شريك التجارة الإلكترونية</p>
                 </div>
                 <div class="partner-card">
-                    <img src="assets/partners/toyou.svg" alt="تو يو">
-                    <h4 data-ar="تو يو | ToYou" data-en="ToYou">تو يو | ToYou</h4>
-                    <p data-ar="حلول توصيل متكاملة للتجارة الإلكترونية بأعلى كفاءة." data-en="Integrated delivery solutions for e-commerce with highest efficiency.">حلول توصيل متكاملة للتجارة الإلكترونية بأعلى كفاءة.</p>
+                    <img src="https://cdn.salla.sa/Rjolm/tKneLPDuLyAbJDqw8YGGABSo4tEOxMjAZLfJAm07.png" alt="iMile">
+                    <h4>iMile</h4>
+                    <p data-ar="خدمات الميل الأخير" data-en="Last Mile Services">خدمات الميل الأخير</p>
                 </div>
-                <div class="partner-card">
-                    <img src="assets/partners/smsa.svg" alt="SMSA">
-                    <h4 data-ar="SMSA" data-en="SMSA">SMSA</h4>
-                    <p data-ar="شريك موثوق في خدمات الشحن والتوصيل السريع." data-en="A trusted partner in shipping and express delivery services.">شريك موثوق في خدمات الشحن والتوصيل السريع.</p>
-                </div>
-                <div class="partner-card">
-                    <img src="assets/partners/aramex.svg" alt="أرامكس">
-                    <h4 data-ar="أرامكس | Aramex" data-en="Aramex">أرامكس | Aramex</h4>
-                    <p data-ar="خدمات لوجستية عالمية بمعايير احترافية." data-en="Global logistics services with professional standards.">خدمات لوجستية عالمية بمعايير احترافية.</p>
-                </div>
-                <div class="partner-card">
-                    <img src="assets/partners/naqel.svg" alt="ناقل">
-                    <h4 data-ar="ناقل إكسبريس | Naqel" data-en="Naqel Express">ناقل إكسبريس | Naqel</h4>
-                    <p data-ar="شبكة توصيل واسعة تغطي جميع أنحاء المملكة." data-en="A wide delivery network covering all parts of the Kingdom.">شبكة توصيل واسعة تغطي جميع أنحاء المملكة.</p>
-                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 data-ar="هل أنت جاهز للبدء؟" data-en="Ready to Get Started?">هل أنت جاهز للبدء؟</h2>
+                <p data-ar="انضم لآلاف التجار الذين يثقون في خدماتنا. احصل على استشارة مجانية اليوم!" data-en="Join thousands of merchants who trust our services. Get a free consultation today!">
+                    انضم لآلاف التجار الذين يثقون في خدماتنا. احصل على استشارة مجانية اليوم!
+                </p>
+                <a href="#contact" class="btn btn-white">
+                    <i class="fas fa-phone"></i>
+                    <span data-ar="تواصل معنا الآن" data-en="Contact Us Now">تواصل معنا الآن</span>
+                </a>
             </div>
         </div>
     </section>
@@ -349,35 +420,56 @@
         <div class="container">
             <div class="section-header">
                 <span class="section-badge" data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</span>
-                <h2 class="section-title" data-ar="لا تتردد بالتواصل معنا <span class='highlight'>نعتز بخدمتكم</span>" data-en="Don't hesitate to contact us <span class='highlight'>We value serving you</span>">لا تتردد بالتواصل معنا <span class="highlight">نعتز بخدمتكم</span></h2>
-                <p class="section-desc" data-ar="هل تحتاج إلى إجابة سريعة على سؤالك؟ فريق الدعم لدينا متاح للإجابة على أي استفسارات طوال أيام الأسبوع." data-en="Need a quick answer to your question? Our support team is available to answer any inquiries throughout the week.">
-                    هل تحتاج إلى إجابة سريعة على سؤالك؟ فريق الدعم لدينا متاح للإجابة على أي استفسارات طوال أيام الأسبوع.
-                </p>
+                <h2 class="section-title">
+                    <span data-ar="نحن هنا" data-en="We're Here">نحن هنا</span>
+                    <span class="highlight" data-ar="لمساعدتك" data-en="To Help">لمساعدتك</span>
+                </h2>
             </div>
             
             <div class="contact-grid">
                 <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
-                        <div class="contact-item-content">
-                            <h4 data-ar="البريد الإلكترونى" data-en="Email">البريد الإلكترونى</h4>
-                            <a href="mailto:info@onetrip.sa">info@onetrip.sa</a>
-                        </div>
-                    </div>
+                    <h3 data-ar="معلومات التواصل" data-en="Contact Information">معلومات التواصل</h3>
+                    <p data-ar="تواصل معنا عبر أي من القنوات التالية وسنرد عليك في أقرب وقت." data-en="Contact us through any of the following channels and we'll respond as soon as possible.">
+                        تواصل معنا عبر أي من القنوات التالية وسنرد عليك في أقرب وقت.
+                    </p>
                     
                     <div class="contact-item">
-                        <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
                         <div class="contact-item-content">
                             <h4 data-ar="الهاتف" data-en="Phone">الهاتف</h4>
-                            <a href="tel:920032104">920032104</a>
+                            <a href="tel:+966507502233">+966 50 750 2233</a>
                         </div>
                     </div>
                     
                     <div class="contact-item">
-                        <div class="contact-icon"><i class="fas fa-location-dot"></i></div>
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-item-content">
+                            <h4 data-ar="البريد الإلكتروني" data-en="Email">البريد الإلكتروني</h4>
+                            <a href="mailto:info@onetripexpress.com">info@onetripexpress.com</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-location-dot"></i>
+                        </div>
                         <div class="contact-item-content">
                             <h4 data-ar="العنوان" data-en="Address">العنوان</h4>
-                            <p data-ar="حي اليرموك، الرياض، المملكة العربية السعودية" data-en="Al-Yarmouk District, Riyadh, Saudi Arabia">حي اليرموك، الرياض، المملكة العربية السعودية</p>
+                            <p data-ar="الرياض، المملكة العربية السعودية" data-en="Riyadh, Saudi Arabia">الرياض، المملكة العربية السعودية</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-item-content">
+                            <h4 data-ar="ساعات العمل" data-en="Working Hours">ساعات العمل</h4>
+                            <p data-ar="السبت - الخميس: 9 ص - 9 م" data-en="Sat - Thu: 9 AM - 9 PM">السبت - الخميس: 9 ص - 9 م</p>
                         </div>
                     </div>
                     
@@ -385,30 +477,30 @@
                         <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
                         <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
                         <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://wa.me/966920032104" class="social-link" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-snapchat-ghost"></i></a>
                     </div>
                 </div>
                 
                 <div class="contact-form">
                     <form id="contactForm">
                         <div class="form-group">
-                            <label data-ar="الإسم" data-en="Name">الإسم</label>
-                            <input type="text" name="name" required placeholder="الإسم">
+                            <label data-ar="الاسم الكامل" data-en="Full Name">الاسم الكامل</label>
+                            <input type="text" name="name" required placeholder="">
                         </div>
                         <div class="form-group">
-                            <label data-ar="رقم التليفون" data-en="Phone Number">رقم التليفون</label>
-                            <input type="tel" name="phone" required placeholder="رقم التليفون">
+                            <label data-ar="البريد الإلكتروني" data-en="Email">البريد الإلكتروني</label>
+                            <input type="email" name="email" required placeholder="">
                         </div>
                         <div class="form-group">
-                            <label data-ar="البريد الإلكترونى" data-en="Email">البريد الإلكترونى</label>
-                            <input type="email" name="email" required placeholder="البريد الإلكترونى">
+                            <label data-ar="رقم الهاتف" data-en="Phone Number">رقم الهاتف</label>
+                            <input type="tel" name="phone" required placeholder="">
                         </div>
                         <div class="form-group">
-                            <label data-ar="مضمون الطلب" data-en="Message">مضمون الطلب</label>
-                            <textarea name="message" required placeholder="مضمون الطلب"></textarea>
+                            <label data-ar="الرسالة" data-en="Message">الرسالة</label>
+                            <textarea name="message" required placeholder=""></textarea>
                         </div>
                         <button type="submit" class="submit-btn">
-                            <span data-ar="إرسال الطلب" data-en="Send Request">إرسال الطلب</span>
+                            <span data-ar="إرسال الرسالة" data-en="Send Message">إرسال الرسالة</span>
                             <i class="fas fa-paper-plane"></i>
                         </button>
                     </form>
@@ -422,60 +514,57 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <a href="#home" class="footer-logo">
+                    <a href="#" class="footer-logo">
                         <img src="assets/logo.svg" alt="One Trip Express">
                     </a>
-                    <p data-ar="التوصيل كما ينبغي أن يكون" data-en="Delivery as it should be">التوصيل كما ينبغي أن يكون</p>
+                    <p data-ar="شركة سعودية متخصصة في خدمات الشحن والتوصيل، نسعى لتقديم أفضل الحلول اللوجستية." data-en="A Saudi company specialized in shipping and delivery services, striving to provide the best logistics solutions.">
+                        شركة سعودية متخصصة في خدمات الشحن والتوصيل، نسعى لتقديم أفضل الحلول اللوجستية.
+                    </p>
                     <div class="footer-social">
                         <a href="#"><i class="fab fa-twitter"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-snapchat-ghost"></i></a>
                     </div>
                 </div>
                 
                 <div class="footer-links">
-                    <h4 data-ar="روابط تهمك" data-en="Quick Links">روابط تهمك</h4>
+                    <h4 data-ar="روابط سريعة" data-en="Quick Links">روابط سريعة</h4>
                     <a href="#home" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
                     <a href="#about" data-ar="من نحن" data-en="About">من نحن</a>
-                    <a href="#services" data-ar="ماذا نقدم؟" data-en="Services">ماذا نقدم؟</a>
-                    <a href="#why-us" data-ar="لماذا نحن؟" data-en="Why Us">لماذا نحن؟</a>
+                    <a href="#services" data-ar="خدماتنا" data-en="Services">خدماتنا</a>
                     <a href="#contact" data-ar="تواصل معنا" data-en="Contact">تواصل معنا</a>
                 </div>
                 
                 <div class="footer-links">
-                    <h4 data-ar="ماذا نقدم" data-en="Services">ماذا نقدم</h4>
-                    <a href="#services" data-ar="توصيل فوري داخل المدن" data-en="Instant City Delivery">توصيل فوري داخل المدن</a>
-                    <a href="#services" data-ar="حلول لوجستية للمطاعم، المتاجر، والمنصات الرقمية" data-en="Logistics for Restaurants">حلول لوجستية للمطاعم، المتاجر، والمنصات الرقمية</a>
-                    <a href="#services" data-ar="إدارة وتشغيل أساطيل توصيل خاصة للشركات" data-en="Fleet Management">إدارة وتشغيل أساطيل توصيل خاصة للشركات</a>
-                    <a href="#services" data-ar="عقود تشغيل مرنة للشركاء التجاريين" data-en="Flexible Contracts">عقود تشغيل مرنة للشركاء التجاريين</a>
-                    <a href="#services" data-ar="تتبع مباشر، دعم متواصل، وتقارير مفصلة" data-en="Live Tracking">تتبع مباشر، دعم متواصل، وتقارير مفصلة</a>
+                    <h4 data-ar="خدماتنا" data-en="Our Services">خدماتنا</h4>
+                    <a href="#" data-ar="التوصيل السريع" data-en="Express Delivery">التوصيل السريع</a>
+                    <a href="#" data-ar="الشحن المحلي" data-en="Local Shipping">الشحن المحلي</a>
+                    <a href="#" data-ar="إدارة الأسطول" data-en="Fleet Management">إدارة الأسطول</a>
+                    <a href="#" data-ar="تتبع الشحنات" data-en="Shipment Tracking">تتبع الشحنات</a>
                 </div>
                 
                 <div class="footer-links">
-                    <h4 data-ar="شركاؤنا في الريادة" data-en="Our Partners">شركاؤنا في الريادة</h4>
-                    <a href="#partners" data-ar="جاهز | Jahez" data-en="Jahez">جاهز | Jahez</a>
-                    <a href="#partners" data-ar="هنقرستيشن | HungerStation" data-en="HungerStation">هنقرستيشن | HungerStation</a>
-                    <a href="#partners" data-ar="كيتا | KEETA" data-en="KEETA">كيتا | KEETA</a>
-                    <a href="#partners" data-ar="مرسول | Mrsool" data-en="Mrsool">مرسول | Mrsool</a>
-                    <a href="#partners" data-ar="ذا شيفز | The Chefs" data-en="The Chefs">ذا شيفز | The Chefs</a>
-                    <a href="#partners" data-ar="تو يو | ToYou" data-en="ToYou">تو يو | ToYou</a>
+                    <h4 data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</h4>
+                    <a href="tel:+966507502233">+966 50 750 2233</a>
+                    <a href="mailto:info@onetripexpress.com">info@onetripexpress.com</a>
+                    <a href="#" data-ar="الرياض، السعودية" data-en="Riyadh, Saudi Arabia">الرياض، السعودية</a>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p data-ar="جميع الحقوق محفوظة لشركة" data-en="All rights reserved to">جميع الحقوق محفوظة لشركة <strong>One Trip Express</strong> – 2025</p>
+                <p>© 2024 One Trip Express. <span data-ar="جميع الحقوق محفوظة" data-en="All rights reserved">جميع الحقوق محفوظة</span></p>
             </div>
         </div>
     </footer>
 
-    <!-- WhatsApp Button -->
-    <a href="https://wa.me/966920032104" class="whatsapp-btn" target="_blank">
+    <!-- Floating Buttons -->
+    <a href="https://wa.me/966507502233" class="whatsapp-btn" target="_blank">
         <i class="fab fa-whatsapp"></i>
     </a>
-
-    <!-- Back to Top -->
-    <button class="back-top" id="backTop">
-        <i class="fas fa-arrow-up"></i>
+    
+    <button class="back-top" id="backTop" onclick="scrollToTop()">
+        <i class="fas fa-chevron-up"></i>
     </button>
 
     <script src="scripts.js"></script>
