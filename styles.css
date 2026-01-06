@@ -11,28 +11,30 @@
     --primary-light: #FFAA40;
     --primary-dark: #D97B0D;
     
-    --dark: #0B1120;
-    --dark-card: #111827;
-    --dark-lighter: #1F2937;
+    /* Light Theme Colors */
+    --dark: #FFFFFF;
+    --dark-card: #F8FAFC;
+    --dark-lighter: #F1F5F9;
     
-    --text-white: #FFFFFF;
-    --text-light: #E5E7EB;
-    --text-muted: #9CA3AF;
-    --text-dark: #6B7280;
+    /* Text Colors - Adjusted for Light Theme */
+    --text-white: #1E293B;
+    --text-light: #334155;
+    --text-muted: #64748B;
+    --text-dark: #94A3B8;
     
     --accent-green: #10B981;
     --accent-blue: #3B82F6;
     
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, #F7941D 0%, #FFAA40 100%);
-    --gradient-dark: linear-gradient(180deg, #0B1120 0%, #111827 100%);
-    --gradient-card: linear-gradient(145deg, #1F2937 0%, #111827 100%);
+    --gradient-dark: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+    --gradient-card: linear-gradient(145deg, #F1F5F9 0%, #F8FAFC 100%);
     
-    /* Shadows */
-    --shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
-    --shadow-md: 0 4px 20px rgba(0,0,0,0.25);
-    --shadow-lg: 0 8px 40px rgba(0,0,0,0.3);
-    --shadow-glow: 0 0 40px rgba(247, 148, 29, 0.2);
+    /* Shadows - Lighter for Light Theme */
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 40px rgba(0,0,0,0.1);
+    --shadow-glow: 0 0 40px rgba(247, 148, 29, 0.15);
     
     /* Border Radius */
     --radius-sm: 8px;
@@ -80,7 +82,7 @@ body {
 .preloader {
     position: fixed;
     inset: 0;
-    background: var(--dark);
+    background: #FFFFFF;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -144,9 +146,10 @@ body {
 }
 
 .nav.scrolled {
-    background: rgba(11, 17, 32, 0.95);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.06);
 }
 
 .nav-container {
@@ -218,7 +221,7 @@ body {
 .nav-toggle span {
     width: 24px;
     height: 2px;
-    background: var(--text-white);
+    background: var(--text-light);
     border-radius: var(--radius-full);
 }
 
@@ -261,8 +264,8 @@ body {
     position: absolute;
     inset: 0;
     background-image: 
-        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+        linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
     background-size: 60px 60px;
     mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 20%, transparent 100%);
 }
@@ -337,7 +340,7 @@ body {
 
 .btn-primary {
     background: var(--gradient-primary);
-    color: var(--text-white);
+    color: #FFFFFF;
     box-shadow: 0 8px 30px rgba(247, 148, 29, 0.3);
 }
 
@@ -399,8 +402,8 @@ body {
 /* ===== PARTNERS MARQUEE ===== */
 .partners-marquee {
     background: var(--dark-card);
-    border-top: 1px solid rgba(255,255,255,0.05);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-top: 1px solid rgba(0,0,0,0.06);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
     padding: 32px 0;
     overflow: hidden;
 }
@@ -454,7 +457,7 @@ body {
     gap: 16px;
     padding: 20px;
     background: var(--dark-card);
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid rgba(0,0,0,0.08);
     border-radius: var(--radius-xl);
     transition: var(--transition);
 }
@@ -472,7 +475,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-white);
+    color: #FFFFFF;
     font-size: 1.25rem;
     flex-shrink: 0;
 }
@@ -562,7 +565,7 @@ body {
 
 .about-card {
     background: var(--dark-card);
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid rgba(0,0,0,0.08);
     border-radius: var(--radius-xl);
     padding: 32px;
     transition: var(--transition);
@@ -581,7 +584,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-white);
+    color: #FFFFFF;
     font-size: 1.5rem;
     margin-bottom: 20px;
 }
@@ -611,7 +614,7 @@ body {
 
 .value-card {
     background: var(--dark);
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid rgba(0,0,0,0.08);
     border-radius: var(--radius-xl);
     padding: 32px 24px;
     text-align: center;
@@ -640,7 +643,7 @@ body {
 
 .value-card:hover .value-icon {
     background: var(--gradient-primary);
-    color: var(--text-white);
+    color: #FFFFFF;
 }
 
 .value-card h3 {
@@ -679,7 +682,7 @@ body {
 
 .service-card {
     background: var(--dark-card);
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid rgba(0,0,0,0.08);
     border-radius: var(--radius-xl);
     overflow: hidden;
     transition: var(--transition);
@@ -705,7 +708,7 @@ body {
     left: 0;
     right: 0;
     height: 100px;
-    background: linear-gradient(transparent, var(--dark-card));
+    background: linear-gradient(transparent, #F8FAFC);
 }
 
 .service-image img {
@@ -736,7 +739,7 @@ body {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
     background: var(--dark-card);
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid rgba(0,0,0,0.08);
     border-radius: var(--radius-xl);
     overflow: hidden;
     transition: var(--transition);
@@ -790,7 +793,7 @@ body {
 
 .partner-card {
     background: var(--dark);
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid rgba(0,0,0,0.08);
     border-radius: var(--radius-xl);
     padding: 32px 24px;
     display: flex;
@@ -854,7 +857,7 @@ body {
 
 .cta h2 {
     font-size: clamp(1.75rem, 4vw, 2.25rem);
-    color: var(--text-white);
+    color: #FFFFFF;
     margin-bottom: 16px;
 }
 
@@ -963,7 +966,7 @@ body {
 /* Contact Form */
 .contact-form {
     background: var(--dark-card);
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid rgba(0,0,0,0.08);
     border-radius: var(--radius-xl);
     padding: 40px;
 }
@@ -1007,7 +1010,7 @@ body {
     width: 100%;
     padding: 16px;
     background: var(--gradient-primary);
-    color: var(--text-white);
+    color: #FFFFFF;
     border: none;
     border-radius: var(--radius-md);
     font-family: inherit;
@@ -1028,8 +1031,8 @@ body {
 
 /* ===== FOOTER ===== */
 .footer {
-    background: var(--dark-card);
-    border-top: 1px solid rgba(255,255,255,0.05);
+    background: #1E293B;
+    border-top: 1px solid rgba(0,0,0,0.08);
     padding: 64px 0 24px;
 }
 
@@ -1041,7 +1044,7 @@ body {
 }
 
 .footer-brand p {
-    color: var(--text-muted);
+    color: #94A3B8;
     margin: 16px 0;
     font-size: 0.9rem;
     line-height: 1.7;
@@ -1060,12 +1063,12 @@ body {
 .footer-social a {
     width: 40px;
     height: 40px;
-    background: var(--dark);
+    background: #334155;
     border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-muted);
+    color: #94A3B8;
     transition: var(--transition);
 }
 
@@ -1075,14 +1078,14 @@ body {
 }
 
 .footer-links h4 {
-    color: var(--text-white);
+    color: #FFFFFF;
     font-size: 1rem;
     margin-bottom: 20px;
 }
 
 .footer-links a {
     display: block;
-    color: var(--text-muted);
+    color: #94A3B8;
     text-decoration: none;
     padding: 8px 0;
     font-size: 0.9rem;
@@ -1095,9 +1098,9 @@ body {
 
 .footer-bottom {
     padding-top: 24px;
-    border-top: 1px solid rgba(255,255,255,0.05);
+    border-top: 1px solid rgba(255,255,255,0.1);
     text-align: center;
-    color: var(--text-dark);
+    color: #94A3B8;
     font-size: 0.85rem;
 }
 
@@ -1113,7 +1116,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-white);
+    color: #FFFFFF;
     font-size: 1.75rem;
     box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
     z-index: 1000;
@@ -1136,8 +1139,8 @@ body {
     right: 24px;
     width: 48px;
     height: 48px;
-    background: var(--dark-card);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: #FFFFFF;
+    border: 1px solid rgba(0,0,0,0.1);
     border-radius: 50%;
     color: var(--text-white);
     font-size: 1.1rem;
@@ -1146,6 +1149,7 @@ body {
     visibility: hidden;
     transition: var(--transition);
     z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 [dir="ltr"] .back-top {
@@ -1211,10 +1215,11 @@ body {
         right: -100%;
         width: 280px;
         height: 100vh;
-        background: var(--dark-card);
+        background: #FFFFFF;
         flex-direction: column;
         padding: 80px 24px;
         transition: var(--transition);
+        box-shadow: -5px 0 30px rgba(0,0,0,0.1);
     }
     
     [dir="ltr"] .nav-menu {
