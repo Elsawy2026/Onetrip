@@ -17,7 +17,9 @@ const nav = document.getElementById('nav');
 const navLinks = document.querySelectorAll('.nav-link');
 const navMenu = document.getElementById('navMenu');
 
-// Scroll Effect
+// Scroll Effect with Progress Bar
+const scrollProgress = document.getElementById('scrollProgress');
+
 window.addEventListener('scroll', () => {
     if (window.pageYOffset > 50) {
         nav.classList.add('scrolled');
@@ -27,7 +29,18 @@ window.addEventListener('scroll', () => {
     
     updateActiveNav();
     updateBackTop();
+    updateScrollProgress();
 });
+
+// Update Scroll Progress
+function updateScrollProgress() {
+    if (scrollProgress) {
+        const scrollTop = window.pageYOffset;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        scrollProgress.style.width = scrollPercent + '%';
+    }
+}
 
 // Toggle Mobile Navigation
 function toggleNav() {
@@ -681,8 +694,108 @@ function animateCounterBoom(element, target, suffix = '') {
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         addTiltEffect();
+        addMagneticButtons();
+        addTextRevealEffect();
         // addGlowingCursor(); // Uncomment for cursor effect
     }, 1500);
+});
+
+// ===== MAGNETIC BUTTONS =====
+function addMagneticButtons() {
+    const magneticBtns = document.querySelectorAll('.btn-primary, .btn-secondary, .submit-btn');
+    
+    magneticBtns.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+        });
+        
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = 'translate(0, 0)';
+        });
+    });
+}
+
+// ===== TEXT REVEAL EFFECT =====
+function addTextRevealEffect() {
+    const titles = document.querySelectorAll('.section-title, .hero-title');
+    
+    titles.forEach(title => {
+        title.style.opacity = '1';
+        title.style.transform = 'translateY(0)';
+    });
+}
+
+// ===== PARTICLE BURST ON CLICK =====
+function createParticleBurst(x, y) {
+    const colors = ['#F7941D', '#FF6B35', '#FFAA40', '#FFD700'];
+    
+    for (let i = 0; i < 15; i++) {
+        const particle = document.createElement('div');
+        particle.style.cssText = `
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: ${colors[Math.floor(Math.random() * colors.length)]};
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            left: ${x}px;
+            top: ${y}px;
+        `;
+        document.body.appendChild(particle);
+        
+        const angle = (Math.PI * 2 * i) / 15;
+        const velocity = 100 + Math.random() * 100;
+        const vx = Math.cos(angle) * velocity;
+        const vy = Math.sin(angle) * velocity;
+        
+        let posX = x;
+        let posY = y;
+        let opacity = 1;
+        
+        function animate() {
+            posX += vx * 0.02;
+            posY += vy * 0.02 + 2;
+            opacity -= 0.02;
+            
+            particle.style.left = posX + 'px';
+            particle.style.top = posY + 'px';
+            particle.style.opacity = opacity;
+            particle.style.transform = `scale(${opacity})`;
+            
+            if (opacity > 0) {
+                requestAnimationFrame(animate);
+            } else {
+                particle.remove();
+            }
+        }
+        
+        requestAnimationFrame(animate);
+    }
+}
+
+// Add particle burst to buttons
+document.querySelectorAll('.btn-primary').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        createParticleBurst(e.clientX, e.clientY);
+    });
+});
+
+// ===== SMOOTH SECTION REVEALS =====
+const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('section-visible');
+        }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.section').forEach(section => {
+    sectionObserver.observe(section);
 });
 
 // ===== CONSOLE MESSAGE =====
