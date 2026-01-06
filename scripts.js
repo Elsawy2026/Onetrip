@@ -79,9 +79,29 @@ function toggleLanguage() {
         const enText = el.dataset.en;
         
         if (newLang === 'ar' && arText) {
-            el.innerHTML = arText;
+            if (el.tagName === 'OPTION') {
+                el.textContent = arText;
+            } else {
+                el.innerHTML = arText;
+            }
         } else if (newLang === 'en' && enText) {
-            el.innerHTML = enText;
+            if (el.tagName === 'OPTION') {
+                el.textContent = enText;
+            } else {
+                el.innerHTML = enText;
+            }
+        }
+    });
+    
+    // Update select options
+    document.querySelectorAll('select option').forEach(option => {
+        const arText = option.dataset.ar;
+        const enText = option.dataset.en;
+        
+        if (newLang === 'ar' && arText) {
+            option.textContent = arText;
+        } else if (newLang === 'en' && enText) {
+            option.textContent = enText;
         }
     });
     
@@ -205,13 +225,63 @@ if (contactForm) {
     });
 }
 
+// ===== CAREERS FORM =====
+const careersForm = document.getElementById('careersForm');
+const resumeFile = document.getElementById('resumeFile');
+const fileName = document.getElementById('fileName');
+
+if (resumeFile && fileName) {
+    resumeFile.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const isArabic = document.documentElement.lang === 'ar';
+            fileName.textContent = isArabic ? `تم اختيار: ${file.name}` : `Selected: ${file.name}`;
+            fileName.style.color = 'var(--primary)';
+        } else {
+            const isArabic = document.documentElement.lang === 'ar';
+            fileName.textContent = isArabic ? 'لم يتم اختيار ملف' : 'No file chosen';
+            fileName.style.color = 'var(--text-muted)';
+        }
+    });
+}
+
+if (careersForm) {
+    careersForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(careersForm);
+        
+        // Show success modal with careers message
+        const isArabic = document.documentElement.lang === 'ar';
+        showSuccessModal(
+            isArabic ? 'شكراً لتقديمك!' : 'Thank You for Applying!',
+            isArabic ? 'تم إرسال طلب التوظيف بنجاح' : 'Your job application has been sent successfully',
+            isArabic ? 'سيتم مراجعة طلبك والاتصال بك قريباً' : 'We will review your application and contact you soon'
+        );
+        
+        // Reset form
+        careersForm.reset();
+        if (fileName) {
+            const isArabic = document.documentElement.lang === 'ar';
+            fileName.textContent = isArabic ? 'لم يتم اختيار ملف' : 'No file chosen';
+            fileName.style.color = 'var(--text-muted)';
+        }
+        
+        console.log('Careers form submitted');
+    });
+}
+
 // ===== SUCCESS MODAL =====
-function showSuccessModal() {
+function showSuccessModal(title, message, subtitle) {
     // Remove existing modal
     const existingModal = document.querySelector('.success-modal-overlay');
     if (existingModal) existingModal.remove();
     
     const isArabic = document.documentElement.lang === 'ar';
+    
+    const modalTitle = title || (isArabic ? 'شكراً لك!' : 'Thank You!');
+    const modalMessage = message || (isArabic ? 'تم إرسال رسالتك بنجاح' : 'Your message has been sent successfully');
+    const modalSubtitle = subtitle || (isArabic ? 'سيتم التواصل معك في أقرب وقت ممكن' : 'We will contact you as soon as possible');
     
     const modalHTML = `
         <div class="success-modal-overlay">
@@ -219,9 +289,9 @@ function showSuccessModal() {
                 <div class="success-icon">
                     <i class="fas fa-check-circle"></i>
                 </div>
-                <h3>${isArabic ? 'شكراً لك!' : 'Thank You!'}</h3>
-                <p>${isArabic ? 'تم إرسال رسالتك بنجاح' : 'Your message has been sent successfully'}</p>
-                <p class="success-subtitle">${isArabic ? 'سيتم التواصل معك في أقرب وقت ممكن' : 'We will contact you as soon as possible'}</p>
+                <h3>${modalTitle}</h3>
+                <p>${modalMessage}</p>
+                <p class="success-subtitle">${modalSubtitle}</p>
                 <button class="success-btn" onclick="closeSuccessModal()">${isArabic ? 'حسناً' : 'OK'}</button>
             </div>
         </div>
