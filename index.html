@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=3.0">
+    <link rel="stylesheet" href="styles.css?v=2026.01.07.1">
 </head>
 <body>
     <!-- Scroll Progress Bar -->
@@ -765,8 +765,13 @@
             <button class="chat-close" onclick="toggleChat()"><i class="fas fa-times"></i></button>
         </div>
         <div class="chat-body">
-            <div class="chat-welcome">
-                <p data-ar="مرحباً! 👋 كيف يمكننا مساعدتك اليوم؟" data-en="Hello! 👋 How can we help you today?">مرحباً! 👋 كيف يمكننا مساعدتك اليوم؟</p>
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message bot">
+                    <span data-ar="مرحباً! 👋 أنا مساعد OneTrip الذكي. اسألني عن الخدمات، الأسعار، مواعيد التوصيل أو أي استفسار يهمك." data-en="Hello! 👋 I'm the OneTrip smart assistant. Ask me about services, pricing, delivery times or anything you need.">
+                        مرحباً! 👋 أنا مساعد OneTrip الذكي. اسألني عن الخدمات، الأسعار، مواعيد التوصيل أو أي استفسار يهمك.
+                    </span>
+                    <span class="chat-message-time">Now</span>
+                </div>
             </div>
             <div class="quick-replies">
                 <button class="quick-reply" onclick="sendQuickReply('pricing')" data-ar="ما هي الأسعار؟" data-en="What are the prices?">ما هي الأسعار؟</button>
@@ -776,10 +781,13 @@
             </div>
         </div>
         <div class="chat-footer">
-            <a href="https://wa.me/966920032104" class="chat-whatsapp-btn" target="_blank">
-                <i class="fab fa-whatsapp"></i>
-                <span data-ar="أكمل المحادثة على واتساب" data-en="Continue on WhatsApp">أكمل المحادثة على واتساب</span>
-            </a>
+            <form class="chat-input-wrapper" onsubmit="sendChatMessage(event)">
+                <input type="text" id="chatInput" class="chat-input" autocomplete="off"
+                    placeholder="اكتب سؤالك هنا..." />
+                <button type="submit" class="chat-send-btn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
         </div>
     </div>
     
@@ -801,7 +809,7 @@
 
     <!-- AOS Animation Library -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="scripts.js"></script>
+    <script src="scripts.js?v=2026.01.07.1"></script>
     <script>
         // Initialize AOS
         AOS.init({

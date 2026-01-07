@@ -224,23 +224,154 @@ function toggleChat() {
     const chatToggle = document.getElementById('chatToggle');
     const badge = document.querySelector('.chat-badge');
     
-    chatWidget?.classList.toggle('active');
+    if (!chatWidget) return;
     
-    if (chatWidget?.classList.contains('active')) {
+    const isOpening = !chatWidget.classList.contains('active');
+    chatWidget.classList.toggle('active');
+    
+    if (isOpening) {
+        // عند الفتح أخفي البادج
         if (badge) badge.style.display = 'none';
+    } else {
+        // عند الإغلاق امسح المحادثة وارجع رسالة الترحيب فقط
+        resetChatConversation();
+        if (badge) badge.style.display = 'flex';
     }
 }
 
 function sendQuickReply(type) {
-    const messages = {
-        pricing: 'أريد معرفة الأسعار',
-        delivery: 'كم مدة التوصيل؟',
-        order: 'أريد طلب خدمة',
-        track: 'أريد تتبع شحنتي'
+    const shortcuts = {
+        pricing: 'ما هي أسعار خدمات التوصيل؟',
+        delivery: 'كم متوسط مدة التوصيل داخل المدينة وبين المدن؟',
+        order: 'أريد معرفة طريقة طلب خدمة توصيل من OneTrip.',
+        track: 'كيف أقدر أتتبع شحنتي؟'
     };
     
-    const message = encodeURIComponent(messages[type] || '');
-    window.open(`https://wa.me/966920032104?text=${message}`, '_blank');
+    const text = shortcuts[type] || '';
+    if (text) {
+        handleUserMessage(text);
+    }
+}
+
+// ===== SIMPLE AI CHAT LOGIC (ON-PAGE ONLY) =====
+const chatMessagesEl = document.getElementById('chatMessages');
+const chatInputEl = document.getElementById('chatInput');
+
+function appendMessage(text, sender = 'bot') {
+    if (!chatMessagesEl || !text) return;
+    
+    const wrapper = document.createElement('div');
+    wrapper.className = `chat-message ${sender}`;
+    
+    const span = document.createElement('span');
+    span.textContent = text;
+    wrapper.appendChild(span);
+    
+    const time = document.createElement('span');
+    time.className = 'chat-message-time';
+    const now = new Date();
+    time.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    wrapper.appendChild(time);
+    
+    chatMessagesEl.appendChild(wrapper);
+    chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+}
+
+function sendChatMessage(event) {
+    event.preventDefault();
+    if (!chatInputEl) return;
+    
+    const text = chatInputEl.value.trim();
+    if (!text) return;
+    
+    handleUserMessage(text);
+    chatInputEl.value = '';
+}
+
+function handleUserMessage(text) {
+    appendMessage(text, 'user');
+    
+    setTimeout(() => {
+        const reply = generateBotReply(text);
+        appendMessage(reply, 'bot');
+    }, 400);
+}
+
+function generateBotReply(message) {
+    const langIsArabic = document.documentElement.lang === 'ar';
+    const msg = message.toLowerCase();
+    
+    // كلمات مفتاحية عربية وإنجليزية
+    const has = (keywords) => keywords.some(k => msg.includes(k));
+    
+    if (has(['سعر', 'الأسعار', 'التكلفة', 'price', 'pricing'])) {
+        return langIsArabic
+            ? 'نقدّم تسعير مرن حسب نوع الخدمة (توصيل فوري، بين المدن، شركات). للطلبات المتكررة أو العقود الشهرية نوفر أسعار خاصة. شاركنا تفاصيل نشاطك وسيتم تجهيز عرض مناسب لك.'
+            : 'We offer flexible pricing based on the service type (instant delivery, inter-city, corporate). For recurring orders and monthly contracts we provide special rates. Share your business details and we’ll tailor an offer.';
+    }
+    
+    if (has(['وقت', 'مدة', 'توصيل', 'كم ساعه', 'delivery time', 'how long'])) {
+        return langIsArabic
+            ? 'داخل المدينة غالباً يتم التوصيل خلال ساعات قليلة حسب حجم الطلب والمنطقة. بين المدن يكون خلال 24–72 ساعة في العادة مع إمكانية تتبع الشحنة لحظياً.'
+            : 'Within the city, deliveries are usually completed within a few hours depending on area and volume. Between cities it’s typically 24–72 hours with real‑time tracking.';
+    }
+    
+    if (has(['تتبع', 'تراك', 'tracking', 'track'])) {
+        return langIsArabic
+            ? 'نوفر نظام تتبع لحظي للطلبات مع تحديثات حالة الشحنة من الاستلام حتى التسليم. يمكنك ربط نظامك معنا أو استلام روابط تتبع جاهزة لعملائك.'
+            : 'We provide real‑time shipment tracking from pickup to delivery. You can integrate our tracking into your systems or share ready tracking links with your customers.';
+    }
+    
+    if (has(['شركة', 'شركات', 'بيزنس', 'منشأة', 'business', 'b2b', 'contract'])) {
+        return langIsArabic
+            ? 'لدينا حلول متكاملة للشركات والمتاجر (مطاعم، متاجر إلكترونية، منصات رقمية) مع عقود تشغيل مرنة، تقارير أداء، وإدارة أساطيل خاصة. أرسل لنا نوع نشاطك وحجم الطلبات التقريبي لنرشّح لك الأنسب.'
+            : 'We provide end‑to‑end logistics for businesses (restaurants, e‑commerce, digital platforms) with flexible contracts, performance dashboards and private fleet management. Tell us your industry and volume for a tailored proposal.';
+    }
+    
+    if (has(['مدينة', 'مدن', 'الرياض', 'جدة', 'coverage', 'cities'])) {
+        return langIsArabic
+            ? 'نغطي حالياً أبرز مدن ومناطق المملكة مع خطة توسع مستمرة. شاركني مدينتك أو مسار الشحن المطلوب وأخبرك بإمكانية الخدمة والمدة المتوقعة.'
+            : 'We currently cover the main cities and regions in Saudi Arabia with continuous expansion. Tell me your city or route and I’ll let you know availability and ETA.';
+    }
+    
+    if (has(['وظيفة', 'توظيف', 'وظائف', 'career', 'job', 'join'])) {
+        return langIsArabic
+            ? 'للانضمام إلى فريق OneTrip يمكنك التقديم من قسم الوظائف في الموقع، تعبئة النموذج ورفع السيرة الذاتية، وسيتم التواصل معك في حال توفر شاغر مناسب.'
+            : 'To join the OneTrip team, please apply through the Careers section, fill in the form and upload your CV. Our team will contact you when a matching position is available.';
+    }
+    
+    if (has(['تواصل', 'رقم', 'واتساب', 'contact', 'email', 'phone'])) {
+        return langIsArabic
+            ? 'يمكنك التواصل معنا مباشرة على الرقم 920032104 أو البريد info@onetrip.sa، أو تكملة استفساراتك هنا في الشات وسنساعدك قدر المستطاع.'
+            : 'You can contact us directly at 920032104 or info@onetrip.sa, or simply continue asking here and we’ll help as much as possible.';
+    }
+    
+    if (has(['hello', 'مرحبا', 'السلام', 'hi', 'hey'])) {
+        return langIsArabic
+            ? 'أهلاً وسهلاً! 😊 كيف أقدر أساعدك اليوم؟ هل تهتم بالخدمات، الأسعار، أو شراكة للشركات؟'
+            : 'Hi there! 😊 How can I help you today? Are you interested in services, pricing, or a business partnership?';
+    }
+    
+    // رد افتراضي ذكي
+    return langIsArabic
+        ? 'فهمت سؤالك 👌 لكن لأعطيك إجابة أدق، حاول توضح لي: هل سؤالك عن الأسعار، مدة التوصيل، التغطية داخل المملكة، أو حلول للشركات؟'
+        : 'Got it 👌 To give you a precise answer, can you tell me if your question is about pricing, delivery time, coverage inside KSA, or business solutions?';
+}
+
+function resetChatConversation() {
+    if (!chatMessagesEl) return;
+    
+    chatMessagesEl.innerHTML = '';
+    const isArabic = document.documentElement.lang === 'ar';
+    const initial = document.createElement('div');
+    initial.className = 'chat-message bot';
+    initial.innerHTML = `
+        <span>${isArabic
+            ? 'مرحباً! 👋 أنا مساعد OneTrip الذكي. اسألني عن الخدمات، الأسعار، مواعيد التوصيل أو أي استفسار يهمك.'
+            : 'Hello! 👋 I\'m the OneTrip smart assistant. Ask me about services, pricing, delivery times or anything you need.'}</span>
+        <span class="chat-message-time">Now</span>
+    `;
+    chatMessagesEl.appendChild(initial);
 }
 
 // ===== TESTIMONIALS SLIDER =====
@@ -873,6 +1004,6 @@ document.querySelectorAll('.section').forEach(section => {
 });
 
 // ===== CONSOLE MESSAGE =====
-console.log('%c🚀 OneTrip Express', 'font-size: 24px; font-weight: bold; color: #F7941D;');
-console.log('%cشريكك اللوجستي الموثوق', 'font-size: 14px; color: #00D9A5;');
+console.log('%c🚀 OneTrip Express v2026.01.07', 'font-size: 24px; font-weight: bold; color: #F7941D;');
+console.log('%cشريكك اللوجستي الموثوق - AI Chat Enabled', 'font-size: 14px; color: #00D9A5;');
 console.log('%cDeveloped with ❤️ for excellence', 'font-size: 12px; color: #64748B;');
