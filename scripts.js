@@ -313,7 +313,7 @@ function generateBotReply(message) {
         cities: 25,
         dailyOrders: 10000,
         monthlyOrders: 300000,
-        partners: 9,
+        partners: 11,
         vehicles: 600,
         customerSatisfaction: 98.5,
         onTimeRate: 97,
@@ -394,9 +394,25 @@ function generateBotReply(message) {
     }
 
     // ===== الفروع بالتفصيل (كل الفروع) =====
-    if (has(['الفروع', 'فروعكم', 'وين فروعكم', 'وين فروع', 'branches', 'all branches', 'locations', 'المواقع'])) {
-        const listAr = companyData.branchesDetail.map(b => '• ' + b.titleAr).join('\n');
-        const listEn = companyData.branchesDetail.map(b => '- ' + b.titleEn).join('\n');
+    if (has(['الفروع', 'فروعكم', 'وين فروعكم', 'وين فروع', 'فروع', 'فرع', 'branches', 'all branches', 'locations', 'المواقع', 'branch', 'location'])) {
+        let responseAr = '🏢 فروع OneTrip Express (' + companyData.branches + ' فروع):\n\n';
+        let responseEn = '🏢 OneTrip Express Branches (' + companyData.branches + ' branches):\n\n';
+        
+        companyData.branchesDetail.forEach((branch, index) => {
+            responseAr += (index + 1) + '. ' + branch.titleAr + '\n';
+            responseAr += '   ' + branch.descriptionAr + '\n';
+            responseAr += '   📍 الموقع: ' + branch.mapsUrl + '\n\n';
+            
+            responseEn += (index + 1) + '. ' + branch.titleEn + '\n';
+            responseEn += '   ' + branch.descriptionEn + '\n';
+            responseEn += '   📍 Location: ' + branch.mapsUrl + '\n\n';
+        });
+        
+        responseAr += '💡 يمكنك الضغط على أي رابط لفتح الموقع على الخريطة مباشرة!';
+        responseEn += '💡 Click any link to open the location on the map!';
+        
+        return langIsArabic ? responseAr : responseEn;
+    }
         return langIsArabic
             ? '🏢 فروع OneTrip Express الحالية (' + companyData.branches + ' فروع):\n\n' +
               listAr +
@@ -459,10 +475,10 @@ function generateBotReply(message) {
     }
     
     // ===== الشركاء =====
-    if (has(['شريك', 'شركاء', 'partner', 'partners', 'تعاون', 'collaboration', 'جاهز', 'هنقرستيشن', 'مرسول', 'كيتا', 'hungerstation', 'jahez', 'mrsool', 'keeta'])) {
+    if (has(['شريك', 'شركاء', 'partner', 'partners', 'تعاون', 'collaboration', 'جاهز', 'هنقرستيشن', 'مرسول', 'كيتا', 'hungerstation', 'jahez', 'mrsool', 'keeta', 'نينجا', 'إيمايل', 'ninja', 'imile'])) {
         return langIsArabic
-            ? '🤝 شركاؤنا الاستراتيجيون:\n\n✅ جاهز (Jahez)\n✅ هنقرستيشن (HungerStation)\n✅ مرسول (Mrsool)\n✅ كيتا (Keeta)\n✅ ذا شيفز (The Chefz)\n✅ تو يو (ToYou)\n✅ أرامكس (Aramex)\n✅ SMSA\n✅ ناقل (Naqel)\n\n' + companyData.partners + ' شركاء يثقون فينا! نفتخر بهذه الثقة ونعمل يومياً على تعزيزها 💙'
-            : '🤝 Our Strategic Partners:\n\n✅ Jahez\n✅ HungerStation\n✅ Mrsool\n✅ Keeta\n✅ The Chefz\n✅ ToYou\n✅ Aramex\n✅ SMSA\n✅ Naqel\n\n' + companyData.partners + ' partners trust us! We\'re proud of this trust 💙';
+            ? '🤝 شركاؤنا في الريادة:\n\n✅ جاهز (Jahez): نقدم لها عمليات توصيل دقيقة تلبي توقعات ملايين المستخدمين\n✅ هنقرستيشن (HungerStation): نشاركهم في تقديم خدمة لوجستية موثوقة وعالية الجودة\n✅ كيتا (KEETA): نترجم التقنية والمرونة إلى تجربة توصيل مميزة\n✅ ذا شيفز (The Chefz): نُوصل الإبداع والمذاق الرفيع بدقة وأناقة\n✅ نينجا (Ninja): نعمل بسرعة ومرونة لنخدم هذا الكيان العصري بأعلى كفاءة\n✅ إيمايل (imile): نحقق التكامل بين التقنية والخدمة لضمان رضا عملائهم\n✅ مرسول (Mrsool)\n✅ تو يو (ToYou)\n✅ أرامكس (Aramex)\n✅ SMSA\n✅ ناقل (Naqel)\n\n' + companyData.partners + ' شركاء يثقون فينا! نقيس نجاحنا بمدى قوة العلاقات التي نبنيها مع شركائنا 💙'
+            : '🤝 Our Partners in Leadership:\n\n✅ Jahez: Precise delivery operations meeting millions of users\' expectations\n✅ HungerStation: Reliable, high-quality logistics services\n✅ KEETA: Translating technology and flexibility into exceptional delivery\n✅ The Chefz: Delivering creativity and fine taste with precision\n✅ Ninja: Fast, flexible service for this modern entity\n✅ imile: Integrating technology and service for customer satisfaction\n✅ Mrsool\n✅ ToYou\n✅ Aramex\n✅ SMSA\n✅ Naqel\n\n' + companyData.partners + ' partners trust us! We measure success by the strength of relationships 💙';
     }
     
     // ===== تاريخ الشركة =====
@@ -531,8 +547,8 @@ function generateBotReply(message) {
     // ===== التواصل =====
     if (has(['تواصل', 'رقم', 'تليفون', 'جوال', 'ايميل', 'بريد', 'contact', 'email', 'phone', 'number', 'call', 'اتصل', 'كلم', 'عنوان', 'address', 'موقع', 'location'])) {
         return langIsArabic
-            ? '📞 تواصل معنا:\n\n☎️ الرقم الموحد: 920032104\n📧 البريد: info@onetrip.sa\n💬 واتساب: 24/7\n\n🏢 المقر الرئيسي:\nحي اليرموك، الرياض\n\n🕐 ساعات العمل:\nالدعم: 24 ساعة / 7 أيام\nالإدارة: 8ص - 6م\n\nأو أكمل محادثتك معي هنا! أنا متاح دائماً 😊'
-            : '📞 Contact Us:\n\n☎️ Unified Number: 920032104\n📧 Email: info@onetrip.sa\n💬 WhatsApp: 24/7\n\n🏢 Headquarters:\nAl-Yarmouk, Riyadh\n\n🕐 Working Hours:\nSupport: 24/7\nOffice: 8AM - 6PM\n\nOr continue chatting here! Always available 😊';
+            ? '📞 بيانات التواصل:\n\n☎️ الهاتف: 920032104\n📧 البريد الإلكتروني: info@onetrip.sa\n💬 واتساب: متاح 24/7\n\n📍 العنوان:\nhttps://maps.app.goo.gl/ga8NvdxSEWAso8B7A?g_st=iw\n\n🕐 ساعات العمل:\nالدعم الفني: 24 ساعة / 7 أيام\nالإدارة: 8ص - 6م\n\nأو أكمل محادثتك معي هنا! أنا متاح دائماً 😊'
+            : '📞 Contact Information:\n\n☎️ Phone: 920032104\n📧 Email: info@onetrip.sa\n💬 WhatsApp: Available 24/7\n\n📍 Address:\nhttps://maps.app.goo.gl/ga8NvdxSEWAso8B7A?g_st=iw\n\n🕐 Working Hours:\nSupport: 24/7\nOffice: 8AM - 6PM\n\nOr continue chatting here! Always available 😊';
     }
     
     // ===== الشكاوي والمشاكل =====
@@ -556,11 +572,39 @@ function generateBotReply(message) {
             : '📦 Ready to serve!\n\n🔹 How to order:\n1️⃣ Click "Request Service"\n2️⃣ Select delivery type\n3️⃣ Enter addresses\n4️⃣ Get price & confirmation!\n\n⚡ Or tell me directly:\n• What to deliver?\n• From where to where?\n• When needed?\n\nI\'ll help set everything up! 🚀';
     }
     
-    // ===== أسئلة عن الشركة =====
-    if (has(['من انتم', 'مين انتو', 'ايش', 'شنو', 'who', 'what is', 'about', 'onetrip', 'ون تريب', 'وان تريب'])) {
+    // ===== من نحن =====
+    if (has(['من نحن', 'من انتم', 'مين انتو', 'من هي', 'who are you', 'what is', 'about', 'onetrip', 'ون تريب', 'وان تريب', 'شركة', 'company'])) {
         return langIsArabic
-            ? '🚀 OneTrip Express - التوصيل كما ينبغي أن يكون!\n\n📍 شركة سعودية تأسست ' + companyData.founded + '\n👥 ' + companyData.totalStaff + ' موظف (' + companyData.drivers + ' مندوب + ' + companyData.admins + ' إداري)\n🚗 ' + companyData.vehicles + ' مركبة\n🏙️ ' + companyData.cities + ' مدينة\n📦 ' + companyData.dailyOrders.toLocaleString() + '+ طلب يومياً\n⭐ ' + companyData.customerSatisfaction + '% رضا العملاء\n\n🤝 شركاء: جاهز، هنقرستيشن، مرسول، كيتا...\n\nنفتخر بخدمة الملايين! 💫'
-            : '🚀 OneTrip Express - Delivery as it should be!\n\n📍 Saudi company founded ' + companyData.founded + '\n👥 ' + companyData.totalStaff + ' staff (' + companyData.drivers + ' drivers + ' + companyData.admins + ' admin)\n🚗 ' + companyData.vehicles + ' vehicles\n🏙️ ' + companyData.cities + ' cities\n📦 ' + companyData.dailyOrders.toLocaleString() + '+ daily orders\n⭐ ' + companyData.customerSatisfaction + '% satisfaction\n\n🤝 Partners: Jahez, HungerStation, Mrsool, Keeta...\n\nProud to serve millions! 💫';
+            ? '🚀 OneTrip Express - التوصيل الذكي\n\nفي عالم لا يعرف التباطؤ، تبرز OneTrip Express كمزود لخدمة توصيل تجمع بين السرعة والدقة والاحترافية، مقدّمة لك تجربة استثنائية مدعومة بالتقنية الحديثة.\n\n📍 من نحن:\nنحن شركة سعودية تقدم خدمات توصيل داخل المدن وحلول لوجستية متكاملة للأفراد والشركات، معتمدة على تقنيات متقدمة وأنظمة تشغيل عالية الكفاءة.\n\n💡 فلسفتنا:\nلسنا مجرد وسيط بين النقطة (أ) والنقطة (ب)، بل نمثل امتدادًا لأعمالك، وواجهة تعبّر عن جودة خدماتك وتزيد من ثقة عملائك.\n\n📊 أرقامنا:\n👥 ' + companyData.totalStaff + ' موظف | 🚗 ' + companyData.vehicles + ' مركبة | 🏙️ ' + companyData.cities + ' مدينة | 📦 ' + companyData.dailyOrders.toLocaleString() + '+ طلب يومياً'
+            : '🚀 OneTrip Express - Smart Delivery\n\nIn a world that knows no slowdown, OneTrip Express stands out as a delivery service provider combining speed, precision, and professionalism, offering an exceptional experience powered by modern technology.\n\n📍 Who We Are:\nA Saudi company providing city delivery services and integrated logistics solutions for individuals and businesses, relying on advanced technologies and highly efficient operating systems.\n\n💡 Our Philosophy:\nWe are not just an intermediary between point (A) and point (B), but rather an extension of your business, an interface that reflects the quality of your services and enhances your customers\' trust.\n\n📊 Our Numbers:\n👥 ' + companyData.totalStaff + ' staff | 🚗 ' + companyData.vehicles + ' vehicles | 🏙️ ' + companyData.cities + ' cities | 📦 ' + companyData.dailyOrders.toLocaleString() + '+ daily orders';
+    }
+    
+    // ===== الرؤية والرسالة =====
+    if (has(['رؤية', 'رؤيتكم', 'رؤيتنا', 'vision', 'رسالة', 'رسالتكم', 'mission', 'هدف', 'اهداف', 'goal', 'goals'])) {
+        return langIsArabic
+            ? '🎯 رؤيتنا:\nأن نكون الخيار الأول في مجال التوصيل داخل المدن، والاسم الذي يتبادر إلى الذهن عند البحث عن حلول توصيل ذكية، مرنة، وسريعة.\n\n💫 رسالتنا:\nنوفّر تجربة توصيل موثوقة وسلسة تدعم نمو أعمال شركائنا، تبدأ من لحظة الانطلاق وتنتهي عند باب العميل.\n\n🚀 هدفنا:\nنسعى للتوسع بخطى مدروسة لتغطية أكبر عدد من المدن والمناطق الحيوية، مع الحفاظ على أعلى درجات الكفاءة والاحتراف، من خلال اعتماد أحدث الأدوات والتقنيات التي تواكب متطلبات السوق المتغيرة.'
+            : '🎯 Our Vision:\nTo be the first choice in city delivery, the name that comes to mind when looking for smart, flexible, and fast delivery solutions.\n\n💫 Our Mission:\nWe provide a reliable and seamless delivery experience that supports our partners\' business growth, from launch to customer doorstep.\n\n🚀 Our Goal:\nWe seek to expand carefully to cover the largest number of cities and vital areas, while maintaining the highest levels of efficiency and professionalism, through adopting the latest tools and technologies that keep pace with changing market requirements.';
+    }
+    
+    // ===== القيم =====
+    if (has(['قيم', 'قيمكم', 'قيمنا', 'values', 'مبادئ', 'principles'])) {
+        return langIsArabic
+            ? '💎 قيمنا:\n\n✅ الاعتمادية:\nنفي بوعودنا ونعمل بثقة.\n\n✅ الابتكار:\nنبحث دائمًا عن طرق جديدة لتحسين خدماتنا وتطوير أدواتنا.\n\n✅ الجودة:\nنضع معايير عالية في كل عملية توصيل.\n\n✅ الاحترافية:\nنتعامل مع كل طلب بأعلى درجات الالتزام لضمان تقديم نتائج ممتازة في كل مرة.'
+            : '💎 Our Values:\n\n✅ Reliability:\nWe keep our promises and work with confidence.\n\n✅ Innovation:\nWe are always looking for new ways to improve our services and develop our tools.\n\n✅ Quality:\nWe set high standards in every delivery operation.\n\n✅ Professionalism:\nWe handle every order with the highest commitment to ensure excellent results every time.';
+    }
+    
+    // ===== ماذا نقدم =====
+    if (has(['ماذا نقدم', 'خدمات', 'خدماتكم', 'services', 'what do you offer', 'ماذا تقدمون', 'عروض', 'offers'])) {
+        return langIsArabic
+            ? '📦 ماذا نقدم؟\n\n⚡ توصيل فوري داخل المدن:\nحلول سريعة وآمنة للوصول إلى وجهتك دون تأخير.\n\n🏢 حلول لوجستية للمطاعم، المتاجر، والمنصات الرقمية:\nدعم تشغيلي يومي يعزز كفاءة أعمالك.\n\n🚗 إدارة وتشغيل أساطيل توصيل خاصة للشركات:\nخدمات مرنة ومتكاملة تساعدك على تقليل التكاليف ورفع الكفاءة.\n\n📋 عقود تشغيل مخصصة للشركاء التجاريين:\nشراكات مبنية على الأداء ونتائج قابلة للقياس.\n\n📊 تتبع مباشر، دعم متواصل، وتقارير مفصلة:\nشفافية تتيح لك الإشراف على كل خطوة في العملية.'
+            : '📦 What We Offer:\n\n⚡ Instant City Delivery:\nFast and secure solutions to reach your destination without delay.\n\n🏢 Logistics Solutions for Restaurants, Stores, and Digital Platforms:\nDaily operational support that enhances your business efficiency.\n\n🚗 Management and Operation of Private Delivery Fleets for Companies:\nFlexible and integrated services that help reduce costs and increase efficiency.\n\n📋 Custom Operating Contracts for Business Partners:\nPartnerships based on performance and measurable results.\n\n📊 Live Tracking, Continuous Support, and Detailed Reports:\nTransparency that allows you to oversee every step of the process.';
+    }
+    
+    // ===== لماذا OneTrip =====
+    if (has(['لماذا', 'ليش', 'why', 'مميزات', 'advantages', 'benefits', 'مزايا', 'فوائد'])) {
+        return langIsArabic
+            ? '⭐ لماذا OneTrip Express؟\n\n🎯 واجهة مشرفة لعلامتك التجارية:\nنمثلك وكأننا جزء من فريقك.\n\n🤖 أنظمة تشغيل ذكية:\nتقنيات دقيقة تقلل الأخطاء وتسرّع الأداء.\n\n⏱️ التزام بالوقت والجودة:\nسرعة في الوصول ورضا مضمون لعملائك.\n\n🤝 شراكة طويلة الأمد:\nنهدف إلى بناء علاقات استراتيجية دائمة تعزز النمو المشترك.\n\n📈 تقارير أداء دقيقة:\nنمنحك بيانات واضحة تساعدك في تحسين عملياتك باستمرار.\n\n💪 كن جزءًا من التجربة:\nسواء كنت فردًا أو شركة، OneTrip Express هي خيارك الأمثل: سرعة، دقة، واحترافية.'
+            : '⭐ Why OneTrip Express?\n\n🎯 Proud Interface for Your Brand:\nWe represent you as if we are part of your team.\n\n🤖 Smart Operating Systems:\nPrecise technologies that reduce errors and speed up performance.\n\n⏱️ Commitment to Time and Quality:\nFast delivery and guaranteed satisfaction for your customers.\n\n🤝 Long-term Partnership:\nWe aim to build lasting strategic relationships that enhance mutual growth.\n\n📈 Accurate Performance Reports:\nWe provide you with clear data that helps you continuously improve your operations.\n\n💪 Be Part of the Experience:\nWhether you are an individual or a company, OneTrip Express is your optimal choice: speed, precision, and professionalism.';
     }
     
     // ===== الجودة والضمان =====
