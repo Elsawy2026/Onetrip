@@ -321,7 +321,54 @@ function generateBotReply(message) {
         headquarters: 'الرياض',
         branches: 5,
         branchNamesAr: ['الرياض (الفرع الرئيسي)', 'الدمام', 'القصيم', 'أبها', 'تبوك'],
-        branchNamesEn: ['Riyadh (HQ)', 'Dammam', 'Qassim', 'Abha', 'Tabuk']
+        branchNamesEn: ['Riyadh (HQ)', 'Dammam', 'Qassim', 'Abha', 'Tabuk'],
+        branchesDetail: [
+            {
+                key: 'riyadh',
+                cityAr: 'الرياض',
+                titleAr: 'الفرع الرئيسي - الرياض',
+                descriptionAr: 'الفرع الرئيسي لإدارة وتشغيل عمليات OneTrip Express على مستوى المملكة.',
+                mapsUrl: 'https://maps.google.com', // يمكن تحديثه لاحقاً
+                titleEn: 'Head Office - Riyadh',
+                descriptionEn: 'Main hub for OneTrip Express operations across the Kingdom.'
+            },
+            {
+                key: 'dammam',
+                cityAr: 'الدمام',
+                titleAr: 'فرع الدمام',
+                descriptionAr: 'يغطي المنطقة الشرقية (الدمام، الخبر، الظهران وما حولها) بفرق تشغيل ومناديب ميدانيين.',
+                mapsUrl: 'https://maps.google.com/?cid=319296445866694874&entry=gps&g_st=aw',
+                titleEn: 'Dammam Branch',
+                descriptionEn: 'Serving the Eastern Region (Dammam, Khobar, Dhahran and nearby areas).'
+            },
+            {
+                key: 'qassim',
+                cityAr: 'القصيم',
+                titleAr: 'فرع القصيم',
+                descriptionAr: 'يدير عمليات التوصيل داخل القصيم والمدن المجاورة بخدمة سريعة وموجهة للمتاجر والمطاعم.',
+                mapsUrl: 'https://maps.app.goo.gl/xVCiq7yBMjZzVZjN6?g_st=aw',
+                titleEn: 'Qassim Branch',
+                descriptionEn: 'Handling deliveries across Qassim and nearby cities for stores and restaurants.'
+            },
+            {
+                key: 'abha',
+                cityAr: 'أبها',
+                titleAr: 'فرع أبها',
+                descriptionAr: 'يخدم المنطقة الجنوبية مع تركيز على المدن السياحية والمناطق الجبلية.',
+                mapsUrl: 'https://maps.google.com', // placeholder
+                titleEn: 'Abha Branch',
+                descriptionEn: 'Serving the Southern region with focus on tourist and mountain areas.'
+            },
+            {
+                key: 'tabuk',
+                cityAr: 'تبوك',
+                titleAr: 'فرع تبوك',
+                descriptionAr: 'نقطة تشغيل رئيسية لخدمة منطقة تبوك والمدن المحيطة بها.',
+                mapsUrl: 'https://www.google.com/maps/place/%D9%85%D8%B4%D9%88%D8%A7%D8%B1+%D9%88%D8%A7%D8%AD%D8%AF+%D9%84%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA+%D8%A7%D9%84%D9%84%D9%88%D8%AC%D8%B3%D8%AA%D9%8A%D8%A9%E2%80%AD/@28.3891144,36.555895,17z/data=!3m1!4b1!4m6!3m5!1s0x15a9ad13398d743d:0xf42647b481f7750f!8m2!3d28.3891144!4d36.555895!16s%2Fg%2F11y6khw94f?entry=ttu',
+                titleEn: 'Tabuk Branch',
+                descriptionEn: 'Main operations point for Tabuk region and surrounding cities.'
+            }
+        ]
     };
     
     // ===== التحيات =====
@@ -344,6 +391,64 @@ function generateBotReply(message) {
         return langIsArabic
             ? '👥 فريق OneTrip Express:\n\n🚴 ' + companyData.drivers + ' مندوب توصيل محترف\n👔 ' + companyData.admins + ' موظف إداري وتشغيلي\n🚗 ' + companyData.vehicles + ' مركبة متنوعة (دراجات، سيارات، فانات)\n\n📍 منتشرين في ' + companyData.cities + ' مدينة\n🏢 ' + companyData.branches + ' فرع تشغيلي\n\nكلهم مدربين على أعلى معايير الجودة والسلامة! 💪'
             : '👥 OneTrip Express Team:\n\n🚴 ' + companyData.drivers + ' Professional Drivers\n👔 ' + companyData.admins + ' Admin & Operations Staff\n🚗 ' + companyData.vehicles + ' Vehicles (bikes, cars, vans)\n\n📍 Operating in ' + companyData.cities + ' cities\n🏢 ' + companyData.branches + ' operational branches\n\nAll trained to the highest quality standards! 💪';
+    }
+
+    // ===== الفروع بالتفصيل (كل الفروع) =====
+    if (has(['الفروع', 'فروعكم', 'وين فروعكم', 'وين فروع', 'branches', 'all branches', 'locations', 'المواقع'])) {
+        const listAr = companyData.branchesDetail.map(b => '• ' + b.titleAr).join('\n');
+        const listEn = companyData.branchesDetail.map(b => '- ' + b.titleEn).join('\n');
+        return langIsArabic
+            ? '🏢 فروع OneTrip Express الحالية (' + companyData.branches + ' فروع):\n\n' +
+              listAr +
+              '\n\n📍 الدمام (الخريطة): ' + companyData.branchesDetail.find(b => b.key === 'dammam').mapsUrl +
+              '\n📍 القصيم (الخريطة): ' + companyData.branchesDetail.find(b => b.key === 'qassim').mapsUrl +
+              '\n📍 تبوك (الخريطة): ' + companyData.branchesDetail.find(b => b.key === 'tabuk').mapsUrl +
+              '\n\nاسألني عن أي فرع بالتحديد وأعطيك التفاصيل كاملة 😉'
+            : '🏢 OneTrip Express Branches (' + companyData.branches + ' branches):\n\n' +
+              listEn +
+              '\n\n📍 Dammam map: ' + companyData.branchesDetail.find(b => b.key === 'dammam').mapsUrl +
+              '\n📍 Qassim map: ' + companyData.branchesDetail.find(b => b.key === 'qassim').mapsUrl +
+              '\n📍 Tabuk map: ' + companyData.branchesDetail.find(b => b.key === 'tabuk').mapsUrl +
+              '\n\nAsk me about any specific branch for more details 😉';
+    }
+
+    // ===== فرع الدمام =====
+    if (has(['فرع الدمام', 'الدمام', 'dammam'])) {
+        const b = companyData.branchesDetail.find(x => x.key === 'dammam');
+        return langIsArabic
+            ? '📍 ' + b.titleAr + ':\n\n' +
+              b.descriptionAr +
+              '\n\n🌍 رابط الخريطة (Google Maps):\n' + b.mapsUrl +
+              '\n\nتقدر تضغط على الرابط وتتنقل مباشرة للفرع 😉'
+            : '📍 ' + b.titleEn + ':\n\n' +
+              b.descriptionEn +
+              '\n\n🌍 Google Maps link:\n' + b.mapsUrl;
+    }
+
+    // ===== فرع تبوك =====
+    if (has(['فرع تبوك', 'تبوك', 'tabuk'])) {
+        const b = companyData.branchesDetail.find(x => x.key === 'tabuk');
+        return langIsArabic
+            ? '📍 ' + b.titleAr + ':\n\n' +
+              b.descriptionAr +
+              '\n\n🌍 رابط الخريطة (Google Maps):\n' + b.mapsUrl +
+              '\n\nموقع دقيق للفرع في تبوك ✅'
+            : '📍 ' + b.titleEn + ':\n\n' +
+              b.descriptionEn +
+              '\n\n🌍 Google Maps link:\n' + b.mapsUrl;
+    }
+
+    // ===== فرع القصيم =====
+    if (has(['فرع القصيم', 'القصيم', 'qassim'])) {
+        const b = companyData.branchesDetail.find(x => x.key === 'qassim');
+        return langIsArabic
+            ? '📍 ' + b.titleAr + ':\n\n' +
+              b.descriptionAr +
+              '\n\n🌍 رابط الخريطة (Google Maps):\n' + b.mapsUrl +
+              '\n\nتقدر تستخدم الرابط للوصول للفرع مباشرة 🚗'
+            : '📍 ' + b.titleEn + ':\n\n' +
+              b.descriptionEn +
+              '\n\n🌍 Google Maps link:\n' + b.mapsUrl;
     }
     
     // ===== الإحصائيات والأرقام =====
