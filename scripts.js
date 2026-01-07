@@ -300,62 +300,156 @@ function handleUserMessage(text) {
 function generateBotReply(message) {
     const langIsArabic = document.documentElement.lang === 'ar';
     const msg = message.toLowerCase();
+    const msgAr = message;
     
-    // كلمات مفتاحية عربية وإنجليزية
-    const has = (keywords) => keywords.some(k => msg.includes(k));
+    // دالة للبحث عن كلمات مفتاحية
+    const has = (keywords) => keywords.some(k => msg.includes(k) || msgAr.includes(k));
     
-    if (has(['سعر', 'الأسعار', 'التكلفة', 'price', 'pricing'])) {
-        return langIsArabic
-            ? 'نقدّم تسعير مرن حسب نوع الخدمة (توصيل فوري، بين المدن، شركات). للطلبات المتكررة أو العقود الشهرية نوفر أسعار خاصة. شاركنا تفاصيل نشاطك وسيتم تجهيز عرض مناسب لك.'
-            : 'We offer flexible pricing based on the service type (instant delivery, inter-city, corporate). For recurring orders and monthly contracts we provide special rates. Share your business details and we’ll tailor an offer.';
+    // ===== التحيات =====
+    if (has(['hello', 'hi', 'hey', 'مرحبا', 'السلام', 'اهلا', 'هلا', 'صباح', 'مساء', 'كيفك', 'شخبارك', 'هاي'])) {
+        const greetings = langIsArabic ? [
+            'أهلاً وسهلاً! 😊 كيف أقدر أساعدك اليوم؟',
+            'هلا والله! نورت 🌟 كيف أخدمك؟',
+            'مرحبا بك! أنا هنا لمساعدتك في كل ما تحتاجه عن خدمات التوصيل 🚀',
+            'حياك الله! سعيد بتواصلك معنا 💫 تفضل اسأل عن أي شيء!'
+        ] : [
+            'Hi there! 😊 How can I help you today?',
+            'Hello! Welcome to OneTrip Express 🚀 What can I do for you?',
+            'Hey! Great to have you here 💫 Ask me anything!'
+        ];
+        return greetings[Math.floor(Math.random() * greetings.length)];
     }
     
-    if (has(['وقت', 'مدة', 'توصيل', 'كم ساعه', 'delivery time', 'how long'])) {
+    // ===== الأسعار =====
+    if (has(['سعر', 'الأسعار', 'التكلفة', 'كم سعر', 'بكم', 'تكلف', 'price', 'pricing', 'cost', 'rate', 'fee', 'رخيص', 'غالي', 'cheap', 'expensive'])) {
         return langIsArabic
-            ? 'داخل المدينة غالباً يتم التوصيل خلال ساعات قليلة حسب حجم الطلب والمنطقة. بين المدن يكون خلال 24–72 ساعة في العادة مع إمكانية تتبع الشحنة لحظياً.'
-            : 'Within the city, deliveries are usually completed within a few hours depending on area and volume. Between cities it’s typically 24–72 hours with real‑time tracking.';
+            ? '💰 تسعيرنا مرن وتنافسي:\n\n• توصيل داخل المدينة: يبدأ من 15 ريال\n• بين المدن: حسب المسافة والوزن\n• عقود الشركات: خصومات تصل 40%\n\nأخبرني نوع نشاطك وحجم الطلبات الشهري وأجهّزلك عرض خاص! 🎯'
+            : '💰 Our pricing is flexible & competitive:\n\n• Same-city delivery: Starting 15 SAR\n• Inter-city: Based on distance & weight\n• Business contracts: Up to 40% discount\n\nTell me your business type and monthly volume for a custom quote! 🎯';
     }
     
-    if (has(['تتبع', 'تراك', 'tracking', 'track'])) {
+    // ===== مدة التوصيل =====
+    if (has(['وقت', 'مدة', 'كم ساعه', 'كم يوم', 'متى يوصل', 'سريع', 'فوري', 'delivery time', 'how long', 'fast', 'quick', 'urgent', 'express', 'ساعة', 'يوم'])) {
         return langIsArabic
-            ? 'نوفر نظام تتبع لحظي للطلبات مع تحديثات حالة الشحنة من الاستلام حتى التسليم. يمكنك ربط نظامك معنا أو استلام روابط تتبع جاهزة لعملائك.'
-            : 'We provide real‑time shipment tracking from pickup to delivery. You can integrate our tracking into your systems or share ready tracking links with your customers.';
+            ? '⚡ سرعة التوصيل:\n\n• داخل المدينة: 1-4 ساعات\n• توصيل عاجل: خلال ساعة واحدة!\n• بين المدن: 24-48 ساعة\n• طلبات الشركات: جداول مخصصة\n\nنلتزم بالموعد أو نعوّضك! 💪'
+            : '⚡ Delivery Speed:\n\n• Same-city: 1-4 hours\n• Express/Urgent: Within 1 hour!\n• Inter-city: 24-48 hours\n• Business orders: Custom schedules\n\nWe deliver on time or compensate you! 💪';
     }
     
-    if (has(['شركة', 'شركات', 'بيزنس', 'منشأة', 'business', 'b2b', 'contract'])) {
+    // ===== التتبع =====
+    if (has(['تتبع', 'تراك', 'وين طلبي', 'وصل فين', 'tracking', 'track', 'where', 'status', 'شحنة', 'shipment'])) {
         return langIsArabic
-            ? 'لدينا حلول متكاملة للشركات والمتاجر (مطاعم، متاجر إلكترونية، منصات رقمية) مع عقود تشغيل مرنة، تقارير أداء، وإدارة أساطيل خاصة. أرسل لنا نوع نشاطك وحجم الطلبات التقريبي لنرشّح لك الأنسب.'
-            : 'We provide end‑to‑end logistics for businesses (restaurants, e‑commerce, digital platforms) with flexible contracts, performance dashboards and private fleet management. Tell us your industry and volume for a tailored proposal.';
+            ? '📍 نظام التتبع المباشر:\n\n• تتبع لحظي على الخريطة\n• إشعارات تلقائية بكل تحديث\n• رابط تتبع خاص لكل شحنة\n• إمكانية الربط مع أنظمتك\n\nشاركني رقم الطلب وأخبرك بحالته فوراً! 🔍'
+            : '📍 Real-time Tracking System:\n\n• Live map tracking\n• Auto notifications on updates\n• Unique tracking link per shipment\n• API integration available\n\nShare your order number and I\'ll check the status! 🔍';
     }
     
-    if (has(['مدينة', 'مدن', 'الرياض', 'جدة', 'coverage', 'cities'])) {
+    // ===== الشركات والمطاعم =====
+    if (has(['شركة', 'شركات', 'بيزنس', 'منشأة', 'مطعم', 'متجر', 'تطبيق', 'business', 'b2b', 'contract', 'restaurant', 'store', 'enterprise', 'corporate', 'عقد', 'اتفاقية', 'شراكة'])) {
         return langIsArabic
-            ? 'نغطي حالياً أبرز مدن ومناطق المملكة مع خطة توسع مستمرة. شاركني مدينتك أو مسار الشحن المطلوب وأخبرك بإمكانية الخدمة والمدة المتوقعة.'
-            : 'We currently cover the main cities and regions in Saudi Arabia with continuous expansion. Tell me your city or route and I’ll let you know availability and ETA.';
+            ? '🏢 حلول الشركات المتكاملة:\n\n• إدارة أساطيل توصيل مخصصة\n• لوحة تحكم وتقارير مفصّلة\n• عقود مرنة (شهري/سنوي)\n• مدير حساب مخصص لك\n• تكامل API مع أنظمتك\n\nنخدم جاهز، هنقرستيشن، مرسول وغيرهم! قولي عن نشاطك وأجهّزلك حل مناسب 🤝'
+            : '🏢 Complete Business Solutions:\n\n• Dedicated delivery fleet management\n• Dashboard & detailed reports\n• Flexible contracts (monthly/yearly)\n• Dedicated account manager\n• API integration\n\nWe serve Jahez, HungerStation, Mrsool & more! Tell me about your business 🤝';
     }
     
-    if (has(['وظيفة', 'توظيف', 'وظائف', 'career', 'job', 'join'])) {
+    // ===== المدن والتغطية =====
+    if (has(['مدينة', 'مدن', 'الرياض', 'جدة', 'مكة', 'الدمام', 'coverage', 'cities', 'area', 'region', 'تغطية', 'منطقة', 'نوصل', 'خميس', 'ابها', 'تبوك', 'الطائف'])) {
         return langIsArabic
-            ? 'للانضمام إلى فريق OneTrip يمكنك التقديم من قسم الوظائف في الموقع، تعبئة النموذج ورفع السيرة الذاتية، وسيتم التواصل معك في حال توفر شاغر مناسب.'
-            : 'To join the OneTrip team, please apply through the Careers section, fill in the form and upload your CV. Our team will contact you when a matching position is available.';
+            ? '🗺️ تغطيتنا في المملكة:\n\n✅ الرياض وضواحيها\n✅ جدة ومكة المكرمة\n✅ الدمام والمنطقة الشرقية\n✅ القصيم وحائل\n✅ أبها وخميس مشيط\n✅ تبوك والطائف\n\nوتتوسع يومياً! قولي مدينتك وأتأكد من التغطية 📍'
+            : '🗺️ Our Coverage in KSA:\n\n✅ Riyadh & surroundings\n✅ Jeddah & Makkah\n✅ Dammam & Eastern Province\n✅ Qassim & Hail\n✅ Abha & Khamis Mushait\n✅ Tabuk & Taif\n\nExpanding daily! Tell me your city 📍';
     }
     
-    if (has(['تواصل', 'رقم', 'واتساب', 'contact', 'email', 'phone'])) {
+    // ===== الوظائف =====
+    if (has(['وظيفة', 'توظيف', 'وظائف', 'شغل', 'عمل', 'career', 'job', 'join', 'hiring', 'work', 'سائق', 'driver', 'مندوب', 'راتب', 'salary'])) {
         return langIsArabic
-            ? 'يمكنك التواصل معنا مباشرة على الرقم 920032104 أو البريد info@onetrip.sa، أو تكملة استفساراتك هنا في الشات وسنساعدك قدر المستطاع.'
-            : 'You can contact us directly at 920032104 or info@onetrip.sa, or simply continue asking here and we’ll help as much as possible.';
+            ? '💼 انضم لفريق OneTrip!\n\n• سائقين ومناديب توصيل\n• مشرفين عمليات\n• خدمة عملاء\n• مبيعات وتسويق\n\n✨ مميزاتنا: رواتب تنافسية، تأمين صحي، حوافز، مرونة في الدوام\n\nقدّم الآن من صفحة الوظائف أو أرسلي سيرتك الذاتية! 📄'
+            : '💼 Join the OneTrip Team!\n\n• Delivery drivers\n• Operations supervisors\n• Customer service\n• Sales & marketing\n\n✨ Benefits: Competitive salary, health insurance, bonuses, flexible hours\n\nApply now through our Careers page! 📄';
     }
     
-    if (has(['hello', 'مرحبا', 'السلام', 'hi', 'hey'])) {
+    // ===== التواصل =====
+    if (has(['تواصل', 'رقم', 'تليفون', 'جوال', 'ايميل', 'بريد', 'contact', 'email', 'phone', 'number', 'call', 'اتصل', 'كلم'])) {
         return langIsArabic
-            ? 'أهلاً وسهلاً! 😊 كيف أقدر أساعدك اليوم؟ هل تهتم بالخدمات، الأسعار، أو شراكة للشركات؟'
-            : 'Hi there! 😊 How can I help you today? Are you interested in services, pricing, or a business partnership?';
+            ? '📞 طرق التواصل:\n\n• الهاتف: 920032104\n• البريد: info@onetrip.sa\n• واتساب: متاح 24/7\n• العنوان: حي اليرموك، الرياض\n\nأو أكمل محادثتك معي هنا! أنا متاح على مدار الساعة 🕐'
+            : '📞 Contact Us:\n\n• Phone: 920032104\n• Email: info@onetrip.sa\n• WhatsApp: Available 24/7\n• Address: Al-Yarmouk, Riyadh\n\nOr continue chatting with me here! I\'m available 24/7 🕐';
     }
     
-    // رد افتراضي ذكي
-    return langIsArabic
-        ? 'فهمت سؤالك 👌 لكن لأعطيك إجابة أدق، حاول توضح لي: هل سؤالك عن الأسعار، مدة التوصيل، التغطية داخل المملكة، أو حلول للشركات؟'
-        : 'Got it 👌 To give you a precise answer, can you tell me if your question is about pricing, delivery time, coverage inside KSA, or business solutions?';
+    // ===== الشكاوي والمشاكل =====
+    if (has(['مشكلة', 'شكوى', 'تأخر', 'ضايع', 'مكسور', 'problem', 'issue', 'complaint', 'late', 'lost', 'damaged', 'broken', 'زعلان', 'غلط', 'خطأ'])) {
+        return langIsArabic
+            ? '😔 آسف جداً على أي إزعاج!\n\nأخبرني بالتفاصيل:\n• رقم الطلب إذا متوفر\n• طبيعة المشكلة\n• التاريخ والوقت\n\nفريقنا يعطي أولوية قصوى للشكاوى وسنحلها بأسرع وقت! نقدّر ثقتك فينا 🙏'
+            : '😔 So sorry for any inconvenience!\n\nPlease share:\n• Order number if available\n• Nature of the issue\n• Date and time\n\nOur team prioritizes complaints and will resolve it ASAP! We value your trust 🙏';
+    }
+    
+    // ===== الدفع =====
+    if (has(['دفع', 'فلوس', 'كاش', 'فيزا', 'تحويل', 'payment', 'pay', 'cash', 'visa', 'card', 'مدى', 'apple pay', 'stc'])) {
+        return langIsArabic
+            ? '💳 طرق الدفع المتاحة:\n\n• كاش عند الاستلام\n• مدى / فيزا / ماستركارد\n• Apple Pay\n• STC Pay\n• تحويل بنكي للشركات\n\nكل الطرق آمنة ومضمونة! 🔒'
+            : '💳 Payment Methods:\n\n• Cash on delivery\n• Mada / Visa / Mastercard\n• Apple Pay\n• STC Pay\n• Bank transfer for businesses\n\nAll methods are secure! 🔒';
+    }
+    
+    // ===== طلب خدمة =====
+    if (has(['طلب', 'اطلب', 'ابغى', 'عايز', 'محتاج', 'order', 'request', 'need', 'want', 'book', 'حجز'])) {
+        return langIsArabic
+            ? '📦 جاهز لخدمتك!\n\nلطلب خدمة توصيل:\n1️⃣ اضغط على "اطلب خدمة" في الموقع\n2️⃣ حدد نوع الخدمة والتفاصيل\n3️⃣ احصل على تأكيد فوري!\n\nأو قولي:\n• إيش تبغى توصّل؟\n• من وين لوين؟\n• متى تحتاجه؟\n\nوأساعدك أجهّز الطلب 🚀'
+            : '📦 Ready to serve you!\n\nTo request delivery:\n1️⃣ Click "Request Service" on the website\n2️⃣ Choose service type & details\n3️⃣ Get instant confirmation!\n\nOr tell me:\n• What do you need delivered?\n• From where to where?\n• When do you need it?\n\nAnd I\'ll help set it up 🚀';
+    }
+    
+    // ===== أسئلة عن الشركة =====
+    if (has(['من انتم', 'مين انتو', 'ايش', 'شنو', 'who', 'what is', 'about', 'onetrip', 'ون تريب', 'وان تريب'])) {
+        return langIsArabic
+            ? '🚀 نحن OneTrip Express!\n\nشركة سعودية رائدة في التوصيل والحلول اللوجستية.\n\n✨ خدماتنا:\n• توصيل سريع داخل المدن\n• شحن بين المدن\n• حلول متكاملة للشركات\n• إدارة أساطيل التوصيل\n\nشركاؤنا: جاهز، هنقرستيشن، مرسول، كيتا وغيرهم!\n\nشعارنا: التوصيل كما ينبغي أن يكون! 💫'
+            : '🚀 We are OneTrip Express!\n\nA leading Saudi logistics & delivery company.\n\n✨ Our Services:\n• Fast same-city delivery\n• Inter-city shipping\n• Complete business solutions\n• Fleet management\n\nPartners: Jahez, HungerStation, Mrsool, Keeta & more!\n\nOur motto: Delivery as it should be! 💫';
+    }
+    
+    // ===== الشكر =====
+    if (has(['شكر', 'شكراً', 'thanks', 'thank', 'مشكور', 'يعطيك', 'الله يعطيك', 'ممتاز', 'رائع', 'حلو', 'great', 'awesome', 'nice', 'good', 'perfect'])) {
+        const thanks = langIsArabic ? [
+            'العفو! سعيد إني قدرت أساعدك 😊 لو تحتاج أي شيء ثاني، أنا هنا!',
+            'تسلم! نورتنا بسؤالك 🌟 لا تتردد ترجع في أي وقت!',
+            'الشكر لك على ثقتك فينا! 💙 موفق!',
+            'يسعدني خدمتك! نتمنى نشوفك عميل دائم عندنا 🚀'
+        ] : [
+            'You\'re welcome! Happy to help 😊',
+            'My pleasure! Come back anytime 🌟',
+            'Thank YOU for choosing us! 💙',
+            'Glad I could help! See you soon 🚀'
+        ];
+        return thanks[Math.floor(Math.random() * thanks.length)];
+    }
+    
+    // ===== الوداع =====
+    if (has(['باي', 'مع السلامة', 'bye', 'goodbye', 'see you', 'الله معك', 'يلا', 'خلاص'])) {
+        const bye = langIsArabic ? [
+            'مع السلامة! 👋 نتشرف بخدمتك في أي وقت',
+            'الله معك! لو تحتاج شيء، راجعنا على طول 💙',
+            'في أمان الله! شكراً لتواصلك معنا 🌟'
+        ] : [
+            'Goodbye! 👋 Always here to help',
+            'Take care! Come back anytime 💙',
+            'Bye! Thanks for chatting with us 🌟'
+        ];
+        return bye[Math.floor(Math.random() * bye.length)];
+    }
+    
+    // ===== أسئلة عامة - رد ذكي =====
+    // تحليل السؤال ومحاولة الرد بشكل إبداعي
+    const questionWords = ['كيف', 'ليش', 'متى', 'وين', 'مين', 'كم', 'هل', 'إيش', 'شنو', 'how', 'why', 'when', 'where', 'who', 'what', 'which', 'can', 'do', 'is', 'are'];
+    const isQuestion = questionWords.some(w => msg.includes(w)) || msg.includes('؟') || msg.includes('?');
+    
+    if (isQuestion) {
+        return langIsArabic
+            ? '🤔 سؤال جميل!\n\nأنا متخصص في خدمات التوصيل، لكن دايماً أحاول أساعد.\n\nلو سؤالك عن:\n• 📦 التوصيل والشحن\n• 💰 الأسعار والعروض\n• 🏢 حلول الشركات\n• 💼 فرص العمل\n\nاسأل وأنا جاهز! أو وضّحلي أكثر عن اللي تحتاجه 😊'
+            : '🤔 Great question!\n\nI specialize in delivery services, but always try to help.\n\nIf you\'re asking about:\n• 📦 Delivery & shipping\n• 💰 Pricing & offers\n• 🏢 Business solutions\n• 💼 Job opportunities\n\nAsk away! Or tell me more about what you need 😊';
+    }
+    
+    // ===== رد افتراضي إبداعي للكلام العام =====
+    const defaultReplies = langIsArabic ? [
+        '👋 أنا مساعد OneTrip الذكي!\n\nممكن أساعدك في:\n• معرفة الأسعار\n• أوقات التوصيل\n• تتبع الشحنات\n• حلول الشركات\n• فرص التوظيف\n\nجرّب تسألني أي شيء! 🚀',
+        '🌟 أهلاً بك!\n\nأخبرني كيف أقدر أخدمك اليوم؟\n\nأقدر أساعدك في كل ما يخص التوصيل والشحن داخل المملكة. اسأل بحرية!',
+        '😊 نورت!\n\nاكتبلي سؤالك أو استفسارك وأنا جاهز أساعدك.\n\nمثلاً: "كم سعر التوصيل داخل الرياض؟" أو "أبغى أعرف عن حلول الشركات"'
+    ] : [
+        '👋 I\'m the OneTrip Smart Assistant!\n\nI can help with:\n• Pricing info\n• Delivery times\n• Shipment tracking\n• Business solutions\n• Job opportunities\n\nTry asking me anything! 🚀',
+        '🌟 Welcome!\n\nHow can I help you today?\n\nI can assist with all delivery & logistics questions across Saudi Arabia!',
+        '😊 Hi there!\n\nType your question and I\'ll do my best to help.\n\nFor example: "How much for delivery in Riyadh?" or "Tell me about business solutions"'
+    ];
+    
+    return defaultReplies[Math.floor(Math.random() * defaultReplies.length)];
 }
 
 function resetChatConversation() {
