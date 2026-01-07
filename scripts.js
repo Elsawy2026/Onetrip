@@ -319,7 +319,9 @@ function generateBotReply(message) {
         onTimeRate: 97,
         founded: 2020,
         headquarters: 'الرياض',
-        branches: 12
+        branches: 5,
+        branchNamesAr: ['الرياض (الفرع الرئيسي)', 'الدمام', 'القصيم', 'أبها', 'تبوك'],
+        branchNamesEn: ['Riyadh (HQ)', 'Dammam', 'Qassim', 'Abha', 'Tabuk']
     };
     
     // ===== التحيات =====
