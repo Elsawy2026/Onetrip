@@ -328,7 +328,7 @@ function generateBotReply(message) {
                 cityAr: 'الرياض',
                 titleAr: 'الفرع الرئيسي - الرياض',
                 descriptionAr: 'الفرع الرئيسي لإدارة وتشغيل عمليات OneTrip Express على مستوى المملكة.',
-                mapsUrl: 'https://maps.google.com', // يمكن تحديثه لاحقاً
+                mapsUrl: 'https://maps.app.goo.gl/ghVH2zxcGERUGZyp7',
                 titleEn: 'Head Office - Riyadh',
                 descriptionEn: 'Main hub for OneTrip Express operations across the Kingdom.'
             },
