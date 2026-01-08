@@ -4,13 +4,28 @@
 // ==========================================
 
 // ===== PRELOADER =====
-window.addEventListener('load', () => {
+function hidePreloader() {
+    const preloader = document.getElementById("preloader");
+    if (preloader) {
+        preloader.classList.add("hidden");
+        preloader.style.opacity = "0";
+        preloader.style.visibility = "hidden";
+        preloader.style.pointerEvents = "none";
+        setTimeout(() => { preloader.style.display = "none"; }, 500);
+    }
+}
+
+window.addEventListener("load", () => {
     setTimeout(() => {
-        document.getElementById('preloader').classList.add('hidden');
-        // Start counter animations after preloader
-        startCounterAnimations();
-    }, 1200);
+        hidePreloader();
+        if (typeof startCounterAnimations === "function") {
+            startCounterAnimations();
+        }
+    }, 800);
 });
+
+setTimeout(hidePreloader, 3000);
+document.addEventListener("DOMContentLoaded", () => setTimeout(hidePreloader, 1500));
 
 // ===== NAVIGATION =====
 const nav = document.getElementById('nav');

@@ -112,8 +112,9 @@ section, .section {
 }
 
 .preloader.hidden {
-    opacity: 0;
-    visibility: hidden;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
 }
 
 .loader {
