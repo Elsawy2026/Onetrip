@@ -162,16 +162,20 @@ section, .section {
     left: 0;
     right: 0;
     z-index: 1000;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
     padding: 16px 0;
     background: transparent;
     transition: var(--transition);
 }
 
 .nav.scrolled {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.98) !important;
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(0,0,0,0.08);
-    box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    border-bottom: 1px solid rgba(37, 99, 235, 0.1);
+    box-shadow: 0 4px 30px rgba(37, 99, 235, 0.1);
 }
 
 .nav-container {
@@ -183,8 +187,18 @@ section, .section {
     padding: 0 24px;
 }
 
+.nav-logo {
+    display: flex;
+    align-items: center;
+}
+
 .nav-logo img {
     height: 50px;
+    transition: transform 0.3s ease;
+}
+
+.nav-logo:hover img {
+    transform: scale(1.05);
 }
 
 .nav-menu {
@@ -195,7 +209,7 @@ section, .section {
 
 .nav-link {
     padding: 10px 18px;
-    color: var(--text-light);
+    color: #2563EB;
     text-decoration: none;
     font-weight: 500;
     font-size: 0.95rem;
@@ -205,8 +219,8 @@ section, .section {
 
 .nav-link:hover,
 .nav-link.active {
-    color: var(--primary);
-    text-shadow: 0 0 20px rgba(247, 148, 29, 0.5);
+    color: #F7941D;
+    text-shadow: 0 0 20px rgba(247, 148, 29, 0.3);
 }
 
 .nav-link {
@@ -220,7 +234,7 @@ section, .section {
     left: 50%;
     width: 0;
     height: 2px;
-    background: var(--gradient-icon);
+    background: linear-gradient(90deg, #2563EB 0%, #F7941D 100%);
     transition: all 0.3s ease;
     transform: translateX(-50%);
 }
@@ -239,17 +253,18 @@ section, .section {
 .lang-btn {
     padding: 10px 24px;
     background: transparent;
-    border: 1px solid var(--text-dark);
+    border: 1px solid #2563EB;
     border-radius: var(--radius-full);
-    color: var(--text-white);
+    color: #2563EB;
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
 }
 
 .lang-btn:hover {
-    background: var(--primary);
-    border-color: var(--primary);
+    background: linear-gradient(135deg, #2563EB 0%, #F7941D 100%);
+    border-color: #F7941D;
+    color: white;
 }
 
 .nav-toggle {
