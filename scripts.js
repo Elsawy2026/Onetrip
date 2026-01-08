@@ -1316,14 +1316,28 @@ document.querySelectorAll('.btn-primary').forEach(btn => {
 });
 
 // ===== SMOOTH SECTION REVEALS =====
+// Make all sections visible immediately on load
+document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('.section');
+    sections.forEach((section) => {
+        section.classList.add('section-visible');
+        section.style.opacity = '1';
+        section.style.transform = 'translateY(0)';
+    });
+});
+
+// IntersectionObserver for scroll animations (optional enhancement)
 const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('section-visible');
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
         }
     });
-}, { threshold: 0.1 });
+}, { threshold: 0.01 });
 
+// Observe all sections
 document.querySelectorAll('.section').forEach(section => {
     sectionObserver.observe(section);
 });
