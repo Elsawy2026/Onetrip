@@ -235,7 +235,7 @@ function startCounterAnimations() {
 
 // ===== LIVE CHAT =====
 // Make toggleChat globally accessible
-window.toggleChat = function() {
+function toggleChat() {
     const chatWidget = document.getElementById('chatWidget');
     const chatToggle = document.getElementById('chatToggle');
     const badge = document.querySelector('.chat-badge');
@@ -262,7 +262,10 @@ window.toggleChat = function() {
         }
         if (badge) badge.style.display = 'flex';
     }
-};
+}
+
+// Make it globally accessible
+window.toggleChat = toggleChat;
 
 function sendQuickReply(type) {
     const shortcuts = {
@@ -1352,15 +1355,89 @@ document.querySelectorAll('.section').forEach(section => {
     sectionObserver.observe(section);
 });
 
+// ===== PARTICLES/STARS ANIMATION =====
+document.addEventListener('DOMContentLoaded', function() {
+    const canvas = document.getElementById('particlesCanvas');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    // Resize canvas on window resize
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+    
+    // Particle class
+    class Particle {
+        constructor() {
+            this.reset();
+            this.y = Math.random() * canvas.height;
+        }
+        
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = -10;
+            this.speed = Math.random() * 2 + 1;
+            this.size = Math.random() * 2 + 1;
+            this.opacity = Math.random() * 0.5 + 0.2;
+        }
+        
+        update() {
+            this.y += this.speed;
+            if (this.y > canvas.height) {
+                this.reset();
+            }
+        }
+        
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(247, 148, 29, ${this.opacity})`;
+            ctx.fill();
+        }
+    }
+    
+    // Create particles
+    const particles = [];
+    const particleCount = 50;
+    
+    for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+    }
+    
+    // Animation loop
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        particles.forEach(particle => {
+            particle.update();
+            particle.draw();
+        });
+        
+        requestAnimationFrame(animate);
+    }
+    
+    animate();
+});
+
 // ===== CURSOR FOLLOWER =====
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
     const cursorFollower = document.getElementById('cursorFollower');
-    if (!cursorFollower) return;
+    if (!cursorFollower) {
+        console.error('cursorFollower not found');
+        return;
+    }
     
     const cursorDot = cursorFollower.querySelector('.cursor-dot');
     const cursorRing = cursorFollower.querySelector('.cursor-ring');
     
-    if (!cursorDot || !cursorRing) return;
+    if (!cursorDot || !cursorRing) {
+        console.error('cursor dot or ring not found');
+        return;
+    }
 
     let mouseX = 0;
     let mouseY = 0;
@@ -1397,8 +1474,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Smooth follow animation
-        cursorX += (mouseX - cursorX) * 0.15;
-        cursorY += (mouseY - cursorY) * 0.15;
+        cursorX += (mouseX - cursorX) * 0.2;
+        cursorY += (mouseY - cursorY) * 0.2;
 
         cursorRing.style.left = cursorX + 'px';
         cursorRing.style.top = cursorY + 'px';
@@ -1438,19 +1515,39 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ===== ENSURE CHAT TOGGLE WORKS =====
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
     const chatToggle = document.getElementById('chatToggle');
     const chatWidget = document.getElementById('chatWidget');
+    
+    console.log('Chat toggle setup:', { chatToggle, chatWidget, toggleChat: typeof toggleChat });
     
     if (chatToggle) {
         chatToggle.style.visibility = 'visible';
         chatToggle.style.opacity = '1';
         chatToggle.style.display = 'flex';
+        
+        // Remove any existing event listeners
+        const newChatToggle = chatToggle.cloneNode(true);
+        chatToggle.parentNode.replaceChild(newChatToggle, chatToggle);
+        
+        // Add click event listener
+        newChatToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Chat toggle clicked!');
+            if (typeof toggleChat === 'function') {
+                toggleChat();
+            } else {
+                console.error('toggleChat function not found!');
+            }
+        });
+        
+        // Make sure toggleChat is globally accessible
+        window.toggleChat = toggleChat;
     }
     
-    if (chatWidget && typeof toggleChat === 'function') {
-        // Make sure toggleChat is accessible
-        window.toggleChat = toggleChat;
+    if (chatWidget) {
+        console.log('Chat widget found');
     }
 });
 
