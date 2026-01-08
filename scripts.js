@@ -1482,6 +1482,44 @@ if (document.readyState === 'loading') {
     initParticles();
 }
 
+// ===== HERO PARTICLES ANIMATION =====
+function initHeroParticles() {
+    const heroParticles = document.getElementById('heroParticles');
+    if (!heroParticles) return;
+    
+    const particleCount = 80;
+    
+    function createParticle() {
+        const particle = document.createElement('div');
+        particle.className = 'hero-particle';
+        
+        const startX = Math.random() * 100;
+        const duration = 8 + Math.random() * 12;
+        const delay = Math.random() * 5;
+        
+        particle.style.left = startX + '%';
+        particle.style.animationDuration = duration + 's';
+        particle.style.animationDelay = delay + 's';
+        
+        heroParticles.appendChild(particle);
+        
+        setTimeout(() => {
+            particle.remove();
+            createParticle();
+        }, (duration + delay) * 1000);
+    }
+    
+    for (let i = 0; i < particleCount; i++) {
+        setTimeout(() => createParticle(), i * 100);
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeroParticles);
+} else {
+    initHeroParticles();
+}
+
 // ===== CURSOR FOLLOWER =====
 function initCursorFollower() {
     const cursorFollower = document.getElementById('cursorFollower');
