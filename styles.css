@@ -1466,12 +1466,12 @@ section, .section {
 }
 
 .about-cards-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    flex-wrap: wrap;
     gap: 28px;
     width: 100%;
     justify-content: center;
-    align-items: start;
+    align-items: stretch;
 }
 
 .about-card {
@@ -1482,9 +1482,9 @@ section, .section {
     overflow: hidden;
     transition: var(--transition-smooth);
     position: relative;
-    width: 100%;
-    max-width: 380px;
-    margin: 0 auto;
+    flex: 0 0 calc(33.333% - 19px);
+    max-width: calc(33.333% - 19px);
+    min-width: 300px;
 }
 
 .about-card::before {
