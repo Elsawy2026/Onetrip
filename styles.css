@@ -1508,15 +1508,6 @@ section, .section {
     gap: 24px;
 }
 
-/* 3D Card Effect */
-.about-card {
-    transform-style: preserve-3d;
-    perspective: 1000px;
-}
-
-.about-card:hover {
-    transform: translateY(-8px) scale(1.01);
-}
 
 .about-card-icon {
     width: 80px;
