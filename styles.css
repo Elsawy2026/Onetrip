@@ -1637,10 +1637,11 @@ section, .section {
 }
 
 .value-card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
     transition: transform 0.5s ease;
+    display: block !important;
 }
 
 .value-card:hover .value-card-image img {
