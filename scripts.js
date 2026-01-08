@@ -234,25 +234,35 @@ function startCounterAnimations() {
 }
 
 // ===== LIVE CHAT =====
-function toggleChat() {
+// Make toggleChat globally accessible
+window.toggleChat = function() {
     const chatWidget = document.getElementById('chatWidget');
     const chatToggle = document.getElementById('chatToggle');
     const badge = document.querySelector('.chat-badge');
     
-    if (!chatWidget) return;
+    console.log('toggleChat called', { chatWidget, chatToggle, badge });
+    
+    if (!chatWidget) {
+        console.error('chatWidget not found!');
+        return;
+    }
     
     const isOpening = !chatWidget.classList.contains('active');
     chatWidget.classList.toggle('active');
+    
+    console.log('Chat toggled, isOpening:', isOpening, 'has active class:', chatWidget.classList.contains('active'));
     
     if (isOpening) {
         // عند الفتح أخفي البادج
         if (badge) badge.style.display = 'none';
     } else {
         // عند الإغلاق امسح المحادثة وارجع رسالة الترحيب فقط
-        resetChatConversation();
+        if (typeof resetChatConversation === 'function') {
+            resetChatConversation();
+        }
         if (badge) badge.style.display = 'flex';
     }
-}
+};
 
 function sendQuickReply(type) {
     const shortcuts = {

@@ -779,6 +779,41 @@
             offset: 50,
             delay: 100
         });
+        
+        // Ensure chat toggle is visible and works
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatToggle = document.getElementById('chatToggle');
+            const chatWidget = document.getElementById('chatWidget');
+            
+            console.log('DOM Loaded - Chat elements:', { chatToggle, chatWidget });
+            
+            if (chatToggle) {
+                chatToggle.style.cssText = 'position: fixed !important; bottom: 30px !important; left: 100px !important; width: 60px !important; height: 60px !important; background: linear-gradient(135deg, #F7941D 0%, #FFAA40 100%) !important; border: none !important; border-radius: 50% !important; color: white !important; font-size: 1.5rem !important; cursor: pointer !important; box-shadow: 0 5px 25px rgba(247, 148, 29, 0.4) !important; z-index: 9998 !important; display: flex !important; align-items: center !important; justify-content: center !important; visibility: visible !important; opacity: 1 !important;';
+                chatToggle.setAttribute('onclick', 'toggleChat()');
+            }
+            
+            if (chatWidget) {
+                console.log('Chat widget found, initial state:', chatWidget.classList.contains('active'));
+            }
+            
+            // Make sure toggleChat is accessible
+            if (typeof window.toggleChat === 'function') {
+                console.log('toggleChat is accessible');
+            } else {
+                console.error('toggleChat is NOT accessible!');
+            }
+        });
+        
+        // Also check on window load
+        window.addEventListener('load', function() {
+            const chatToggle = document.getElementById('chatToggle');
+            if (chatToggle) {
+                chatToggle.style.visibility = 'visible';
+                chatToggle.style.opacity = '1';
+                chatToggle.style.display = 'flex';
+                console.log('Chat toggle should be visible now');
+            }
+        });
     </script>
 </body>
 </html>
