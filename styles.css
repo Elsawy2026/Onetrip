@@ -303,7 +303,7 @@ section, .section {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    z-index: 1;
+    z-index: 2;
     overflow: hidden;
 }
 
@@ -339,7 +339,7 @@ section, .section {
     inset: 0;
     overflow: hidden;
     pointer-events: none;
-    z-index: 1;
+    z-index: 0;
 }
 
 .hero-bg::before {
@@ -386,11 +386,13 @@ section, .section {
     align-items: center;
     padding: 100px 0 60px;
     position: relative;
-    z-index: 2;
+    z-index: 3;
 }
 
 .hero-content {
     max-width: 580px;
+    position: relative;
+    z-index: 3;
 }
 
 .hero-badge {
