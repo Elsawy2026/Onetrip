@@ -345,59 +345,77 @@ section, .section {
 
 .delivery-vehicle {
     position: absolute;
-    opacity: 0.18;
+    opacity: 0.2;
     transition: opacity 0.3s ease;
+    will-change: transform;
 }
 
 .delivery-vehicle svg {
-    width: 32px;
-    height: 32px;
-    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.15));
+    width: 36px;
+    height: 36px;
+    filter: drop-shadow(0 2px 6px rgba(247, 148, 29, 0.3)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
 }
 
-/* Vehicle Types */
+/* Vehicle Types - Professional colors inspired by dash-cord */
 .vehicle-car {
     color: #F7941D;
+    filter: brightness(1.1);
 }
 
 .vehicle-van {
     color: #FFAA40;
+    filter: brightness(1.05);
 }
 
 .vehicle-truck {
     color: #FF6B35;
+    filter: brightness(1.08);
+}
+
+/* Subtle glow effect on vehicles */
+.delivery-vehicle:hover {
+    opacity: 0.25;
+    filter: brightness(1.2);
 }
 
 @keyframes vehicleMove {
     0% {
-        transform: translateX(-50px) translateY(0) rotate(0deg);
+        transform: translateX(-60px) translateY(0) rotate(0deg);
         opacity: 0;
     }
-    5% {
-        opacity: 0.18;
+    3% {
+        opacity: 0.2;
     }
-    95% {
-        opacity: 0.18;
+    50% {
+        transform: translateX(calc(50vw)) translateY(calc(var(--offset, 0px))) rotate(0deg);
+        opacity: 0.2;
+    }
+    97% {
+        opacity: 0.2;
     }
     100% {
-        transform: translateX(calc(100vw + 50px)) translateY(0) rotate(0deg);
+        transform: translateX(calc(100vw + 60px)) translateY(0) rotate(0deg);
         opacity: 0;
     }
 }
 
 @keyframes vehicleMoveVertical {
     0% {
-        transform: translateX(0) translateY(-50px) rotate(90deg);
+        transform: translateX(0) translateY(-60px) rotate(90deg);
         opacity: 0;
     }
-    5% {
-        opacity: 0.18;
+    3% {
+        opacity: 0.2;
     }
-    95% {
-        opacity: 0.18;
+    50% {
+        transform: translateX(calc(var(--offset, 0px))) translateY(calc(50vh)) rotate(90deg);
+        opacity: 0.2;
+    }
+    97% {
+        opacity: 0.2;
     }
     100% {
-        transform: translateX(0) translateY(calc(100vh + 50px)) rotate(90deg);
+        transform: translateX(0) translateY(calc(100vh + 60px)) rotate(90deg);
         opacity: 0;
     }
 }

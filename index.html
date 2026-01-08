@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=2026.01.08.vehicles3">
+    <link rel="stylesheet" href="styles.css?v=2026.01.08.dashcord">
 </head>
 <body>
     <!-- Inline Preloader Fallback -->
@@ -1004,19 +1004,19 @@
                         return;
                     }
                     
-                    // Vehicle types with professional SVG paths (minimalist, professional design)
+                    // Vehicle types with professional SVG paths (inspired by dash-cord design)
                     const vehicleTypes = [
                         { 
                             class: 'vehicle-car', 
-                            svg: '<rect x="4" y="10" width="16" height="8" rx="1" fill="currentColor" opacity="0.9"/><rect x="6" y="8" width="12" height="4" rx="0.5" fill="currentColor" opacity="0.8"/><circle cx="9" cy="17" r="1.5" fill="#1E293B"/><circle cx="15" cy="17" r="1.5" fill="#1E293B"/>'
+                            svg: '<path d="M5 12h14a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1z" fill="currentColor" opacity="0.95"/><path d="M7 9h10a1 1 0 0 1 1 1v3H6v-3a1 1 0 0 1 1-1z" fill="currentColor" opacity="0.9"/><circle cx="9" cy="18" r="1.8" fill="#1E293B" opacity="0.8"/><circle cx="15" cy="18" r="1.8" fill="#1E293B" opacity="0.8"/><rect x="8" y="11" width="8" height="1.5" fill="#1E293B" opacity="0.2" rx="0.5"/>'
                         },
                         { 
                             class: 'vehicle-van', 
-                            svg: '<rect x="4" y="10" width="16" height="8" rx="1" fill="currentColor" opacity="0.9"/><rect x="6" y="7" width="14" height="5" rx="0.5" fill="currentColor" opacity="0.85"/><rect x="8" y="11" width="8" height="2" fill="#1E293B" opacity="0.3"/><circle cx="9" cy="17" r="1.5" fill="#1E293B"/><circle cx="15" cy="17" r="1.5" fill="#1E293B"/>'
+                            svg: '<path d="M4 12h16a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1z" fill="currentColor" opacity="0.95"/><path d="M6 8h12a1 1 0 0 1 1 1v4H5V9a1 1 0 0 1 1-1z" fill="currentColor" opacity="0.9"/><rect x="7" y="10" width="10" height="2" fill="#1E293B" opacity="0.25" rx="0.5"/><circle cx="9" cy="18" r="1.8" fill="#1E293B" opacity="0.8"/><circle cx="15" cy="18" r="1.8" fill="#1E293B" opacity="0.8"/><rect x="8" y="11" width="6" height="1.5" fill="#1E293B" opacity="0.2" rx="0.5"/>'
                         },
                         { 
                             class: 'vehicle-truck', 
-                            svg: '<rect x="3" y="10" width="18" height="8" rx="1" fill="currentColor" opacity="0.9"/><rect x="5" y="7" width="10" height="5" rx="0.5" fill="currentColor" opacity="0.85"/><rect x="15" y="9" width="5" height="6" fill="currentColor" opacity="0.75"/><circle cx="8" cy="17" r="1.5" fill="#1E293B"/><circle cx="18" cy="17" r="1.5" fill="#1E293B"/><rect x="16" y="11" width="3" height="2" fill="#1E293B" opacity="0.2"/>'
+                            svg: '<path d="M3 12h18a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1z" fill="currentColor" opacity="0.95"/><path d="M5 8h9a1 1 0 0 1 1 1v4H4V9a1 1 0 0 1 1-1z" fill="currentColor" opacity="0.9"/><path d="M14 9h5a1 1 0 0 1 1 1v5h-6V9z" fill="currentColor" opacity="0.85"/><circle cx="8" cy="18" r="1.8" fill="#1E293B" opacity="0.8"/><circle cx="17" cy="18" r="1.8" fill="#1E293B" opacity="0.8"/><rect x="6" y="11" width="6" height="1.5" fill="#1E293B" opacity="0.2" rx="0.5"/><rect x="15" y="11" width="4" height="1.5" fill="#1E293B" opacity="0.2" rx="0.5"/>'
                         }
                     ];
                     
@@ -1027,7 +1027,7 @@
                         'vehicleMoveDiagonal2'
                     ];
                     
-                    const vehicleCount = 5;
+                    const vehicleCount = 4; // Less vehicles for cleaner look
                     
                     function createVehicle() {
                         const vehicle = document.createElement('div');
@@ -1035,30 +1035,33 @@
                         
                         const vehicleType = vehicleTypes[Math.floor(Math.random() * vehicleTypes.length)];
                         const animationType = animations[Math.floor(Math.random() * animations.length)];
-                        const duration = 40 + Math.random() * 35; // 40-75 seconds - very slow movement
-                        const delay = Math.random() * 5;
+                        const duration = 50 + Math.random() * 40; // 50-90 seconds - very slow, smooth movement
+                        const delay = Math.random() * 8;
                         
-                        // Random starting position based on animation type
-                        let startX = 0, startY = 0;
+                        // Random starting position based on animation type with natural variation
+                        let startX = 0, startY = 0, offset = 0;
                         if (animationType === 'vehicleMove') {
-                            startY = Math.random() * 100; // Random vertical position
+                            startY = 20 + Math.random() * 60; // Random vertical position (20-80%)
+                            offset = (Math.random() - 0.5) * 30; // Small vertical offset for curved path
                         } else if (animationType === 'vehicleMoveVertical') {
-                            startX = Math.random() * 100; // Random horizontal position
+                            startX = 20 + Math.random() * 60; // Random horizontal position (20-80%)
+                            offset = (Math.random() - 0.5) * 30; // Small horizontal offset
                         } else if (animationType === 'vehicleMoveDiagonal1') {
-                            startX = Math.random() * 30;
-                            startY = Math.random() * 30;
+                            startX = Math.random() * 25;
+                            startY = Math.random() * 25;
                         } else {
-                            startX = 70 + Math.random() * 30;
-                            startY = Math.random() * 30;
+                            startX = 75 + Math.random() * 25;
+                            startY = Math.random() * 25;
                         }
                         
                         vehicle.className += ' ' + vehicleType.class;
                         vehicle.style.left = startX + '%';
                         vehicle.style.top = startY + '%';
+                        vehicle.style.setProperty('--offset', offset + 'px');
                         vehicle.style.animationName = animationType;
                         vehicle.style.animationDuration = duration + 's';
                         vehicle.style.animationDelay = delay + 's';
-                        vehicle.style.animationTimingFunction = 'linear';
+                        vehicle.style.animationTimingFunction = 'cubic-bezier(0.4, 0, 0.2, 1)'; // Smooth easing
                         vehicle.style.animationIterationCount = 'infinite';
                         
                         // Create SVG for vehicle (professional, minimal design)
