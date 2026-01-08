@@ -95,6 +95,8 @@ function toggleLanguage() {
     const newLang = currentLang === 'ar' ? 'en' : 'ar';
     const newDir = newLang === 'ar' ? 'rtl' : 'ltr';
     
+    console.log('toggleLanguage called:', { currentLang, newLang, newDir });
+    
     html.setAttribute('lang', newLang);
     html.setAttribute('dir', newDir);
     
@@ -134,7 +136,10 @@ function toggleLanguage() {
     });
     
     // Update button text
-    document.getElementById('langBtn').textContent = newLang === 'ar' ? 'EN' : 'AR';
+    const langBtn = document.getElementById('langBtn');
+    if (langBtn) {
+        langBtn.textContent = newLang === 'ar' ? 'English' : 'العربية';
+    }
     
     // Update CTA arrow direction
     document.querySelectorAll('.btn i.fa-arrow-left, .btn i.fa-arrow-right').forEach(icon => {
@@ -147,6 +152,9 @@ function toggleLanguage() {
         }
     });
 }
+
+// Make globally accessible
+window.toggleLanguage = toggleLanguage;
 
 // Load saved language preference
 window.addEventListener('DOMContentLoaded', () => {
@@ -215,7 +223,26 @@ function animateCounter(element, target, suffix = '') {
 }
 
 function startCounterAnimations() {
+    console.log('startCounterAnimations called');
     const counters = document.querySelectorAll('[data-count]');
+    console.log('Found counters:', counters.length);
+    
+    if (counters.length === 0) {
+        console.error('No counters found with data-count attribute!');
+        // Try to animate anyway after a delay
+        setTimeout(() => {
+            const retryCounters = document.querySelectorAll('[data-count]');
+            console.log('Retry found counters:', retryCounters.length);
+            if (retryCounters.length > 0) {
+                retryCounters.forEach(counter => {
+                    const target = parseInt(counter.dataset.count);
+                    const suffix = counter.dataset.suffix || '';
+                    animateCounter(counter, target, suffix);
+                });
+            }
+        }, 1000);
+        return;
+    }
     
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -224,14 +251,28 @@ function startCounterAnimations() {
                 const target = parseInt(element.dataset.count);
                 const suffix = element.dataset.suffix || '';
                 
+                console.log('Animating counter:', { target, suffix });
                 animateCounter(element, target, suffix);
                 observer.unobserve(element);
             }
         });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.1 });
     
-    counters.forEach(counter => observer.observe(counter));
+    counters.forEach(counter => {
+        observer.observe(counter);
+        // Also animate immediately if already visible
+        const rect = counter.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+            const target = parseInt(counter.dataset.count);
+            const suffix = counter.dataset.suffix || '';
+            animateCounter(counter, target, suffix);
+            observer.unobserve(counter);
+        }
+    });
 }
+
+// Make globally accessible
+window.startCounterAnimations = startCounterAnimations;
 
 // ===== LIVE CHAT =====
 // Make toggleChat globally accessible

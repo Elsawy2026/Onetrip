@@ -782,14 +782,31 @@
             delay: 100
         });
         
-        // Additional chat toggle initialization
+        // Ensure all functions are globally accessible
         window.addEventListener('load', function() {
+            console.log('Window loaded - initializing everything');
+            
+            // Chat toggle
             const chatToggle = document.getElementById('chatToggle');
             if (chatToggle) {
                 chatToggle.style.visibility = 'visible';
                 chatToggle.style.opacity = '1';
                 chatToggle.style.display = 'flex';
-                console.log('Chat toggle visible on load');
+                console.log('Chat toggle visible');
+            }
+            
+            // Language toggle
+            const langBtn = document.getElementById('langBtn');
+            if (langBtn && typeof window.toggleLanguage === 'function') {
+                langBtn.setAttribute('onclick', 'window.toggleLanguage()');
+                console.log('Language button ready');
+            }
+            
+            // Start counter animations
+            if (typeof window.startCounterAnimations === 'function') {
+                setTimeout(() => {
+                    window.startCounterAnimations();
+                }, 500);
             }
         });
     </script>
