@@ -3736,8 +3736,17 @@ section, .section {
         justify-content: center;
     }
     
+    .about-cards-grid {
+        justify-content: center;
+    }
+    
+    .about-card {
+        flex: 0 0 calc(50% - 14px);
+        max-width: calc(50% - 14px);
+        min-width: 280px;
+    }
+    
     .services-grid,
-    .about-cards-grid,
     .partners-grid {
         grid-template-columns: repeat(2, 1fr);
     }
