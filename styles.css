@@ -1724,6 +1724,10 @@ section, .section {
     overflow: hidden;
     position: relative;
     border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    background: linear-gradient(135deg, #F7941D 0%, #FFAA40 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .service-hero-image {
@@ -1732,6 +1736,12 @@ section, .section {
     object-fit: cover;
     object-position: center;
     transition: transform 0.5s ease;
+    display: block;
+}
+
+.service-hero-image[src=""],
+.service-hero-image:not([src]) {
+    display: none;
 }
 
 .service-card-new:hover .service-hero-image {
