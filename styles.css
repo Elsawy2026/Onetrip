@@ -1470,6 +1470,8 @@ section, .section {
     flex-wrap: wrap;
     gap: 28px;
     width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
     justify-content: center;
     align-items: stretch;
 }
@@ -1482,9 +1484,9 @@ section, .section {
     overflow: hidden;
     transition: var(--transition-smooth);
     position: relative;
-    flex: 0 0 calc(33.333% - 19px);
-    max-width: calc(33.333% - 19px);
-    min-width: 300px;
+    flex: 0 0 350px;
+    max-width: 350px;
+    width: 100%;
 }
 
 .about-card::before {
