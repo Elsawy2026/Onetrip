@@ -18,9 +18,16 @@ function hidePreloader() {
 window.addEventListener("load", () => {
     setTimeout(() => {
         hidePreloader();
-        if (typeof startCounterAnimations === "function") {
-            startCounterAnimations();
+        // Start counter animations multiple times to ensure they work
+        if (typeof window.startCounterAnimations === "function") {
+            window.startCounterAnimations();
         }
+        // Fallback - try again after delay
+        setTimeout(() => {
+            if (typeof window.startCounterAnimations === "function") {
+                window.startCounterAnimations();
+            }
+        }, 1000);
     }, 800);
 });
 
