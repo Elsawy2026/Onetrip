@@ -1490,16 +1490,19 @@ function initHeroParticles() {
         return;
     }
     
-    const particleCount = 100;
+    // Reduced particle count - less crowded
+    const particleCount = 35;
     
     function createParticle() {
         const particle = document.createElement('div');
         particle.className = 'hero-particle';
         
         const startX = Math.random() * 100;
-        const duration = 10 + Math.random() * 15;
-        const delay = Math.random() * 3;
-        const size = 2 + Math.random() * 3;
+        // Faster falling speed (like rain)
+        const duration = 8 + Math.random() * 10;
+        const delay = Math.random() * 2;
+        // Smaller size (1-2px)
+        const size = 1 + Math.random() * 1;
         
         particle.style.left = startX + '%';
         particle.style.width = size + 'px';
@@ -1517,9 +1520,9 @@ function initHeroParticles() {
         }, (duration + delay) * 1000);
     }
     
-    // Create initial particles
+    // Create initial particles with more spacing
     for (let i = 0; i < particleCount; i++) {
-        setTimeout(() => createParticle(), i * 50);
+        setTimeout(() => createParticle(), i * 150);
     }
     
     console.log('✅ Hero particles (falling orange dots) started');
