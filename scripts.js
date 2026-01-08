@@ -1404,9 +1404,12 @@ document.querySelectorAll('.section').forEach(section => {
 });
 
 // ===== PARTICLES/STARS ANIMATION =====
-document.addEventListener('DOMContentLoaded', function() {
+function initParticles() {
     const canvas = document.getElementById('particlesCanvas');
-    if (!canvas) return;
+    if (!canvas) {
+        console.error('particlesCanvas not found');
+        return;
+    }
     
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
@@ -1469,10 +1472,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     animate();
-});
+    console.log('✅ Particles animation started');
+}
+
+// Initialize on DOM ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initParticles);
+} else {
+    initParticles();
+}
 
 // ===== CURSOR FOLLOWER =====
-document.addEventListener('DOMContentLoaded', function() {
+function initCursorFollower() {
     const cursorFollower = document.getElementById('cursorFollower');
     if (!cursorFollower) {
         console.error('cursorFollower not found');
@@ -1560,7 +1571,16 @@ document.addEventListener('DOMContentLoaded', function() {
             cursorRing.style.borderColor = 'rgba(247, 148, 29, 0.5)';
         });
     });
-});
+    
+    console.log('✅ Cursor follower initialized');
+}
+
+// Initialize on DOM ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCursorFollower);
+} else {
+    initCursorFollower();
+}
 
 // ===== ENSURE CHAT TOGGLE WORKS =====
 document.addEventListener('DOMContentLoaded', function() {

@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=2026.01.08.force">
+    <link rel="stylesheet" href="styles.css?v=2026.01.08.complete">
 </head>
 <body>
     <!-- Inline Preloader Fallback -->
@@ -771,7 +771,7 @@
 
     <!-- AOS Animation Library -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="scripts.js?v=2026.01.08.force"></script>
+    <script src="scripts.js?v=2026.01.08.complete"></script>
     <script>
         // Initialize AOS
         AOS.init({
@@ -782,33 +782,88 @@
             delay: 100
         });
         
-        // Ensure all functions are globally accessible
-        window.addEventListener('load', function() {
-            console.log('Window loaded - initializing everything');
+        // ===== COMPLETE INITIALIZATION =====
+        (function() {
+            console.log('=== INITIALIZING ONETRIP ===');
             
-            // Chat toggle
-            const chatToggle = document.getElementById('chatToggle');
-            if (chatToggle) {
-                chatToggle.style.visibility = 'visible';
-                chatToggle.style.opacity = '1';
-                chatToggle.style.display = 'flex';
-                console.log('Chat toggle visible');
-            }
-            
-            // Language toggle
-            const langBtn = document.getElementById('langBtn');
-            if (langBtn && typeof window.toggleLanguage === 'function') {
-                langBtn.setAttribute('onclick', 'window.toggleLanguage()');
-                console.log('Language button ready');
-            }
-            
-            // Start counter animations
-            if (typeof window.startCounterAnimations === 'function') {
+            function initAll() {
+                // 1. Language Toggle
+                const langBtn = document.getElementById('langBtn');
+                if (langBtn) {
+                    langBtn.onclick = function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (typeof toggleLanguage === 'function') {
+                            toggleLanguage();
+                        } else if (typeof window.toggleLanguage === 'function') {
+                            window.toggleLanguage();
+                        } else {
+                            console.error('toggleLanguage not found!');
+                        }
+                    };
+                    console.log('✅ Language button ready');
+                }
+                
+                // 2. Chat Toggle
+                const chatToggle = document.getElementById('chatToggle');
+                if (chatToggle) {
+                    chatToggle.style.cssText = 'position: fixed !important; bottom: 30px !important; left: 100px !important; width: 60px !important; height: 60px !important; background: linear-gradient(135deg, #F7941D 0%, #FFAA40 100%) !important; border: none !important; border-radius: 50% !important; color: white !important; font-size: 1.5rem !important; cursor: pointer !important; box-shadow: 0 5px 25px rgba(247, 148, 29, 0.4) !important; z-index: 9998 !important; display: flex !important; align-items: center !important; justify-content: center !important; visibility: visible !important; opacity: 1 !important;';
+                    
+                    chatToggle.onclick = function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (typeof toggleChat === 'function') {
+                            toggleChat();
+                        } else if (typeof window.toggleChat === 'function') {
+                            window.toggleChat();
+                        } else {
+                            console.error('toggleChat not found!');
+                        }
+                    };
+                    console.log('✅ Chat toggle ready');
+                }
+                
+                // 3. Counter Animations
+                if (typeof startCounterAnimations === 'function') {
+                    setTimeout(() => startCounterAnimations(), 500);
+                    setTimeout(() => startCounterAnimations(), 1500);
+                } else if (typeof window.startCounterAnimations === 'function') {
+                    setTimeout(() => window.startCounterAnimations(), 500);
+                    setTimeout(() => window.startCounterAnimations(), 1500);
+                }
+                console.log('✅ Counter animations started');
+                
+                // 4. Cursor Follower - Force initialization
                 setTimeout(() => {
-                    window.startCounterAnimations();
-                }, 500);
+                    const cursorFollower = document.getElementById('cursorFollower');
+                    if (cursorFollower) {
+                        cursorFollower.style.opacity = '1';
+                        cursorFollower.classList.add('active');
+                        console.log('✅ Cursor follower initialized');
+                    }
+                }, 100);
+                
+                // 5. Particles - Force initialization
+                setTimeout(() => {
+                    const canvas = document.getElementById('particlesCanvas');
+                    if (canvas) {
+                        console.log('✅ Particles canvas found');
+                    }
+                }, 100);
             }
-        });
+            
+            // Run on DOM ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initAll);
+            } else {
+                initAll();
+            }
+            
+            // Also run on window load
+            window.addEventListener('load', function() {
+                setTimeout(initAll, 100);
+            });
+        })();
     </script>
 </body>
 </html>
