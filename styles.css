@@ -1482,6 +1482,8 @@ section, .section {
     overflow: hidden;
     transition: var(--transition-smooth);
     position: relative;
+    width: 100%;
+    max-width: 100%;
 }
 
 .about-card::before {
