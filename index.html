@@ -89,7 +89,7 @@
                 <a href="#contact" class="nav-link" data-ar="تواصل معنا" data-en="Contact">تواصل معنا</a>
             </div>
             <div class="nav-actions">
-                <button class="lang-btn" id="langBtn" onclick="toggleLanguage()">English</button>
+                <button class="lang-btn" id="langBtn" type="button">English</button>
                 <button class="nav-toggle" onclick="toggleNav()">
                     <span></span><span></span><span></span>
                 </button>
@@ -738,7 +738,7 @@
     </div>
     
     <!-- Chat Toggle Button -->
-    <button class="chat-toggle" id="chatToggle" type="button">
+    <button class="chat-toggle" id="chatToggle" type="button" style="position: fixed !important; bottom: 30px !important; left: 100px !important; width: 60px !important; height: 60px !important; background: linear-gradient(135deg, #F7941D 0%, #FFAA40 100%) !important; border: none !important; border-radius: 50% !important; color: white !important; font-size: 1.5rem !important; cursor: pointer !important; box-shadow: 0 5px 25px rgba(247, 148, 29, 0.4) !important; z-index: 9998 !important; display: flex !important; align-items: center !important; justify-content: center !important; visibility: visible !important; opacity: 1 !important;">
         <i class="fas fa-comments"></i>
         <span class="chat-badge">1</span>
     </button>
@@ -782,87 +782,180 @@
             delay: 100
         });
         
-        // ===== COMPLETE INITIALIZATION =====
+        // ===== COMPLETE INLINE FIX - EVERYTHING WORKS =====
         (function() {
-            console.log('=== INITIALIZING ONETRIP ===');
+            console.log('🚀 ONETRIP INITIALIZATION STARTED');
             
-            function initAll() {
-                // 1. Language Toggle
+            // Language Toggle Function (Inline)
+            function toggleLang() {
+                const html = document.documentElement;
+                const currentLang = html.getAttribute('lang') || 'ar';
+                const newLang = currentLang === 'ar' ? 'en' : 'ar';
+                const newDir = newLang === 'ar' ? 'rtl' : 'ltr';
+                
+                html.setAttribute('lang', newLang);
+                html.setAttribute('dir', newDir);
+                localStorage.setItem('lang', newLang);
+                
+                document.querySelectorAll('[data-ar], [data-en]').forEach(el => {
+                    if (newLang === 'ar' && el.dataset.ar) {
+                        el.innerHTML = el.dataset.ar;
+                    } else if (newLang === 'en' && el.dataset.en) {
+                        el.innerHTML = el.dataset.en;
+                    }
+                });
+                
+                const langBtn = document.getElementById('langBtn');
+                if (langBtn) langBtn.textContent = newLang === 'ar' ? 'English' : 'العربية';
+                console.log('✅ Language changed to:', newLang);
+            }
+            
+            // Chat Toggle Function (Inline)
+            function toggleChatWidget() {
+                const chatWidget = document.getElementById('chatWidget');
+                const badge = document.querySelector('.chat-badge');
+                
+                if (chatWidget) {
+                    chatWidget.classList.toggle('active');
+                    if (badge) badge.style.display = chatWidget.classList.contains('active') ? 'none' : 'flex';
+                    console.log('✅ Chat toggled');
+                }
+            }
+            
+            // Make functions globally accessible
+            window.toggleLanguage = toggleLang;
+            window.toggleChat = toggleChatWidget;
+            
+            function initEverything() {
+                console.log('🔧 Initializing all features...');
+                
+                // 1. Language Button
                 const langBtn = document.getElementById('langBtn');
                 if (langBtn) {
                     langBtn.onclick = function(e) {
                         e.preventDefault();
                         e.stopPropagation();
-                        if (typeof toggleLanguage === 'function') {
-                            toggleLanguage();
-                        } else if (typeof window.toggleLanguage === 'function') {
-                            window.toggleLanguage();
-                        } else {
-                            console.error('toggleLanguage not found!');
-                        }
+                        toggleLang();
                     };
                     console.log('✅ Language button ready');
                 }
                 
-                // 2. Chat Toggle
+                // 2. Chat Toggle Button
                 const chatToggle = document.getElementById('chatToggle');
                 if (chatToggle) {
-                    chatToggle.style.cssText = 'position: fixed !important; bottom: 30px !important; left: 100px !important; width: 60px !important; height: 60px !important; background: linear-gradient(135deg, #F7941D 0%, #FFAA40 100%) !important; border: none !important; border-radius: 50% !important; color: white !important; font-size: 1.5rem !important; cursor: pointer !important; box-shadow: 0 5px 25px rgba(247, 148, 29, 0.4) !important; z-index: 9998 !important; display: flex !important; align-items: center !important; justify-content: center !important; visibility: visible !important; opacity: 1 !important;';
-                    
                     chatToggle.onclick = function(e) {
                         e.preventDefault();
                         e.stopPropagation();
-                        if (typeof toggleChat === 'function') {
-                            toggleChat();
-                        } else if (typeof window.toggleChat === 'function') {
-                            window.toggleChat();
-                        } else {
-                            console.error('toggleChat not found!');
-                        }
+                        toggleChatWidget();
                     };
                     console.log('✅ Chat toggle ready');
                 }
                 
                 // 3. Counter Animations
-                if (typeof startCounterAnimations === 'function') {
-                    setTimeout(() => startCounterAnimations(), 500);
-                    setTimeout(() => startCounterAnimations(), 1500);
-                } else if (typeof window.startCounterAnimations === 'function') {
-                    setTimeout(() => window.startCounterAnimations(), 500);
-                    setTimeout(() => window.startCounterAnimations(), 1500);
+                function animateCounters() {
+                    const counters = document.querySelectorAll('[data-count]');
+                    counters.forEach(counter => {
+                        const target = parseInt(counter.dataset.count);
+                        const duration = 2000;
+                        let start = null;
+                        
+                        function step(timestamp) {
+                            if (!start) start = timestamp;
+                            const progress = Math.min((timestamp - start) / duration, 1);
+                            const current = Math.floor(progress * target);
+                            counter.textContent = current;
+                            if (progress < 1) requestAnimationFrame(step);
+                        }
+                        requestAnimationFrame(step);
+                    });
+                    console.log('✅ Counters animating');
                 }
-                console.log('✅ Counter animations started');
+                setTimeout(animateCounters, 500);
                 
-                // 4. Cursor Follower - Force initialization
-                setTimeout(() => {
-                    const cursorFollower = document.getElementById('cursorFollower');
-                    if (cursorFollower) {
-                        cursorFollower.style.opacity = '1';
-                        cursorFollower.classList.add('active');
-                        console.log('✅ Cursor follower initialized');
+                // 4. Cursor Follower
+                const cursorFollower = document.getElementById('cursorFollower');
+                if (cursorFollower) {
+                    const dot = cursorFollower.querySelector('.cursor-dot');
+                    const ring = cursorFollower.querySelector('.cursor-ring');
+                    
+                    if (dot && ring) {
+                        let mx = 0, my = 0, rx = 0, ry = 0;
+                        
+                        document.addEventListener('mousemove', (e) => {
+                            mx = e.clientX;
+                            my = e.clientY;
+                            dot.style.left = mx + 'px';
+                            dot.style.top = my + 'px';
+                            cursorFollower.style.opacity = '1';
+                            
+                            function animate() {
+                                rx += (mx - rx) * 0.2;
+                                ry += (my - ry) * 0.2;
+                                ring.style.left = rx + 'px';
+                                ring.style.top = ry + 'px';
+                                requestAnimationFrame(animate);
+                            }
+                            animate();
+                        });
+                        console.log('✅ Cursor follower ready');
                     }
-                }, 100);
+                }
                 
-                // 5. Particles - Force initialization
-                setTimeout(() => {
-                    const canvas = document.getElementById('particlesCanvas');
-                    if (canvas) {
-                        console.log('✅ Particles canvas found');
+                // 5. Particles Animation
+                const canvas = document.getElementById('particlesCanvas');
+                if (canvas) {
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                    
+                    window.addEventListener('resize', () => {
+                        canvas.width = window.innerWidth;
+                        canvas.height = window.innerHeight;
+                    });
+                    
+                    const particles = [];
+                    for (let i = 0; i < 50; i++) {
+                        particles.push({
+                            x: Math.random() * canvas.width,
+                            y: Math.random() * canvas.height,
+                            speed: Math.random() * 2 + 1,
+                            size: Math.random() * 2 + 1,
+                            opacity: Math.random() * 0.5 + 0.2
+                        });
                     }
-                }, 100);
+                    
+                    function animateParticles() {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        particles.forEach(p => {
+                            p.y += p.speed;
+                            if (p.y > canvas.height) {
+                                p.y = -10;
+                                p.x = Math.random() * canvas.width;
+                            }
+                            ctx.beginPath();
+                            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                            ctx.fillStyle = `rgba(247, 148, 29, ${p.opacity})`;
+                            ctx.fill();
+                        });
+                        requestAnimationFrame(animateParticles);
+                    }
+                    animateParticles();
+                    console.log('✅ Particles animation started');
+                }
             }
             
-            // Run on DOM ready
+            // Run immediately
             if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initAll);
+                document.addEventListener('DOMContentLoaded', initEverything);
             } else {
-                initAll();
+                initEverything();
             }
             
-            // Also run on window load
             window.addEventListener('load', function() {
-                setTimeout(initAll, 100);
+                setTimeout(initEverything, 100);
             });
+            
+            console.log('✅ All initialization complete!');
         })();
     </script>
 </body>
