@@ -1736,12 +1736,8 @@ section, .section {
     object-fit: cover;
     object-position: center;
     transition: transform 0.5s ease;
-    display: block;
-}
-
-.service-hero-image[src=""],
-.service-hero-image:not([src]) {
-    display: none;
+    display: block !important;
+    min-height: 200px;
 }
 
 .service-card-new:hover .service-hero-image {
