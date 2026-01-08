@@ -340,6 +340,7 @@ section, .section {
     overflow: hidden;
     pointer-events: none;
     z-index: 0;
+    background: transparent !important;
 }
 
 .hero-bg::before {
