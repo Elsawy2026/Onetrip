@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=2026.01.08.vehicles">
+    <link rel="stylesheet" href="styles.css?v=2026.01.08.vehicles2">
 </head>
 <body>
     <!-- Inline Preloader Fallback -->
@@ -1027,7 +1027,7 @@
                         'vehicleMoveDiagonal2'
                     ];
                     
-                    const vehicleCount = 8;
+                    const vehicleCount = 6;
                     
                     function createVehicle() {
                         const vehicle = document.createElement('div');
@@ -1035,10 +1035,26 @@
                         
                         const vehicleType = vehicleTypes[Math.floor(Math.random() * vehicleTypes.length)];
                         const animationType = animations[Math.floor(Math.random() * animations.length)];
-                        const duration = 20 + Math.random() * 25; // 20-45 seconds - slow movement
-                        const delay = Math.random() * 5;
+                        const duration = 25 + Math.random() * 20; // 25-45 seconds - slow movement
+                        const delay = Math.random() * 3;
+                        
+                        // Random starting position based on animation type
+                        let startX = 0, startY = 0;
+                        if (animationType === 'vehicleMove') {
+                            startY = Math.random() * 100; // Random vertical position
+                        } else if (animationType === 'vehicleMoveVertical') {
+                            startX = Math.random() * 100; // Random horizontal position
+                        } else if (animationType === 'vehicleMoveDiagonal1') {
+                            startX = Math.random() * 30;
+                            startY = Math.random() * 30;
+                        } else {
+                            startX = 70 + Math.random() * 30;
+                            startY = Math.random() * 30;
+                        }
                         
                         vehicle.className += ' ' + vehicleType.class;
+                        vehicle.style.left = startX + '%';
+                        vehicle.style.top = startY + '%';
                         vehicle.style.animationName = animationType;
                         vehicle.style.animationDuration = duration + 's';
                         vehicle.style.animationDelay = delay + 's';
@@ -1064,16 +1080,32 @@
                         }, (duration + delay) * 1000);
                     }
                     
-                    // Create initial vehicles
+                    // Create initial vehicles immediately
                     for (let i = 0; i < vehicleCount; i++) {
-                        setTimeout(() => createVehicle(), i * 3000);
+                        setTimeout(() => createVehicle(), i * 2000);
                     }
                     
                     console.log('✅ Hero delivery vehicles animation started');
                 }
                 
-                // Initialize hero vehicles
-                setTimeout(initHeroVehicles, 500);
+                // Initialize hero vehicles - multiple attempts to ensure it works
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', () => {
+                        setTimeout(initHeroVehicles, 300);
+                    });
+                } else {
+                    setTimeout(initHeroVehicles, 300);
+                }
+                
+                // Also try after page fully loaded
+                window.addEventListener('load', () => {
+                    setTimeout(() => {
+                        if (!document.querySelector('.delivery-vehicle')) {
+                            console.log('Retrying vehicles initialization...');
+                            initHeroVehicles();
+                        }
+                    }, 1000);
+                });
             }
             
             // Run immediately

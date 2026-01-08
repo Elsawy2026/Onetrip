@@ -341,12 +341,11 @@ section, .section {
     pointer-events: none;
     z-index: 1;
     overflow: hidden;
-    opacity: 0.15;
 }
 
 .delivery-vehicle {
     position: absolute;
-    opacity: 0.12;
+    opacity: 0.18;
     transition: opacity 0.3s ease;
 }
 
@@ -374,11 +373,11 @@ section, .section {
         transform: translateX(-50px) translateY(0) rotate(0deg);
         opacity: 0;
     }
-    10% {
-        opacity: 0.12;
+    5% {
+        opacity: 0.18;
     }
-    90% {
-        opacity: 0.12;
+    95% {
+        opacity: 0.18;
     }
     100% {
         transform: translateX(calc(100vw + 50px)) translateY(0) rotate(0deg);
@@ -391,11 +390,11 @@ section, .section {
         transform: translateX(0) translateY(-50px) rotate(90deg);
         opacity: 0;
     }
-    10% {
-        opacity: 0.12;
+    5% {
+        opacity: 0.18;
     }
-    90% {
-        opacity: 0.12;
+    95% {
+        opacity: 0.18;
     }
     100% {
         transform: translateX(0) translateY(calc(100vh + 50px)) rotate(90deg);
@@ -408,11 +407,11 @@ section, .section {
         transform: translateX(-100px) translateY(-100px) rotate(45deg);
         opacity: 0;
     }
-    10% {
-        opacity: 0.12;
+    5% {
+        opacity: 0.18;
     }
-    90% {
-        opacity: 0.12;
+    95% {
+        opacity: 0.18;
     }
     100% {
         transform: translateX(calc(100vw + 100px)) translateY(calc(100vh + 100px)) rotate(45deg);
@@ -425,11 +424,11 @@ section, .section {
         transform: translateX(calc(100vw + 100px)) translateY(-100px) rotate(-45deg);
         opacity: 0;
     }
-    10% {
-        opacity: 0.12;
+    5% {
+        opacity: 0.18;
     }
-    90% {
-        opacity: 0.12;
+    95% {
+        opacity: 0.18;
     }
     100% {
         transform: translateX(-100px) translateY(calc(100vh + 100px)) rotate(-45deg);
