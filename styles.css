@@ -1469,9 +1469,9 @@ section, .section {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 28px;
-    max-width: 1200px;
-    margin: 0 auto;
-    justify-items: center;
+    width: 100%;
+    justify-content: center;
+    align-items: start;
 }
 
 .about-card {
@@ -1483,7 +1483,8 @@ section, .section {
     transition: var(--transition-smooth);
     position: relative;
     width: 100%;
-    max-width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
 }
 
 .about-card::before {
