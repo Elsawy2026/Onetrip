@@ -3130,12 +3130,16 @@ section, .section {
     transform: scale(0) translateY(20px);
     transform-origin: bottom left;
     opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
     transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .chat-widget.active {
     transform: scale(1) translateY(0);
     opacity: 1;
+    visibility: visible;
+    pointer-events: all;
 }
 
 [dir="ltr"] .chat-widget {
@@ -3343,20 +3347,25 @@ section, .section {
 
 /* Chat Toggle Button */
 .chat-toggle {
-    position: fixed;
-    bottom: 30px;
-    left: 100px;
-    width: 60px;
-    height: 60px;
-    background: var(--gradient-icon);
-    border: none;
-    border-radius: 50%;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-    box-shadow: 0 5px 25px rgba(247, 148, 29, 0.4);
-    z-index: 9998;
-    transition: all 0.3s ease;
+    position: fixed !important;
+    bottom: 30px !important;
+    left: 100px !important;
+    width: 60px !important;
+    height: 60px !important;
+    background: var(--gradient-icon) !important;
+    border: none !important;
+    border-radius: 50% !important;
+    color: white !important;
+    font-size: 1.5rem !important;
+    cursor: pointer !important;
+    box-shadow: 0 5px 25px rgba(247, 148, 29, 0.4) !important;
+    z-index: 9998 !important;
+    transition: all 0.3s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 [dir="ltr"] .chat-toggle {
@@ -3868,5 +3877,143 @@ section, .section {
     img {
         max-width: 100%;
         height: auto;
+    }
+}
+
+/* ===== BACKGROUND ANIMATED ELEMENTS ===== */
+.bg-animations {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.bg-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    animation: blobFloat 20s ease-in-out infinite;
+}
+
+.blob-1 {
+    width: 500px;
+    height: 500px;
+    background: linear-gradient(135deg, rgba(247, 148, 29, 0.4) 0%, rgba(255, 170, 64, 0.2) 100%);
+    top: -10%;
+    left: -10%;
+    animation-delay: 0s;
+}
+
+.blob-2 {
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(135deg, rgba(0, 217, 165, 0.3) 0%, rgba(0, 255, 200, 0.15) 100%);
+    top: 60%;
+    right: -5%;
+    animation-delay: 5s;
+}
+
+.blob-3 {
+    width: 350px;
+    height: 350px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.3) 0%, rgba(59, 130, 246, 0.15) 100%);
+    bottom: -10%;
+    left: 20%;
+    animation-delay: 10s;
+}
+
+.blob-4 {
+    width: 450px;
+    height: 450px;
+    background: linear-gradient(135deg, rgba(247, 148, 29, 0.25) 0%, rgba(0, 217, 165, 0.15) 100%);
+    top: 30%;
+    left: 50%;
+    animation-delay: 15s;
+}
+
+@keyframes blobFloat {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    25% {
+        transform: translate(50px, -50px) scale(1.1);
+    }
+    50% {
+        transform: translate(-30px, 30px) scale(0.9);
+    }
+    75% {
+        transform: translate(30px, 50px) scale(1.05);
+    }
+}
+
+/* Ensure sections are above background animations */
+section, .section {
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== CURSOR FOLLOWER ===== */
+.cursor-follower {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+body:hover .cursor-follower,
+.cursor-follower.active {
+    opacity: 1;
+}
+
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background: rgba(247, 148, 29, 0.8);
+    border-radius: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+
+.cursor-ring {
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(247, 148, 29, 0.5);
+    border-radius: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    transition: all 0.15s ease;
+}
+
+/* Cursor effects on interactive elements */
+a:hover ~ .cursor-follower .cursor-ring,
+button:hover ~ .cursor-follower .cursor-ring,
+.btn:hover ~ .cursor-follower .cursor-ring {
+    width: 60px;
+    height: 60px;
+    border-color: rgba(247, 148, 29, 0.8);
+}
+
+/* Hide on mobile */
+@media (max-width: 768px) {
+    .cursor-follower {
+        display: none;
+    }
+    
+    .bg-blob {
+        opacity: 0.08;
     }
 }

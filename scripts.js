@@ -1342,6 +1342,108 @@ document.querySelectorAll('.section').forEach(section => {
     sectionObserver.observe(section);
 });
 
+// ===== CURSOR FOLLOWER =====
+document.addEventListener('DOMContentLoaded', () => {
+    const cursorFollower = document.getElementById('cursorFollower');
+    if (!cursorFollower) return;
+    
+    const cursorDot = cursorFollower.querySelector('.cursor-dot');
+    const cursorRing = cursorFollower.querySelector('.cursor-ring');
+    
+    if (!cursorDot || !cursorRing) return;
+
+    let mouseX = 0;
+    let mouseY = 0;
+    let cursorX = 0;
+    let cursorY = 0;
+    let isMoving = false;
+    let animationFrameId = null;
+
+    // Mouse move event
+    const handleMouseMove = (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        isMoving = true;
+
+        // Update dot immediately
+        cursorDot.style.left = mouseX + 'px';
+        cursorDot.style.top = mouseY + 'px';
+
+        // Show cursor
+        cursorFollower.classList.add('active');
+        cursorFollower.style.opacity = '1';
+        
+        if (!animationFrameId) {
+            animateCursor();
+        }
+    };
+
+    // Animate ring smoothly
+    function animateCursor() {
+        if (!isMoving) {
+            cursorFollower.style.opacity = '0';
+            animationFrameId = null;
+            return;
+        }
+
+        // Smooth follow animation
+        cursorX += (mouseX - cursorX) * 0.15;
+        cursorY += (mouseY - cursorY) * 0.15;
+
+        cursorRing.style.left = cursorX + 'px';
+        cursorRing.style.top = cursorY + 'px';
+
+        animationFrameId = requestAnimationFrame(animateCursor);
+    }
+
+    document.addEventListener('mousemove', handleMouseMove);
+
+    // Hide when mouse leaves window
+    document.addEventListener('mouseleave', () => {
+        cursorFollower.style.opacity = '0';
+        isMoving = false;
+        cursorFollower.classList.remove('active');
+    });
+
+    // Show when mouse enters
+    document.addEventListener('mouseenter', () => {
+        cursorFollower.style.opacity = '1';
+        cursorFollower.classList.add('active');
+    });
+
+    // Expand on interactive elements
+    const interactiveElements = document.querySelectorAll('a, button, .btn, input, textarea, select, .chat-toggle, .whatsapp-btn');
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursorRing.style.width = '60px';
+            cursorRing.style.height = '60px';
+            cursorRing.style.borderColor = 'rgba(247, 148, 29, 0.8)';
+        });
+        el.addEventListener('mouseleave', () => {
+            cursorRing.style.width = '40px';
+            cursorRing.style.height = '40px';
+            cursorRing.style.borderColor = 'rgba(247, 148, 29, 0.5)';
+        });
+    });
+});
+
+// ===== ENSURE CHAT TOGGLE WORKS =====
+document.addEventListener('DOMContentLoaded', () => {
+    const chatToggle = document.getElementById('chatToggle');
+    const chatWidget = document.getElementById('chatWidget');
+    
+    if (chatToggle) {
+        chatToggle.style.visibility = 'visible';
+        chatToggle.style.opacity = '1';
+        chatToggle.style.display = 'flex';
+    }
+    
+    if (chatWidget && typeof toggleChat === 'function') {
+        // Make sure toggleChat is accessible
+        window.toggleChat = toggleChat;
+    }
+});
+
 // ===== CONSOLE MESSAGE =====
 console.log('%c🚀 OneTrip Express v2026.01.07', 'font-size: 24px; font-weight: bold; color: #F7941D;');
 console.log('%cشريكك اللوجستي الموثوق - AI Chat Enabled', 'font-size: 14px; color: #00D9A5;');

@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=2026.01.08.fix3">
+    <link rel="stylesheet" href="styles.css?v=2026.01.08.fix4">
 </head>
 <body>
     <!-- Inline Preloader Fallback -->
@@ -753,9 +753,23 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
+    <!-- Background Animated Elements -->
+    <div class="bg-animations">
+        <div class="bg-blob blob-1"></div>
+        <div class="bg-blob blob-2"></div>
+        <div class="bg-blob blob-3"></div>
+        <div class="bg-blob blob-4"></div>
+    </div>
+
+    <!-- Cursor Follower -->
+    <div class="cursor-follower" id="cursorFollower">
+        <div class="cursor-dot"></div>
+        <div class="cursor-ring"></div>
+    </div>
+
     <!-- AOS Animation Library -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="scripts.js?v=2026.01.07.4"></script>
+    <script src="scripts.js?v=2026.01.08.fix4"></script>
     <script>
         // Initialize AOS
         AOS.init({
