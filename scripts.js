@@ -1482,36 +1482,47 @@ if (document.readyState === 'loading') {
     initParticles();
 }
 
-// ===== HERO PARTICLES ANIMATION =====
+// ===== HERO PARTICLES ANIMATION - Falling Orange Dots =====
 function initHeroParticles() {
     const heroParticles = document.getElementById('heroParticles');
-    if (!heroParticles) return;
+    if (!heroParticles) {
+        console.error('heroParticles not found');
+        return;
+    }
     
-    const particleCount = 80;
+    const particleCount = 100;
     
     function createParticle() {
         const particle = document.createElement('div');
         particle.className = 'hero-particle';
         
         const startX = Math.random() * 100;
-        const duration = 8 + Math.random() * 12;
-        const delay = Math.random() * 5;
+        const duration = 10 + Math.random() * 15;
+        const delay = Math.random() * 3;
+        const size = 2 + Math.random() * 3;
         
         particle.style.left = startX + '%';
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
         particle.style.animationDuration = duration + 's';
         particle.style.animationDelay = delay + 's';
         
         heroParticles.appendChild(particle);
         
         setTimeout(() => {
-            particle.remove();
+            if (particle.parentNode) {
+                particle.remove();
+            }
             createParticle();
         }, (duration + delay) * 1000);
     }
     
+    // Create initial particles
     for (let i = 0; i < particleCount; i++) {
-        setTimeout(() => createParticle(), i * 100);
+        setTimeout(() => createParticle(), i * 50);
     }
+    
+    console.log('✅ Hero particles (falling orange dots) started');
 }
 
 if (document.readyState === 'loading') {
