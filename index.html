@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=2026.01.08.vehicles2">
+    <link rel="stylesheet" href="styles.css?v=2026.01.08.vehicles3">
 </head>
 <body>
     <!-- Inline Preloader Fallback -->
@@ -1027,7 +1027,7 @@
                         'vehicleMoveDiagonal2'
                     ];
                     
-                    const vehicleCount = 6;
+                    const vehicleCount = 5;
                     
                     function createVehicle() {
                         const vehicle = document.createElement('div');
@@ -1035,8 +1035,8 @@
                         
                         const vehicleType = vehicleTypes[Math.floor(Math.random() * vehicleTypes.length)];
                         const animationType = animations[Math.floor(Math.random() * animations.length)];
-                        const duration = 25 + Math.random() * 20; // 25-45 seconds - slow movement
-                        const delay = Math.random() * 3;
+                        const duration = 40 + Math.random() * 35; // 40-75 seconds - very slow movement
+                        const delay = Math.random() * 5;
                         
                         // Random starting position based on animation type
                         let startX = 0, startY = 0;
@@ -1080,9 +1080,9 @@
                         }, (duration + delay) * 1000);
                     }
                     
-                    // Create initial vehicles immediately
+                    // Create initial vehicles with more spacing
                     for (let i = 0; i < vehicleCount; i++) {
-                        setTimeout(() => createVehicle(), i * 2000);
+                        setTimeout(() => createVehicle(), i * 4000);
                     }
                     
                     console.log('✅ Hero delivery vehicles animation started');
