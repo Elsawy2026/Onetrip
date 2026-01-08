@@ -209,7 +209,7 @@ section, .section {
 
 .nav-link {
     padding: 10px 18px;
-    color: #2563EB;
+    color: #F7941D;
     text-decoration: none;
     font-weight: 500;
     font-size: 0.95rem;
@@ -219,8 +219,8 @@ section, .section {
 
 .nav-link:hover,
 .nav-link.active {
-    color: #F7941D;
-    text-shadow: 0 0 20px rgba(247, 148, 29, 0.3);
+    color: #FFAA40;
+    text-shadow: 0 0 20px rgba(247, 148, 29, 0.5);
 }
 
 .nav-link {
@@ -234,7 +234,7 @@ section, .section {
     left: 50%;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, #2563EB 0%, #F7941D 100%);
+    background: linear-gradient(90deg, #F7941D 0%, #FFAA40 100%);
     transition: all 0.3s ease;
     transform: translateX(-50%);
 }
@@ -330,6 +330,109 @@ section, .section {
     }
     100% {
         transform: translateY(100vh) translateX(0);
+        opacity: 0;
+    }
+}
+
+/* Delivery Vehicles Animated Background */
+.hero-vehicles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+    opacity: 0.15;
+}
+
+.delivery-vehicle {
+    position: absolute;
+    opacity: 0.12;
+    transition: opacity 0.3s ease;
+}
+
+.delivery-vehicle svg {
+    width: 35px;
+    height: 35px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Vehicle Types */
+.vehicle-car {
+    color: #F7941D;
+}
+
+.vehicle-van {
+    color: #FFAA40;
+}
+
+.vehicle-truck {
+    color: #FF6B35;
+}
+
+@keyframes vehicleMove {
+    0% {
+        transform: translateX(-50px) translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.12;
+    }
+    90% {
+        opacity: 0.12;
+    }
+    100% {
+        transform: translateX(calc(100vw + 50px)) translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+}
+
+@keyframes vehicleMoveVertical {
+    0% {
+        transform: translateX(0) translateY(-50px) rotate(90deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.12;
+    }
+    90% {
+        opacity: 0.12;
+    }
+    100% {
+        transform: translateX(0) translateY(calc(100vh + 50px)) rotate(90deg);
+        opacity: 0;
+    }
+}
+
+@keyframes vehicleMoveDiagonal1 {
+    0% {
+        transform: translateX(-100px) translateY(-100px) rotate(45deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.12;
+    }
+    90% {
+        opacity: 0.12;
+    }
+    100% {
+        transform: translateX(calc(100vw + 100px)) translateY(calc(100vh + 100px)) rotate(45deg);
+        opacity: 0;
+    }
+}
+
+@keyframes vehicleMoveDiagonal2 {
+    0% {
+        transform: translateX(calc(100vw + 100px)) translateY(-100px) rotate(-45deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.12;
+    }
+    90% {
+        opacity: 0.12;
+    }
+    100% {
+        transform: translateX(-100px) translateY(calc(100vh + 100px)) rotate(-45deg);
         opacity: 0;
     }
 }

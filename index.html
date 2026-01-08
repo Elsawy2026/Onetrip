@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=2026.01.08.rain">
+    <link rel="stylesheet" href="styles.css?v=2026.01.08.vehicles">
 </head>
 <body>
     <!-- Inline Preloader Fallback -->
@@ -102,6 +102,8 @@
     <section class="hero" id="home">
         <!-- Animated Particles Background -->
         <div class="hero-particles" id="heroParticles"></div>
+        <!-- Delivery Vehicles Animated Background -->
+        <div class="hero-vehicles" id="heroVehicles"></div>
         <div class="hero-bg">
             <div class="hero-grid"></div>
             <div class="hero-overlay"></div>
@@ -993,6 +995,75 @@
                 
                 // Initialize hero particles
                 setTimeout(initHeroParticlesInline, 200);
+                
+                // 7. Hero Delivery Vehicles Animation
+                function initHeroVehicles() {
+                    const heroVehicles = document.getElementById('heroVehicles');
+                    if (!heroVehicles) {
+                        console.error('heroVehicles not found');
+                        return;
+                    }
+                    
+                    // Vehicle types with SVG paths
+                    const vehicleTypes = [
+                        { class: 'vehicle-car', svg: '<path d="M5 11a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-1h6v1a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1V8a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v3H5zm2-3h6v3H7V8z"/><circle cx="8.5" cy="16.5" r="1.5"/><circle cx="15.5" cy="16.5" r="1.5"/>' },
+                        { class: 'vehicle-van', svg: '<path d="M4 8v10h12V8H4zm10 8H6v-6h8v6z"/><rect x="6" y="10" width="8" height="2"/><rect x="6" y="13" width="4" height="2"/><circle cx="8.5" cy="19" r="1.5"/><circle cx="13.5" cy="19" r="1.5"/>' },
+                        { class: 'vehicle-truck', svg: '<path d="M2 6v12h3v3h3v-3h8v3h3v-3h1V6H2zm16 10H4V8h14v8zm-12 2h10v-2H6v2zm-2-4h2v-2H4v2zm14 0h2v-2h-2v2z"/><circle cx="8" cy="18" r="1.5"/><circle cx="16" cy="18" r="1.5"/>' }
+                    ];
+                    
+                    const animations = [
+                        'vehicleMove',
+                        'vehicleMoveVertical',
+                        'vehicleMoveDiagonal1',
+                        'vehicleMoveDiagonal2'
+                    ];
+                    
+                    const vehicleCount = 8;
+                    
+                    function createVehicle() {
+                        const vehicle = document.createElement('div');
+                        vehicle.className = 'delivery-vehicle';
+                        
+                        const vehicleType = vehicleTypes[Math.floor(Math.random() * vehicleTypes.length)];
+                        const animationType = animations[Math.floor(Math.random() * animations.length)];
+                        const duration = 20 + Math.random() * 25; // 20-45 seconds - slow movement
+                        const delay = Math.random() * 5;
+                        
+                        vehicle.className += ' ' + vehicleType.class;
+                        vehicle.style.animationName = animationType;
+                        vehicle.style.animationDuration = duration + 's';
+                        vehicle.style.animationDelay = delay + 's';
+                        vehicle.style.animationTimingFunction = 'linear';
+                        vehicle.style.animationIterationCount = 'infinite';
+                        
+                        // Create SVG for vehicle
+                        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                        svg.setAttribute('viewBox', '0 0 24 24');
+                        svg.setAttribute('fill', 'currentColor');
+                        svg.innerHTML = vehicleType.svg;
+                        
+                        vehicle.appendChild(svg);
+                        heroVehicles.appendChild(vehicle);
+                        
+                        // Remove and recreate after animation completes
+                        setTimeout(() => {
+                            if (vehicle.parentNode) {
+                                vehicle.remove();
+                                createVehicle();
+                            }
+                        }, (duration + delay) * 1000);
+                    }
+                    
+                    // Create initial vehicles
+                    for (let i = 0; i < vehicleCount; i++) {
+                        setTimeout(() => createVehicle(), i * 3000);
+                    }
+                    
+                    console.log('✅ Hero delivery vehicles animation started');
+                }
+                
+                // Initialize hero vehicles
+                setTimeout(initHeroVehicles, 500);
             }
             
             // Run immediately
