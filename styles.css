@@ -1469,6 +1469,9 @@ section, .section {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 28px;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-items: center;
 }
 
 .about-card {
