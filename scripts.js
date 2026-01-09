@@ -186,11 +186,18 @@ window.toggleLanguage = function toggleLanguage() {
     });
 }
 
+// Ensure toggleLanguage is available globally
+if (typeof window.toggleLanguage === 'undefined') {
+    window.toggleLanguage = function() {
+        console.warn('toggleLanguage called before script loaded');
+    };
+}
+
 // Load saved language preference
 window.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('lang');
     if (savedLang && savedLang !== document.documentElement.getAttribute('lang')) {
-        toggleLanguage();
+        window.toggleLanguage();
     }
 });
 
