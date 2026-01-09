@@ -187,7 +187,7 @@ section, .section {
 .nav-logo {
     text-decoration: none;
     display: block;
-    height: 50px;
+    height: auto;
 }
 
 .nav-logo img,
@@ -196,6 +196,130 @@ section, .section {
     width: auto;
     object-fit: contain;
     display: block;
+}
+
+/* Logo Container - Based on Image */
+.nav-logo .logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    line-height: 0.85;
+}
+
+/* Row 1: ONE */
+.logo-row-1 {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.logo-icon-pin {
+    color: #F7941D;
+    font-size: 3.5rem;
+    line-height: 0.7;
+    transform: rotate(-45deg);
+    display: inline-block;
+    margin-right: 1px;
+}
+
+.logo-text-blue {
+    color: #0a0e27;
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 1;
+}
+
+.logo-arrow-container {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 12px;
+    gap: 5px;
+}
+
+.logo-arrow-bar {
+    width: 28px;
+    height: 4px;
+    background: #F7941D;
+    display: inline-block;
+    border-radius: 2px;
+}
+
+.logo-arrow-icon {
+    color: #0a0e27;
+    font-size: 1.3rem;
+    line-height: 1;
+}
+
+/* Row 2: TRIP */
+.logo-row-2 {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    margin-top: -10px;
+    margin-left: 12px;
+    white-space: nowrap;
+}
+
+.logo-text-orange {
+    color: #F7941D;
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 0.9;
+}
+
+.logo-t {
+    margin-top: -3px;
+}
+
+.logo-rip {
+    color: #0a0e27;
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 0.9;
+    margin-top: -3px;
+}
+
+/* Row 3: EXPRESS */
+.logo-row-3 {
+    margin-top: -10px;
+    margin-left: 12px;
+    white-space: nowrap;
+}
+
+.logo-express {
+    color: #F7941D;
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 0.9;
+}
+
+/* LTR Support */
+[dir="ltr"] .logo-container {
+    align-items: flex-end;
+}
+
+[dir="ltr"] .logo-row-2,
+[dir="ltr"] .logo-row-3 {
+    margin-left: 0;
+    margin-right: 12px;
+}
+
+[dir="ltr"] .logo-icon-pin {
+    margin-right: 0;
+    margin-left: 1px;
+}
+
+[dir="ltr"] .logo-arrow-container {
+    margin-left: 0;
+    margin-right: 12px;
 }
 
 .nav-menu {
