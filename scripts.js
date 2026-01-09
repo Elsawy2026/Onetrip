@@ -546,7 +546,8 @@ if (document.readyState === 'loading') {
     setTimeout(initChatWidget, 1000);
 }
 
-function sendQuickReply(type) {
+// Make sendQuickReply globally accessible
+window.sendQuickReply = function sendQuickReply(type) {
     const shortcuts = {
         pricing: 'ما هي أسعار خدمات التوصيل؟',
         delivery: 'كم متوسط مدة التوصيل داخل المدينة وبين المدن؟',
@@ -556,16 +557,33 @@ function sendQuickReply(type) {
     
     const text = shortcuts[type] || '';
     if (text) {
-        handleUserMessage(text);
+        if (window.handleUserMessage) {
+            window.handleUserMessage(text);
+        } else {
+            console.error('❌ handleUserMessage not found!');
+        }
     }
-}
+};
 
 // ===== SIMPLE AI CHAT LOGIC (ON-PAGE ONLY) =====
 const chatMessagesEl = document.getElementById('chatMessages');
 const chatInputEl = document.getElementById('chatInput');
 
-function appendMessage(text, sender = 'bot') {
-    if (!chatMessagesEl || !text) return;
+// Make appendMessage globally accessible
+window.appendMessage = function appendMessage(text, sender = 'bot') {
+    const chatMessagesEl = document.getElementById('chatMessages');
+    
+    if (!chatMessagesEl) {
+        console.error('❌ chatMessages element not found!');
+        return;
+    }
+    
+    if (!text || !text.trim()) {
+        console.log('⚠️ Empty message, ignoring...');
+        return;
+    }
+    
+    console.log('🔵 appendMessage:', sender, text.substring(0, 50) + '...');
     
     const wrapper = document.createElement('div');
     wrapper.className = `chat-message ${sender}`;
@@ -582,18 +600,48 @@ function appendMessage(text, sender = 'bot') {
     
     chatMessagesEl.appendChild(wrapper);
     chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
-}
+    
+    console.log('✅ Message appended');
+};
 
-function sendChatMessage(event) {
-    event.preventDefault();
-    if (!chatInputEl) return;
+// Make sendChatMessage globally accessible
+window.sendChatMessage = function sendChatMessage(event) {
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    
+    console.log('🔵 sendChatMessage called');
+    
+    const chatInputEl = document.getElementById('chatInput');
+    
+    if (!chatInputEl) {
+        console.error('❌ Chat input not found!');
+        return false;
+    }
     
     const text = chatInputEl.value.trim();
-    if (!text) return;
     
-    handleUserMessage(text);
+    if (!text) {
+        console.log('⚠️ Empty message, ignoring...');
+        return false;
+    }
+    
+    console.log('✅ Message to send:', text);
+    
+    // Clear input first
     chatInputEl.value = '';
-}
+    
+    // Send message
+    if (window.handleUserMessage) {
+        window.handleUserMessage(text);
+    } else {
+        console.error('❌ handleUserMessage not found!');
+        alert('Chat system not loaded yet. Please refresh the page.');
+    }
+    
+    return false;
+};
 
 // Handle User Message - Stateless AI Chat
 async function handleUserMessage(text) {

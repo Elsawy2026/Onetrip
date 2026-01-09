@@ -831,10 +831,10 @@
             </div>
         </div>
         <div class="chat-footer">
-            <form class="chat-input-wrapper" onsubmit="sendChatMessage(event)">
+            <form class="chat-input-wrapper" onsubmit="if(window.sendChatMessage){window.sendChatMessage(event);} else {event.preventDefault(); const input=document.getElementById('chatInput'); if(input&&input.value.trim()){const msg=input.value.trim(); input.value=''; if(window.handleUserMessage){window.handleUserMessage(msg);} else {alert('Chat system not loaded yet. Please refresh the page.');}} return false;} return false;">
                 <input type="text" id="chatInput" class="chat-input" autocomplete="off"
                     placeholder="اكتب سؤالك هنا..." />
-                <button type="submit" class="chat-send-btn">
+                <button type="submit" class="chat-send-btn" onclick="event.preventDefault(); const input=document.getElementById('chatInput'); if(input&&input.value.trim()){const msg=input.value.trim(); input.value=''; if(window.handleUserMessage){window.handleUserMessage(msg);} else {alert('Chat system not loaded yet. Please refresh the page.');}} return false;">
                     <i class="fas fa-paper-plane"></i>
                 </button>
             </form>
@@ -951,7 +951,7 @@
     <!-- AI Chat Configuration (Optional - for API setup) -->
     <!-- <script src="ai-chat-config.js"></script> -->
     
-    <script src="scripts.js?v=2026.01.09.46"></script>
+    <script src="scripts.js?v=2026.01.09.47"></script>
     <script>
         // FIX LANGUAGE BUTTON - DIRECT APPROACH
         (function() {
