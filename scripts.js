@@ -643,28 +643,84 @@ window.sendChatMessage = function sendChatMessage(event) {
     return false;
 };
 
-// Handle User Message - Stateless AI Chat
-async function handleUserMessage(text) {
-    if (window.appendMessage) window.appendMessage(text, 'user');
+// Handle User Message - Stateless AI Chat (Make globally accessible)
+window.handleUserMessage = async function handleUserMessage(text) {
+    if (!text || !text.trim()) {
+        console.log('⚠️ Empty message, ignoring...');
+        return;
+    }
+    
+    console.log('🔵 handleUserMessage called with:', text);
+    
+    // Append user message
+    if (window.appendMessage) {
+        window.appendMessage(text, 'user');
+    } else {
+        console.error('❌ appendMessage not found!');
+        return;
+    }
     
     // Show typing indicator
-    const typingId = window.showTypingIndicator ? window.showTypingIndicator() : null;
+    let typingId = null;
+    if (window.showTypingIndicator) {
+        typingId = window.showTypingIndicator();
+    }
     
     try {
-        // Call AI API with Stateless Session
-        const reply = window.callAIChatAPI ? await window.callAIChatAPI(text) : null;
-        if (typingId && window.removeTypingIndicator) window.removeTypingIndicator(typingId);
-        if (window.appendMessage) window.appendMessage(reply, 'bot');
+        // Call AI API with Stateless Session (or use fallback)
+        let reply = null;
+        if (window.callAIChatAPI) {
+            try {
+                reply = await window.callAIChatAPI(text);
+            } catch (apiError) {
+                console.warn('⚠️ AI API error, using fallback:', apiError);
+                reply = null;
+            }
+        }
+        
+        // If no reply from API, use fallback rule-based system
+        if (!reply && window.generateBotReply) {
+            reply = window.generateBotReply(text);
+        }
+        
+        // Remove typing indicator
+        if (typingId && window.removeTypingIndicator) {
+            window.removeTypingIndicator(typingId);
+        }
+        
+        // Append bot reply
+        if (reply) {
+            if (window.appendMessage) {
+                window.appendMessage(reply, 'bot');
+            }
+        } else {
+            // Last resort fallback
+            if (window.appendMessage) {
+                window.appendMessage('عذراً، لم أتمكن من الرد على سؤالك. يرجى المحاولة مرة أخرى أو التواصل معنا عبر الهاتف: 920032104', 'bot');
+            }
+        }
     } catch (error) {
-        console.error('AI Chat Error:', error);
-        removeTypingIndicator(typingId);
+        console.error('❌ Chat Error:', error);
+        
+        // Remove typing indicator
+        if (typingId && window.removeTypingIndicator) {
+            window.removeTypingIndicator(typingId);
+        }
+        
         // Fallback to rule-based reply
         if (window.generateBotReply) {
             const fallbackReply = window.generateBotReply(text);
-            if (window.appendMessage) window.appendMessage(fallbackReply, 'bot');
+            if (window.appendMessage) {
+                window.appendMessage(fallbackReply, 'bot');
+            }
+        } else {
+            // Last resort
+            if (window.appendMessage) {
+                window.appendMessage('عذراً، حدث خطأ. يرجى المحاولة مرة أخرى أو التواصل معنا عبر الهاتف: 920032104', 'bot');
+            }
         }
     }
-}
+};
 
 // ===== STATELESS AI CHAT SYSTEM =====
 // System Prompt - يُرسل مع كل محادثة (Stateless Session)
