@@ -5,34 +5,46 @@
 
 // ===== PRELOADER =====
 function hidePreloader() {
-    const preloader = document.getElementById("preloader");
+    const preloader = document.getElementById('preloader');
     if (preloader) {
-        preloader.classList.add("hidden");
-        preloader.style.opacity = "0";
-        preloader.style.visibility = "hidden";
-        preloader.style.pointerEvents = "none";
-        setTimeout(() => { preloader.style.display = "none"; }, 500);
+        preloader.classList.add('hidden');
+        console.log('Preloader hidden');
     }
 }
 
-window.addEventListener("load", () => {
+// Hide preloader when page loads
+window.addEventListener('load', () => {
     setTimeout(() => {
         hidePreloader();
-        // Start counter animations multiple times to ensure they work
-        if (typeof window.startCounterAnimations === "function") {
-            window.startCounterAnimations();
-        }
-        // Fallback - try again after delay
-        setTimeout(() => {
-            if (typeof window.startCounterAnimations === "function") {
-                window.startCounterAnimations();
-            }
-        }, 1000);
     }, 800);
 });
 
-setTimeout(hidePreloader, 3000);
-document.addEventListener("DOMContentLoaded", () => setTimeout(hidePreloader, 1500));
+// Fallback: Hide preloader after max 3 seconds regardless
+setTimeout(() => {
+    hidePreloader();
+}, 3000);
+
+// Also hide when DOM is ready (faster)
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            hidePreloader();
+            // Ensure counters start
+            if (typeof startCounterAnimations === 'function') {
+                startCounterAnimations();
+            }
+        }, 1000);
+    });
+} else {
+    // DOM already loaded
+    setTimeout(() => {
+        hidePreloader();
+        // Ensure counters start
+        if (typeof startCounterAnimations === 'function') {
+            startCounterAnimations();
+        }
+    }, 500);
+}
 
 // ===== NAVIGATION =====
 const nav = document.getElementById('nav');
@@ -41,6 +53,25 @@ const navMenu = document.getElementById('navMenu');
 
 // Scroll Effect with Progress Bar
 const scrollProgress = document.getElementById('scrollProgress');
+
+// Ensure all elements are visible on load
+window.addEventListener('DOMContentLoaded', () => {
+    // Force visibility of floating buttons
+    const whatsappBtn = document.querySelector('.whatsapp-btn');
+    const chatToggle = document.querySelector('.chat-toggle');
+    
+    if (whatsappBtn) {
+        whatsappBtn.style.visibility = 'visible';
+        whatsappBtn.style.opacity = '1';
+        whatsappBtn.style.display = 'flex';
+    }
+    
+    if (chatToggle) {
+        chatToggle.style.visibility = 'visible';
+        chatToggle.style.opacity = '1';
+        chatToggle.style.display = 'flex';
+    }
+});
 
 window.addEventListener('scroll', () => {
     if (window.pageYOffset > 50) {
@@ -102,8 +133,6 @@ function toggleLanguage() {
     const newLang = currentLang === 'ar' ? 'en' : 'ar';
     const newDir = newLang === 'ar' ? 'rtl' : 'ltr';
     
-    console.log('toggleLanguage called:', { currentLang, newLang, newDir });
-    
     html.setAttribute('lang', newLang);
     html.setAttribute('dir', newDir);
     
@@ -143,10 +172,7 @@ function toggleLanguage() {
     });
     
     // Update button text
-    const langBtn = document.getElementById('langBtn');
-    if (langBtn) {
-        langBtn.textContent = newLang === 'ar' ? 'English' : 'العربية';
-    }
+    document.getElementById('langBtn').textContent = newLang === 'ar' ? 'EN' : 'AR';
     
     // Update CTA arrow direction
     document.querySelectorAll('.btn i.fa-arrow-left, .btn i.fa-arrow-right').forEach(icon => {
@@ -159,9 +185,6 @@ function toggleLanguage() {
         }
     });
 }
-
-// Make globally accessible
-window.toggleLanguage = toggleLanguage;
 
 // Load saved language preference
 window.addEventListener('DOMContentLoaded', () => {
@@ -190,19 +213,23 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 const backTop = document.getElementById('backTop');
 
 function updateBackTop() {
-    if (window.pageYOffset > 500) {
-        backTop.classList.add('visible');
-    } else {
-        backTop.classList.remove('visible');
+    if (backTop) {
+        if (window.pageYOffset > 500) {
+            backTop.classList.add('visible');
+        } else {
+            backTop.classList.remove('visible');
+        }
     }
 }
 
-backTop.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+if (backTop) {
+    backTop.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     });
-});
+}
 
 // ===== COUNTER ANIMATIONS =====
 function animateCounter(element, target, suffix = '') {
@@ -217,12 +244,16 @@ function animateCounter(element, target, suffix = '') {
         const easeProgress = 1 - Math.pow(1 - progress, 3);
         const current = Math.floor(easeProgress * target);
         
-        element.textContent = current + suffix;
+        // Format number with comma separators
+        const formatted = current.toLocaleString('en-US');
+        element.textContent = formatted + suffix;
         
         if (progress < 1) {
             requestAnimationFrame(update);
         } else {
-            element.textContent = target + suffix;
+            // Final value with formatting
+            const finalFormatted = target.toLocaleString('en-US');
+            element.textContent = finalFormatted + suffix;
         }
     }
     
@@ -230,27 +261,25 @@ function animateCounter(element, target, suffix = '') {
 }
 
 function startCounterAnimations() {
-    console.log('startCounterAnimations called');
     const counters = document.querySelectorAll('[data-count]');
     console.log('Found counters:', counters.length);
     
     if (counters.length === 0) {
-        console.error('No counters found with data-count attribute!');
-        // Try to animate anyway after a delay
+        console.warn('No counters found, retrying...');
         setTimeout(() => {
             const retryCounters = document.querySelectorAll('[data-count]');
-            console.log('Retry found counters:', retryCounters.length);
             if (retryCounters.length > 0) {
-                retryCounters.forEach(counter => {
-                    const target = parseInt(counter.dataset.count);
-                    const suffix = counter.dataset.suffix || '';
-                    animateCounter(counter, target, suffix);
-                });
+                console.log('Retry found counters:', retryCounters.length);
+                initCounters(retryCounters);
             }
-        }, 1000);
+        }, 500);
         return;
     }
     
+    initCounters(counters);
+}
+
+function initCounters(counters) {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -258,31 +287,40 @@ function startCounterAnimations() {
                 const target = parseInt(element.dataset.count);
                 const suffix = element.dataset.suffix || '';
                 
-                console.log('Animating counter:', { target, suffix });
-                animateCounter(element, target, suffix);
+                // Check if this is percentage
+                const isPercentage = element.textContent.includes('%') || suffix === '%';
+                const finalSuffix = isPercentage ? '%' : suffix;
+                
+                animateCounter(element, target, finalSuffix);
                 observer.unobserve(element);
             }
         });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.3 });
     
     counters.forEach(counter => {
         observer.observe(counter);
-        // Also animate immediately if already visible
+        // Also trigger if already visible
         const rect = counter.getBoundingClientRect();
         if (rect.top < window.innerHeight && rect.bottom > 0) {
             const target = parseInt(counter.dataset.count);
-            const suffix = counter.dataset.suffix || '';
+            const isPercentage = counter.textContent.includes('%') || counter.dataset.suffix === '%';
+            const suffix = isPercentage ? '%' : (counter.dataset.suffix || '');
             animateCounter(counter, target, suffix);
             observer.unobserve(counter);
         }
     });
 }
 
-// Make globally accessible
+// Start counter animations on page load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startCounterAnimations);
+} else {
+    startCounterAnimations();
+}
+
 window.startCounterAnimations = startCounterAnimations;
 
 // ===== LIVE CHAT =====
-// Make toggleChat globally accessible
 function toggleChat() {
     const chatWidget = document.getElementById('chatWidget');
     const chatToggle = document.getElementById('chatToggle');
@@ -305,15 +343,31 @@ function toggleChat() {
         if (badge) badge.style.display = 'none';
     } else {
         // عند الإغلاق امسح المحادثة وارجع رسالة الترحيب فقط
-        if (typeof resetChatConversation === 'function') {
-            resetChatConversation();
-        }
+        resetChatConversation();
         if (badge) badge.style.display = 'flex';
     }
 }
 
-// Make it globally accessible
-window.toggleChat = toggleChat;
+// Initialize chat on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const chatWidget = document.getElementById('chatWidget');
+    const chatToggle = document.getElementById('chatToggle');
+    
+    console.log('Chat elements on load:', { chatWidget, chatToggle });
+    
+    if (chatToggle) {
+        // Ensure click handler is attached
+        chatToggle.addEventListener('click', toggleChat);
+        console.log('Chat toggle click handler attached');
+    }
+    
+    // Also check if chat widget exists
+    if (chatWidget) {
+        console.log('Chat widget found, initial state:', chatWidget.classList.contains('active'));
+    } else {
+        console.error('Chat widget NOT found in DOM!');
+    }
+});
 
 function sendQuickReply(type) {
     const shortcuts = {
@@ -1021,7 +1075,7 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 // Observe elements with BOOM effect
 document.addEventListener('DOMContentLoaded', () => {
-    const elementsToAnimate = document.querySelectorAll('.service-card, .partner-card, .about-card, .feature-item, .stat-item, .value-card, .benefit-item, .contact-item');
+    const elementsToAnimate = document.querySelectorAll('.service-card, .partner-card, .about-card, .feature-item, .stat-item, .value-card, .benefit-item, .contact-item, .branch-card, .branch-card-in-contact');
     
     elementsToAnimate.forEach((el, index) => {
         el.style.opacity = '0';
@@ -1377,298 +1431,16 @@ document.querySelectorAll('.btn-primary').forEach(btn => {
 });
 
 // ===== SMOOTH SECTION REVEALS =====
-// Make all sections visible immediately on load
-document.addEventListener('DOMContentLoaded', () => {
-    const sections = document.querySelectorAll('.section');
-    sections.forEach((section) => {
-        section.classList.add('section-visible');
-        section.style.opacity = '1';
-        section.style.transform = 'translateY(0)';
-    });
-});
-
-// IntersectionObserver for scroll animations (optional enhancement)
 const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('section-visible');
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
         }
     });
-}, { threshold: 0.01 });
+}, { threshold: 0.1 });
 
-// Observe all sections
 document.querySelectorAll('.section').forEach(section => {
     sectionObserver.observe(section);
-});
-
-// ===== PARTICLES/STARS ANIMATION =====
-function initParticles() {
-    const canvas = document.getElementById('particlesCanvas');
-    if (!canvas) {
-        console.error('particlesCanvas not found');
-        return;
-    }
-    
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    
-    // Resize canvas on window resize
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    });
-    
-    // Particle class
-    class Particle {
-        constructor() {
-            this.reset();
-            this.y = Math.random() * canvas.height;
-        }
-        
-        reset() {
-            this.x = Math.random() * canvas.width;
-            this.y = -10;
-            this.speed = Math.random() * 2 + 1;
-            this.size = Math.random() * 2 + 1;
-            this.opacity = Math.random() * 0.5 + 0.2;
-        }
-        
-        update() {
-            this.y += this.speed;
-            if (this.y > canvas.height) {
-                this.reset();
-            }
-        }
-        
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(247, 148, 29, ${this.opacity})`;
-            ctx.fill();
-        }
-    }
-    
-    // Create particles
-    const particles = [];
-    const particleCount = 50;
-    
-    for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle());
-    }
-    
-    // Animation loop
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        particles.forEach(particle => {
-            particle.update();
-            particle.draw();
-        });
-        
-        requestAnimationFrame(animate);
-    }
-    
-    animate();
-    console.log('✅ Particles animation started');
-}
-
-// Initialize on DOM ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initParticles);
-} else {
-    initParticles();
-}
-
-// ===== HERO PARTICLES ANIMATION - Falling Orange Dots =====
-function initHeroParticles() {
-    const heroParticles = document.getElementById('heroParticles');
-    if (!heroParticles) {
-        console.error('heroParticles not found');
-        return;
-    }
-    
-    // Reduced particle count - less crowded
-    const particleCount = 35;
-    
-    function createParticle() {
-        const particle = document.createElement('div');
-        particle.className = 'hero-particle';
-        
-        const startX = Math.random() * 100;
-        // Faster falling speed (like rain)
-        const duration = 8 + Math.random() * 10;
-        const delay = Math.random() * 2;
-        // Smaller size (1-2px)
-        const size = 1 + Math.random() * 1;
-        
-        particle.style.left = startX + '%';
-        particle.style.width = size + 'px';
-        particle.style.height = size + 'px';
-        particle.style.animationDuration = duration + 's';
-        particle.style.animationDelay = delay + 's';
-        
-        heroParticles.appendChild(particle);
-        
-        setTimeout(() => {
-            if (particle.parentNode) {
-                particle.remove();
-            }
-            createParticle();
-        }, (duration + delay) * 1000);
-    }
-    
-    // Create initial particles with more spacing
-    for (let i = 0; i < particleCount; i++) {
-        setTimeout(() => createParticle(), i * 150);
-    }
-    
-    console.log('✅ Hero particles (falling orange dots) started');
-}
-
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initHeroParticles);
-} else {
-    initHeroParticles();
-}
-
-// ===== CURSOR FOLLOWER =====
-function initCursorFollower() {
-    const cursorFollower = document.getElementById('cursorFollower');
-    if (!cursorFollower) {
-        console.error('cursorFollower not found');
-        return;
-    }
-    
-    const cursorDot = cursorFollower.querySelector('.cursor-dot');
-    const cursorRing = cursorFollower.querySelector('.cursor-ring');
-    
-    if (!cursorDot || !cursorRing) {
-        console.error('cursor dot or ring not found');
-        return;
-    }
-
-    let mouseX = 0;
-    let mouseY = 0;
-    let cursorX = 0;
-    let cursorY = 0;
-    let isMoving = false;
-    let animationFrameId = null;
-
-    // Mouse move event
-    const handleMouseMove = (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        isMoving = true;
-
-        // Update dot immediately
-        cursorDot.style.left = mouseX + 'px';
-        cursorDot.style.top = mouseY + 'px';
-
-        // Show cursor
-        cursorFollower.classList.add('active');
-        cursorFollower.style.opacity = '1';
-        
-        if (!animationFrameId) {
-            animateCursor();
-        }
-    };
-
-    // Animate ring smoothly
-    function animateCursor() {
-        if (!isMoving) {
-            cursorFollower.style.opacity = '0';
-            animationFrameId = null;
-            return;
-        }
-
-        // Smooth follow animation
-        cursorX += (mouseX - cursorX) * 0.2;
-        cursorY += (mouseY - cursorY) * 0.2;
-
-        cursorRing.style.left = cursorX + 'px';
-        cursorRing.style.top = cursorY + 'px';
-
-        animationFrameId = requestAnimationFrame(animateCursor);
-    }
-
-    document.addEventListener('mousemove', handleMouseMove);
-
-    // Hide when mouse leaves window
-    document.addEventListener('mouseleave', () => {
-        cursorFollower.style.opacity = '0';
-        isMoving = false;
-        cursorFollower.classList.remove('active');
-    });
-
-    // Show when mouse enters
-    document.addEventListener('mouseenter', () => {
-        cursorFollower.style.opacity = '1';
-        cursorFollower.classList.add('active');
-    });
-
-    // Expand on interactive elements
-    const interactiveElements = document.querySelectorAll('a, button, .btn, input, textarea, select, .chat-toggle, .whatsapp-btn');
-    interactiveElements.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            cursorRing.style.width = '60px';
-            cursorRing.style.height = '60px';
-            cursorRing.style.borderColor = 'rgba(247, 148, 29, 0.8)';
-        });
-        el.addEventListener('mouseleave', () => {
-            cursorRing.style.width = '40px';
-            cursorRing.style.height = '40px';
-            cursorRing.style.borderColor = 'rgba(247, 148, 29, 0.5)';
-        });
-    });
-    
-    console.log('✅ Cursor follower initialized');
-}
-
-// Initialize on DOM ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCursorFollower);
-} else {
-    initCursorFollower();
-}
-
-// ===== ENSURE CHAT TOGGLE WORKS =====
-document.addEventListener('DOMContentLoaded', function() {
-    const chatToggle = document.getElementById('chatToggle');
-    const chatWidget = document.getElementById('chatWidget');
-    
-    console.log('Chat toggle setup:', { chatToggle, chatWidget, toggleChat: typeof toggleChat });
-    
-    if (chatToggle) {
-        chatToggle.style.visibility = 'visible';
-        chatToggle.style.opacity = '1';
-        chatToggle.style.display = 'flex';
-        
-        // Remove any existing event listeners
-        const newChatToggle = chatToggle.cloneNode(true);
-        chatToggle.parentNode.replaceChild(newChatToggle, chatToggle);
-        
-        // Add click event listener
-        newChatToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log('Chat toggle clicked!');
-            if (typeof toggleChat === 'function') {
-                toggleChat();
-            } else {
-                console.error('toggleChat function not found!');
-            }
-        });
-        
-        // Make sure toggleChat is globally accessible
-        window.toggleChat = toggleChat;
-    }
-    
-    if (chatWidget) {
-        console.log('Chat widget found');
-    }
 });
 
 // ===== CONSOLE MESSAGE =====
