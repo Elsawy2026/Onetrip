@@ -188,107 +188,117 @@ section, .section {
     height: 50px;
 }
 
-/* Logo Text Style - Matching Image Exactly */
+/* Logo Text Style - EXACT MATCH FROM IMAGE */
 .nav-logo {
     text-decoration: none;
     display: block;
+    height: auto;
 }
 
 .nav-logo .logo-text {
     display: inline-block;
     font-family: 'Inter', sans-serif;
     font-weight: 900;
-    line-height: 1.1;
-    color: #000;
+    line-height: 0.9;
+    color: #000000;
 }
 
+/* Line 1: ONE with pin and arrow */
 .logo-line-1 {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: 3px;
     white-space: nowrap;
+    height: auto;
 }
 
 .logo-pin {
     color: #F7941D;
-    font-size: 2.8rem;
-    line-height: 1;
-    display: inline-block;
+    font-size: 3.2rem;
+    line-height: 0.8;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     transform: rotate(-45deg);
-    margin-right: 1px;
-    vertical-align: middle;
+    margin-right: 2px;
+    width: 0.9em;
+    height: 0.9em;
 }
 
 .logo-ne {
     color: #0a0e27;
-    font-size: 2rem;
+    font-size: 2.1rem;
     font-weight: 900;
-    letter-spacing: -1px;
+    letter-spacing: -2px;
     line-height: 1;
-    vertical-align: baseline;
+    margin-top: 2px;
 }
 
 .logo-arrow {
     display: inline-flex;
     align-items: center;
-    margin-left: 8px;
-    gap: 3px;
-    vertical-align: baseline;
+    margin-left: 10px;
+    gap: 4px;
 }
 
 .arrow-bar {
-    width: 24px;
+    width: 26px;
     height: 4px;
     background: #F7941D;
     display: inline-block;
-    border-radius: 1px;
+    border-radius: 2px;
 }
 
 .arrow-icon {
     color: #0a0e27;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     line-height: 1;
 }
 
+/* Line 2: TRIP */
 .logo-line-2 {
     display: flex;
-    align-items: baseline;
+    align-items: flex-start;
     gap: 0;
-    margin-top: -5px;
-    margin-left: 10px;
+    margin-top: -8px;
+    margin-left: 11px;
     white-space: nowrap;
 }
 
 .logo-t {
     color: #F7941D;
-    font-size: 2rem;
+    font-size: 2.1rem;
     font-weight: 900;
-    letter-spacing: -1px;
-    line-height: 1;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    margin-top: -2px;
 }
 
 .logo-rip {
     color: #0a0e27;
-    font-size: 2rem;
+    font-size: 2.1rem;
     font-weight: 900;
-    letter-spacing: -1px;
-    line-height: 1;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    margin-top: -2px;
 }
 
+/* Line 3: EXPRESS */
 .logo-line-3 {
-    margin-top: -5px;
-    margin-left: 10px;
+    margin-top: -8px;
+    margin-left: 11px;
     white-space: nowrap;
 }
 
 .logo-express {
     color: #F7941D;
-    font-size: 2rem;
+    font-size: 2.1rem;
     font-weight: 900;
-    letter-spacing: -1px;
-    line-height: 1;
+    letter-spacing: -2px;
+    line-height: 0.95;
 }
 
+/* LTR Support */
 [dir="ltr"] .logo-text {
     direction: ltr;
 }
@@ -296,17 +306,17 @@ section, .section {
 [dir="ltr"] .logo-line-2,
 [dir="ltr"] .logo-line-3 {
     margin-left: 0;
-    margin-right: 10px;
+    margin-right: 11px;
 }
 
 [dir="ltr"] .logo-pin {
     margin-right: 0;
-    margin-left: 1px;
+    margin-left: 2px;
 }
 
 [dir="ltr"] .logo-arrow {
     margin-left: 0;
-    margin-right: 8px;
+    margin-right: 10px;
 }
 
 .nav-menu {
