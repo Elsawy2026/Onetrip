@@ -424,7 +424,8 @@ window.addEventListener('scroll', function() {
 window.startCounterAnimations = startCounterAnimations;
 
 // ===== LIVE CHAT =====
-function toggleChat() {
+// Make toggleChat globally accessible
+window.toggleChat = function toggleChat() {
     const chatWidget = document.getElementById('chatWidget');
     const chatToggle = document.getElementById('chatToggle');
     const badge = document.querySelector('.chat-badge');
@@ -451,7 +452,7 @@ function toggleChat() {
         if (badge) badge.style.display = 'flex';
         chatSessionActive = false;
     }
-}
+};
 
 // Initialize chat on page load
 document.addEventListener('DOMContentLoaded', function() {
@@ -461,9 +462,17 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Chat elements on load:', { chatWidget, chatToggle });
     
     if (chatToggle) {
-        // Ensure click handler is attached
-        chatToggle.addEventListener('click', toggleChat);
+        // Ensure click handler is attached - multiple ways
+        chatToggle.addEventListener('click', window.toggleChat);
+        chatToggle.onclick = window.toggleChat;
         console.log('Chat toggle click handler attached');
+        
+        // Make sure button is visible and clickable
+        chatToggle.style.pointerEvents = 'auto';
+        chatToggle.style.cursor = 'pointer';
+        chatToggle.style.zIndex = '9999';
+    } else {
+        console.error('Chat toggle button NOT found in DOM!');
     }
     
     // Also check if chat widget exists
