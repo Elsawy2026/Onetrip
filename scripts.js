@@ -523,13 +523,25 @@ function sendChatMessage(event) {
     chatInputEl.value = '';
 }
 
-function handleUserMessage(text) {
+// Handle User Message - Stateless AI Chat
+async function handleUserMessage(text) {
     appendMessage(text, 'user');
     
-    setTimeout(() => {
-        const reply = generateBotReply(text);
+    // Show typing indicator
+    const typingId = showTypingIndicator();
+    
+    try {
+        // Call AI API with Stateless Session
+        const reply = await callAIChatAPI(text);
+        removeTypingIndicator(typingId);
         appendMessage(reply, 'bot');
-    }, 400);
+    } catch (error) {
+        console.error('AI Chat Error:', error);
+        removeTypingIndicator(typingId);
+        // Fallback to rule-based reply
+        const fallbackReply = generateBotReply(text);
+        appendMessage(fallbackReply, 'bot');
+    }
 }
 
 // ===== STATELESS AI CHAT SYSTEM =====
