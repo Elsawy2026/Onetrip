@@ -188,7 +188,7 @@ section, .section {
     height: 50px;
 }
 
-/* Logo Text Style - Matching Image */
+/* Logo Text Style - Matching Image Exactly */
 .nav-logo .logo-text {
     display: flex;
     flex-direction: column;
@@ -196,96 +196,117 @@ section, .section {
     gap: 0;
     font-family: 'Inter', 'Tajawal', sans-serif;
     font-weight: 900;
-    line-height: 1;
+    line-height: 0.95;
+    position: relative;
 }
 
 .logo-line-1 {
     display: flex;
     align-items: center;
-    gap: 0;
-    margin-bottom: 0;
+    gap: 2px;
+    margin-bottom: -4px;
+    position: relative;
 }
 
 .logo-pin {
     color: #F7941D;
-    font-size: 2.2rem;
-    margin-right: 2px;
+    font-size: 2.5rem;
+    margin-right: 1px;
     transform: rotate(-45deg);
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    line-height: 1;
 }
 
 .logo-ne {
     color: #1a1f3a;
-    font-size: 1.8rem;
+    font-size: 1.95rem;
     font-weight: 900;
-    letter-spacing: -1px;
+    letter-spacing: -0.5px;
+    line-height: 1;
+    margin-top: -2px;
 }
 
 .logo-arrow {
     display: inline-flex;
     align-items: center;
-    margin-left: 4px;
+    margin-left: 6px;
+    margin-top: -2px;
+    gap: 2px;
 }
 
 .arrow-bar {
-    width: 20px;
-    height: 4px;
+    width: 18px;
+    height: 3px;
     background: #F7941D;
     display: inline-block;
-    margin-right: 2px;
+    border-radius: 2px;
 }
 
 .arrow-icon {
     color: #1a1f3a;
-    font-size: 1rem;
+    font-size: 0.9rem;
+    margin-left: 1px;
 }
 
 .logo-line-2 {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 0;
-    margin-top: -2px;
+    margin-top: -6px;
+    margin-left: 9px;
+    position: relative;
 }
 
 .logo-t {
     color: #F7941D;
-    font-size: 1.8rem;
+    font-size: 1.95rem;
     font-weight: 900;
-    letter-spacing: -1px;
-    margin-left: 8px;
+    letter-spacing: -0.5px;
+    line-height: 1;
+    position: relative;
 }
 
 .logo-rip {
     color: #1a1f3a;
-    font-size: 1.8rem;
+    font-size: 1.95rem;
     font-weight: 900;
-    letter-spacing: -1px;
+    letter-spacing: -0.5px;
+    line-height: 1;
 }
 
 .logo-line-3 {
-    margin-top: -2px;
+    margin-top: -6px;
+    margin-left: 9px;
 }
 
 .logo-express {
     color: #F7941D;
-    font-size: 1.8rem;
+    font-size: 1.95rem;
     font-weight: 900;
-    letter-spacing: -1px;
-    margin-left: 8px;
+    letter-spacing: -0.5px;
+    line-height: 1;
 }
 
 [dir="ltr"] .logo-text {
     align-items: flex-end;
 }
 
-[dir="ltr"] .logo-t,
-[dir="ltr"] .logo-express {
+[dir="ltr"] .logo-line-2,
+[dir="ltr"] .logo-line-3 {
     margin-left: 0;
-    margin-right: 8px;
+    margin-right: 9px;
 }
 
 [dir="ltr"] .logo-pin {
     margin-right: 0;
-    margin-left: 2px;
+    margin-left: 1px;
+}
+
+[dir="ltr"] .logo-arrow {
+    margin-left: 0;
+    margin-right: 6px;
 }
 
 .nav-menu {
