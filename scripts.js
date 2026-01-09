@@ -233,14 +233,13 @@ if (backTop) {
 
 // ===== COUNTER ANIMATIONS =====
 function animateCounter(element, target, suffix = '') {
-    if (!element || isNaN(target) || target <= 0) {
-        console.warn('Invalid counter element or target:', element, target);
+    if (!element || isNaN(target)) {
         return;
     }
     
-    const duration = 2000;
+    const duration = 2500;
     const startTime = performance.now();
-    const startValue = 0;
+    const startValue = parseInt(element.textContent) || 0;
     
     function update(currentTime) {
         const elapsed = currentTime - startTime;
@@ -252,19 +251,14 @@ function animateCounter(element, target, suffix = '') {
         
         // Format number with comma separators
         const formatted = current.toLocaleString('en-US');
-        if (element) {
-            element.textContent = formatted + suffix;
-        }
+        element.textContent = formatted + suffix;
         
         if (progress < 1) {
             requestAnimationFrame(update);
         } else {
             // Final value with formatting
             const finalFormatted = target.toLocaleString('en-US');
-            if (element) {
-                element.textContent = finalFormatted + suffix;
-                element.classList.remove('animating');
-            }
+            element.textContent = finalFormatted + suffix;
         }
     }
     
@@ -290,106 +284,104 @@ function startCounterAnimations() {
 
 function initCounters(counters) {
     if (!counters || counters.length === 0) {
-        console.warn('No counters found to initialize');
         return;
     }
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const element = entry.target;
-                const countValue = element.getAttribute('data-count');
-                
-                if (!countValue || isNaN(parseInt(countValue))) {
-                    observer.unobserve(element);
-                    return;
-                }
-                
-                const target = parseInt(countValue);
-                const suffix = element.getAttribute('data-suffix') || '';
-                const finalSuffix = suffix === '%' ? '%' : suffix;
-                
-                if (!element.classList.contains('animating')) {
-                    element.classList.add('animating');
-                    animateCounter(element, target, finalSuffix);
-                }
-                observer.unobserve(element);
-            }
-        });
-    }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
     
     counters.forEach((counter, index) => {
         if (!counter) return;
         
-        // Always observe first, then check visibility
-        observer.observe(counter);
+        const countValue = counter.getAttribute('data-count');
+        if (!countValue || isNaN(parseInt(countValue))) {
+            return;
+        }
         
-        // Also check if already visible immediately
-        setTimeout(() => {
+        const target = parseInt(countValue);
+        const suffix = counter.getAttribute('data-suffix') || '';
+        const finalSuffix = suffix === '%' ? '%' : suffix;
+        
+        // Check if visible
+        const checkAndAnimate = () => {
             const rect = counter.getBoundingClientRect();
-            const isVisible = rect.top < (window.innerHeight + 200) && rect.bottom > -200;
+            const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
             
-            if (isVisible && !counter.classList.contains('animating')) {
-                const countValue = counter.getAttribute('data-count');
-                if (countValue && !isNaN(parseInt(countValue))) {
-                    const target = parseInt(countValue);
-                    const suffix = counter.getAttribute('data-suffix') || '';
-                    const finalSuffix = suffix === '%' ? '%' : suffix;
-                    
-                    counter.classList.add('animating');
-                    animateCounter(counter, target, finalSuffix);
-                    observer.unobserve(counter);
-                }
+            if (isVisible && counter.textContent === '0' || counter.textContent.trim() === '0') {
+                animateCounter(counter, target, finalSuffix);
             }
-        }, 200 + (index * 50));
+        };
+        
+        // Immediate check
+        setTimeout(checkAndAnimate, 100 + (index * 100));
+        
+        // Use IntersectionObserver as backup
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.target.textContent === '0' || entry.target.textContent.trim() === '0') {
+                    const countValue = entry.target.getAttribute('data-count');
+                    if (countValue && !isNaN(parseInt(countValue))) {
+                        const target = parseInt(countValue);
+                        const suffix = entry.target.getAttribute('data-suffix') || '';
+                        const finalSuffix = suffix === '%' ? '%' : suffix;
+                        animateCounter(entry.target, target, finalSuffix);
+                        observer.unobserve(entry.target);
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        observer.observe(counter);
     });
 }
 
-// Start counter animations on page load - multiple attempts
-function initCounterOnLoad() {
+// Start counter animations - DIRECT APPROACH
+function initStatsCounters() {
+    // Force start immediately
     setTimeout(() => {
-        startCounterAnimations();
-    }, 100);
-    
-    setTimeout(() => {
-        startCounterAnimations();
-    }, 500);
-    
-    setTimeout(() => {
-        startCounterAnimations();
-    }, 1000);
-}
-
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCounterOnLoad);
-} else {
-    initCounterOnLoad();
-}
-
-// Also start after window load for better reliability
-window.addEventListener('load', function() {
-    setTimeout(() => {
-        startCounterAnimations();
-    }, 200);
-});
-
-// Force start on scroll
-window.addEventListener('scroll', function() {
-    const counters = document.querySelectorAll('[data-count]:not(.animating)');
-    if (counters.length > 0) {
-        counters.forEach(counter => {
-            const rect = counter.getBoundingClientRect();
-            if (rect.top < window.innerHeight && rect.bottom > 0) {
+        const counters = document.querySelectorAll('.stat-number[data-count]');
+        counters.forEach((counter, index) => {
+            setTimeout(() => {
                 const countValue = counter.getAttribute('data-count');
                 if (countValue && !isNaN(parseInt(countValue))) {
                     const target = parseInt(countValue);
                     const suffix = counter.getAttribute('data-suffix') || '';
                     const finalSuffix = suffix === '%' ? '%' : suffix;
-                    counter.classList.add('animating');
                     animateCounter(counter, target, finalSuffix);
                 }
+            }, 300 + (index * 200));
+        });
+    }, 500);
+    
+    // Also use the normal flow
+    startCounterAnimations();
+}
+
+// Multiple initialization points
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(initStatsCounters, 200);
+    });
+} else {
+    setTimeout(initStatsCounters, 200);
+}
+
+window.addEventListener('load', () => {
+    setTimeout(initStatsCounters, 300);
+});
+
+// Force on scroll
+let scrollCounterTriggered = false;
+window.addEventListener('scroll', function() {
+    if (!scrollCounterTriggered) {
+        const counters = document.querySelectorAll('.stat-number[data-count]');
+        counters.forEach(counter => {
+            const countValue = counter.getAttribute('data-count');
+            if (countValue && !isNaN(parseInt(countValue)) && (counter.textContent === '0' || counter.textContent.trim() === '0')) {
+                const target = parseInt(countValue);
+                const suffix = counter.getAttribute('data-suffix') || '';
+                const finalSuffix = suffix === '%' ? '%' : suffix;
+                animateCounter(counter, target, finalSuffix);
             }
         });
+        scrollCounterTriggered = true;
     }
 }, { once: false, passive: true });
 
