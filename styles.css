@@ -3936,6 +3936,8 @@ section, .section {
     justify-content: center !important;
     visibility: visible !important;
     opacity: 1 !important;
+    pointer-events: auto !important;
+    user-select: none !important;
 }
 
 [dir="ltr"] .chat-toggle {
