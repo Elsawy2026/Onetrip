@@ -196,7 +196,7 @@ section, .section {
 
 .nav-link {
     padding: 10px 18px;
-    color: var(--text-light);
+    color: var(--primary);
     text-decoration: none;
     font-weight: 500;
     font-size: 0.95rem;
