@@ -842,10 +842,99 @@
     </div>
     
     <!-- Chat Toggle Button -->
-    <button class="chat-toggle" id="chatToggle" onclick="window.toggleChat && window.toggleChat(event); return false;" type="button">
+    <button class="chat-toggle" id="chatToggle" type="button" style="position: fixed !important; bottom: 30px !important; left: 100px !important; width: 60px !important; height: 60px !important; background: linear-gradient(135deg, #F7941D 0%, #FFAA40 100%) !important; border: none !important; border-radius: 50% !important; color: white !important; font-size: 1.5rem !important; cursor: pointer !important; box-shadow: 0 5px 25px rgba(247, 148, 29, 0.4) !important; z-index: 99999 !important; display: flex !important; align-items: center !important; justify-content: center !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important;">
         <i class="fas fa-comments"></i>
         <span class="chat-badge">1</span>
     </button>
+    
+    <script>
+        // INLINE SCRIPT TO ENSURE CHAT BUTTON WORKS
+        (function() {
+            function initChatButton() {
+                const chatToggle = document.getElementById('chatToggle');
+                const chatWidget = document.getElementById('chatWidget');
+                
+                if (!chatToggle || !chatWidget) {
+                    console.error('Chat elements not found!', { chatToggle, chatWidget });
+                    return;
+                }
+                
+                console.log('✅ Chat elements found, attaching click handler...');
+                
+                // Remove any existing handlers
+                const newToggle = chatToggle.cloneNode(true);
+                chatToggle.parentNode.replaceChild(newToggle, chatToggle);
+                
+                const newWidget = document.getElementById('chatWidget');
+                const newButton = document.getElementById('chatToggle');
+                
+                // Simple direct click handler
+                newButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🔵 CHAT BUTTON CLICKED!');
+                    
+                    if (newWidget) {
+                        const isActive = newWidget.classList.contains('active');
+                        console.log('Current state:', isActive ? 'open' : 'closed');
+                        
+                        if (isActive) {
+                            newWidget.classList.remove('active');
+                            const badge = document.querySelector('.chat-badge');
+                            if (badge) badge.style.display = 'flex';
+                            console.log('✅ Chat closed');
+                        } else {
+                            newWidget.classList.add('active');
+                            const badge = document.querySelector('.chat-badge');
+                            if (badge) badge.style.display = 'none';
+                            console.log('✅ Chat opened');
+                        }
+                    } else {
+                        console.error('❌ Chat widget not found!');
+                    }
+                    
+                    return false;
+                }, true);
+                
+                // Also set onclick as backup
+                newButton.onclick = function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🔵 CHAT BUTTON CLICKED (onclick)!');
+                    
+                    if (newWidget) {
+                        newWidget.classList.toggle('active');
+                        const badge = document.querySelector('.chat-badge');
+                        if (badge) {
+                            badge.style.display = newWidget.classList.contains('active') ? 'none' : 'flex';
+                        }
+                    }
+                    return false;
+                };
+                
+                // Force button to be clickable
+                newButton.style.pointerEvents = 'auto';
+                newButton.style.cursor = 'pointer';
+                newButton.style.zIndex = '99999';
+                
+                console.log('✅ Chat button initialized!');
+            }
+            
+            // Try multiple times to ensure it works
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initChatButton);
+            } else {
+                initChatButton();
+            }
+            
+            // Also try after a delay
+            setTimeout(initChatButton, 100);
+            setTimeout(initChatButton, 500);
+            setTimeout(initChatButton, 1000);
+            
+            window.initChatButton = initChatButton;
+        })();
+    </script>
     
     <!-- WhatsApp Channel Button -->
     <a href="https://whatsapp.com/channel/0029Vb5zEdjIXnm0N94Kuo2y" class="whatsapp-btn" target="_blank">
@@ -862,7 +951,7 @@
     <!-- AI Chat Configuration (Optional - for API setup) -->
     <!-- <script src="ai-chat-config.js"></script> -->
     
-    <script src="scripts.js?v=2026.01.09.45"></script>
+    <script src="scripts.js?v=2026.01.09.46"></script>
     <script>
         // FIX LANGUAGE BUTTON - DIRECT APPROACH
         (function() {
