@@ -424,64 +424,127 @@ window.addEventListener('scroll', function() {
 window.startCounterAnimations = startCounterAnimations;
 
 // ===== LIVE CHAT =====
-// Make toggleChat globally accessible
-window.toggleChat = function toggleChat() {
+// Make toggleChat globally accessible - SIMPLE DIRECT VERSION
+window.toggleChat = function toggleChat(event) {
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    
+    console.log('=== toggleChat CALLED ===');
+    
     const chatWidget = document.getElementById('chatWidget');
-    const chatToggle = document.getElementById('chatToggle');
     const badge = document.querySelector('.chat-badge');
     
-    console.log('toggleChat called', { chatWidget, chatToggle, badge });
-    
     if (!chatWidget) {
-        console.error('chatWidget not found!');
-        return;
+        console.error('❌ chatWidget not found!');
+        alert('Chat widget not found!');
+        return false;
     }
+    
+    console.log('✅ chatWidget found:', chatWidget);
+    console.log('Current active class:', chatWidget.classList.contains('active'));
     
     const isOpening = !chatWidget.classList.contains('active');
     chatWidget.classList.toggle('active');
     
-    console.log('Chat toggled, isOpening:', isOpening, 'has active class:', chatWidget.classList.contains('active'));
+    const isNowActive = chatWidget.classList.contains('active');
+    console.log('After toggle - isNowActive:', isNowActive);
     
     if (isOpening) {
         // عند الفتح أخفي البادج وابدأ Session جديدة
-        if (badge) badge.style.display = 'none';
+        if (badge) {
+            badge.style.display = 'none';
+        }
         chatSessionActive = true;
+        console.log('✅ Chat opened');
     } else {
         // عند الإغلاق امسح المحادثة وارجع رسالة الترحيب فقط (Stateless)
         resetChatConversation();
-        if (badge) badge.style.display = 'flex';
+        if (badge) {
+            badge.style.display = 'flex';
+        }
         chatSessionActive = false;
+        console.log('✅ Chat closed');
     }
+    
+    return false;
 };
 
-// Initialize chat on page load
-document.addEventListener('DOMContentLoaded', function() {
+// Also expose as global function without window prefix for backward compatibility
+if (typeof toggleChat === 'undefined') {
+    window.toggleChat = window.toggleChat;
+}
+
+// Initialize chat on page load - MULTIPLE INITIALIZATION POINTS
+function initChatWidget() {
     const chatWidget = document.getElementById('chatWidget');
     const chatToggle = document.getElementById('chatToggle');
     
-    console.log('Chat elements on load:', { chatWidget, chatToggle });
+    console.log('🔵 initChatWidget called', { chatWidget, chatToggle });
     
     if (chatToggle) {
-        // Ensure click handler is attached - multiple ways
-        chatToggle.addEventListener('click', window.toggleChat);
-        chatToggle.onclick = window.toggleChat;
-        console.log('Chat toggle click handler attached');
+        // Remove any existing handlers first
+        chatToggle.onclick = null;
+        chatToggle.replaceWith(chatToggle.cloneNode(true));
+        const newChatToggle = document.getElementById('chatToggle');
+        
+        // Add click handler - multiple methods
+        const clickHandler = function(event) {
+            console.log('🔵 Chat button clicked via event listener');
+            event.preventDefault();
+            event.stopPropagation();
+            if (window.toggleChat) {
+                window.toggleChat(event);
+            } else {
+                console.error('❌ window.toggleChat not defined!');
+            }
+            return false;
+        };
+        
+        newChatToggle.addEventListener('click', clickHandler, true);
+        newChatToggle.onclick = clickHandler;
         
         // Make sure button is visible and clickable
-        chatToggle.style.pointerEvents = 'auto';
-        chatToggle.style.cursor = 'pointer';
-        chatToggle.style.zIndex = '9999';
+        newChatToggle.style.pointerEvents = 'auto';
+        newChatToggle.style.cursor = 'pointer';
+        newChatToggle.style.zIndex = '9999';
+        newChatToggle.style.position = 'fixed';
+        newChatToggle.style.display = 'flex';
+        newChatToggle.style.visibility = 'visible';
+        newChatToggle.style.opacity = '1';
+        
+        console.log('✅ Chat toggle click handler attached');
+        console.log('Button styles:', {
+            pointerEvents: newChatToggle.style.pointerEvents,
+            cursor: newChatToggle.style.cursor,
+            zIndex: newChatToggle.style.zIndex,
+            display: newChatToggle.style.display
+        });
     } else {
-        console.error('Chat toggle button NOT found in DOM!');
+        console.error('❌ Chat toggle button NOT found in DOM!');
     }
     
-    // Also check if chat widget exists
     if (chatWidget) {
-        console.log('Chat widget found, initial state:', chatWidget.classList.contains('active'));
+        console.log('✅ Chat widget found, initial state:', chatWidget.classList.contains('active'));
     } else {
-        console.error('Chat widget NOT found in DOM!');
+        console.error('❌ Chat widget NOT found in DOM!');
     }
-});
+}
+
+// Initialize on multiple events
+document.addEventListener('DOMContentLoaded', initChatWidget);
+window.addEventListener('load', initChatWidget);
+
+// Also try immediate initialization
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initChatWidget);
+} else {
+    // DOM already loaded
+    setTimeout(initChatWidget, 100);
+    setTimeout(initChatWidget, 500);
+    setTimeout(initChatWidget, 1000);
+}
 
 function sendQuickReply(type) {
     const shortcuts = {

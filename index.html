@@ -812,7 +812,7 @@
                     <span class="chat-status"><i class="fas fa-circle"></i> <span data-ar="متصل الآن" data-en="Online">متصل الآن</span></span>
                 </div>
             </div>
-            <button class="chat-close" onclick="toggleChat()"><i class="fas fa-times"></i></button>
+            <button class="chat-close" onclick="window.toggleChat && window.toggleChat(event)"><i class="fas fa-times"></i></button>
         </div>
         <div class="chat-body">
             <div class="chat-messages" id="chatMessages">
@@ -842,7 +842,7 @@
     </div>
     
     <!-- Chat Toggle Button -->
-    <button class="chat-toggle" id="chatToggle" onclick="window.toggleChat && window.toggleChat()" type="button">
+    <button class="chat-toggle" id="chatToggle" onclick="window.toggleChat && window.toggleChat(event); return false;" type="button">
         <i class="fas fa-comments"></i>
         <span class="chat-badge">1</span>
     </button>
@@ -862,7 +862,7 @@
     <!-- AI Chat Configuration (Optional - for API setup) -->
     <!-- <script src="ai-chat-config.js"></script> -->
     
-    <script src="scripts.js?v=2026.01.09.44"></script>
+    <script src="scripts.js?v=2026.01.09.45"></script>
     <script>
         // FIX LANGUAGE BUTTON - DIRECT APPROACH
         (function() {
