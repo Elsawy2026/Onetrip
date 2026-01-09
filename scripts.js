@@ -272,22 +272,20 @@ function animateCounter(element, target, suffix = '') {
 }
 
 function startCounterAnimations() {
-    const counters = document.querySelectorAll('[data-count]');
-    console.log('Found counters:', counters.length);
+    // Try multiple times to ensure it works
+    const tryStart = () => {
+        const counters = document.querySelectorAll('[data-count]');
+        console.log('Found counters:', counters.length);
+        
+        if (counters.length > 0) {
+            initCounters(counters);
+        } else {
+            console.warn('No counters found, retrying...');
+            setTimeout(tryStart, 300);
+        }
+    };
     
-    if (counters.length === 0) {
-        console.warn('No counters found, retrying...');
-        setTimeout(() => {
-            const retryCounters = document.querySelectorAll('[data-count]');
-            if (retryCounters.length > 0) {
-                console.log('Retry found counters:', retryCounters.length);
-                initCounters(retryCounters);
-            }
-        }, 500);
-        return;
-    }
-    
-    initCounters(counters);
+    tryStart();
 }
 
 function initCounters(counters) {
@@ -320,38 +318,46 @@ function initCounters(counters) {
         });
     }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
     
-    counters.forEach(counter => {
+    counters.forEach((counter, index) => {
         if (!counter) return;
         
-        // Check if already visible
-        const rect = counter.getBoundingClientRect();
-        const isVisible = rect.top < (window.innerHeight + 100) && rect.bottom > -100;
+        // Always observe first, then check visibility
+        observer.observe(counter);
         
-        if (isVisible) {
-            const countValue = counter.getAttribute('data-count');
-            if (countValue && !isNaN(parseInt(countValue))) {
-                const target = parseInt(countValue);
-                const suffix = counter.getAttribute('data-suffix') || '';
-                const finalSuffix = suffix === '%' ? '%' : suffix;
-                
-                if (!counter.classList.contains('animating')) {
+        // Also check if already visible immediately
+        setTimeout(() => {
+            const rect = counter.getBoundingClientRect();
+            const isVisible = rect.top < (window.innerHeight + 200) && rect.bottom > -200;
+            
+            if (isVisible && !counter.classList.contains('animating')) {
+                const countValue = counter.getAttribute('data-count');
+                if (countValue && !isNaN(parseInt(countValue))) {
+                    const target = parseInt(countValue);
+                    const suffix = counter.getAttribute('data-suffix') || '';
+                    const finalSuffix = suffix === '%' ? '%' : suffix;
+                    
                     counter.classList.add('animating');
-                    setTimeout(() => {
-                        animateCounter(counter, target, finalSuffix);
-                    }, 100);
+                    animateCounter(counter, target, finalSuffix);
+                    observer.unobserve(counter);
                 }
             }
-        } else {
-            observer.observe(counter);
-        }
+        }, 200 + (index * 50));
     });
 }
 
-// Start counter animations on page load
+// Start counter animations on page load - multiple attempts
 function initCounterOnLoad() {
     setTimeout(() => {
         startCounterAnimations();
-    }, 200);
+    }, 100);
+    
+    setTimeout(() => {
+        startCounterAnimations();
+    }, 500);
+    
+    setTimeout(() => {
+        startCounterAnimations();
+    }, 1000);
 }
 
 if (document.readyState === 'loading') {
@@ -364,8 +370,28 @@ if (document.readyState === 'loading') {
 window.addEventListener('load', function() {
     setTimeout(() => {
         startCounterAnimations();
-    }, 300);
+    }, 200);
 });
+
+// Force start on scroll
+window.addEventListener('scroll', function() {
+    const counters = document.querySelectorAll('[data-count]:not(.animating)');
+    if (counters.length > 0) {
+        counters.forEach(counter => {
+            const rect = counter.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                const countValue = counter.getAttribute('data-count');
+                if (countValue && !isNaN(parseInt(countValue))) {
+                    const target = parseInt(countValue);
+                    const suffix = counter.getAttribute('data-suffix') || '';
+                    const finalSuffix = suffix === '%' ? '%' : suffix;
+                    counter.classList.add('animating');
+                    animateCounter(counter, target, finalSuffix);
+                }
+            }
+        });
+    }
+}, { once: false, passive: true });
 
 window.startCounterAnimations = startCounterAnimations;
 
