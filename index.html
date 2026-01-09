@@ -831,14 +831,98 @@
             </div>
         </div>
         <div class="chat-footer">
-            <form class="chat-input-wrapper" onsubmit="if(window.sendChatMessage){window.sendChatMessage(event);} else {event.preventDefault(); const input=document.getElementById('chatInput'); if(input&&input.value.trim()){const msg=input.value.trim(); input.value=''; if(window.handleUserMessage){window.handleUserMessage(msg);} else {alert('Chat system not loaded yet. Please refresh the page.');}} return false;} return false;">
+            <form class="chat-input-wrapper" id="chatForm" onsubmit="event.preventDefault(); event.stopPropagation(); const input=document.getElementById('chatInput'); if(!input || !input.value.trim()) return false; const msg=input.value.trim(); input.value=''; (window.handleUserMessage || function(m){if(window.appendMessage){window.appendMessage(m,'user');setTimeout(()=>{if(window.generateBotReply){window.appendMessage(window.generateBotReply(m),'bot');}else{window.appendMessage('شكراً على سؤالك! للحصول على معلومات محددة، يمكنك الاتصال بنا: 920032104','bot');}},500);}})(msg); return false;">
                 <input type="text" id="chatInput" class="chat-input" autocomplete="off"
                     placeholder="اكتب سؤالك هنا..." />
-                <button type="submit" class="chat-send-btn" onclick="event.preventDefault(); const input=document.getElementById('chatInput'); if(input&&input.value.trim()){const msg=input.value.trim(); input.value=''; if(window.handleUserMessage){window.handleUserMessage(msg);} else {alert('Chat system not loaded yet. Please refresh the page.');}} return false;">
+                <button type="submit" class="chat-send-btn" onclick="event.preventDefault(); event.stopPropagation(); const form=document.getElementById('chatForm'); if(form)form.dispatchEvent(new Event('submit',{cancelable:true,bubbles:true})); return false;">
                     <i class="fas fa-paper-plane"></i>
                 </button>
             </form>
         </div>
+        
+        <script>
+        // Ensure chat form works immediately
+        (function() {
+            function initChatForm() {
+                const form = document.getElementById('chatForm');
+                const input = document.getElementById('chatInput');
+                const sendBtn = form ? form.querySelector('.chat-send-btn') : null;
+                
+                if (!form || !input) {
+                    setTimeout(initChatForm, 100);
+                    return;
+                }
+                
+                // Remove existing handlers
+                const newForm = form.cloneNode(true);
+                form.parentNode.replaceChild(newForm, form);
+                
+                const newInput = document.getElementById('chatInput');
+                const newBtn = newForm.querySelector('.chat-send-btn');
+                
+                // Form submit handler
+                newForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const msg = newInput.value.trim();
+                    if (!msg) return false;
+                    
+                    newInput.value = '';
+                    
+                    // Use available functions
+                    if (window.handleUserMessage) {
+                        window.handleUserMessage(msg);
+                    } else if (window.appendMessage && window.generateBotReply) {
+                        // Fallback: use basic functions directly
+                        window.appendMessage(msg, 'user');
+                        setTimeout(() => {
+                            const reply = window.generateBotReply(msg);
+                            window.appendMessage(reply, 'bot');
+                        }, 400);
+                    } else {
+                        // Last resort: alert
+                        alert('جاري التحميل... يرجى المحاولة مرة أخرى.');
+                    }
+                    
+                    return false;
+                }, true);
+                
+                // Button click handler
+                if (newBtn) {
+                    newBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        newForm.dispatchEvent(new Event('submit', {cancelable: true, bubbles: true}));
+                        return false;
+                    }, true);
+                }
+                
+                // Enter key handler
+                newInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        newForm.dispatchEvent(new Event('submit', {cancelable: true, bubbles: true}));
+                    }
+                });
+                
+                console.log('✅ Chat form initialized');
+            }
+            
+            // Initialize multiple times
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initChatForm);
+            } else {
+                initChatForm();
+            }
+            
+            setTimeout(initChatForm, 100);
+            setTimeout(initChatForm, 500);
+            setTimeout(initChatForm, 1000);
+            
+            window.initChatForm = initChatForm;
+        })();
+        </script>
     </div>
     
     <!-- Chat Toggle Button -->
