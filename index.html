@@ -831,96 +831,155 @@
             </div>
         </div>
         <div class="chat-footer">
-            <form class="chat-input-wrapper" id="chatForm" onsubmit="event.preventDefault(); event.stopPropagation(); const input=document.getElementById('chatInput'); if(!input || !input.value.trim()) return false; const msg=input.value.trim(); input.value=''; (window.handleUserMessage || function(m){if(window.appendMessage){window.appendMessage(m,'user');setTimeout(()=>{if(window.generateBotReply){window.appendMessage(window.generateBotReply(m),'bot');}else{window.appendMessage('شكراً على سؤالك! للحصول على معلومات محددة، يمكنك الاتصال بنا: 920032104','bot');}},500);}})(msg); return false;">
+            <form class="chat-input-wrapper" id="chatForm">
                 <input type="text" id="chatInput" class="chat-input" autocomplete="off"
                     placeholder="اكتب سؤالك هنا..." />
-                <button type="submit" class="chat-send-btn" onclick="event.preventDefault(); event.stopPropagation(); const form=document.getElementById('chatForm'); if(form)form.dispatchEvent(new Event('submit',{cancelable:true,bubbles:true})); return false;">
+                <button type="button" class="chat-send-btn" id="chatSendBtn">
                     <i class="fas fa-paper-plane"></i>
                 </button>
             </form>
         </div>
         
         <script>
-        // Ensure chat form works immediately
+        // COMPLETE CHAT SYSTEM - Works independently
         (function() {
-            function initChatForm() {
+            function appendMessageToChat(text, sender) {
+                const chatMessages = document.getElementById('chatMessages');
+                if (!chatMessages) return;
+                
+                const wrapper = document.createElement('div');
+                wrapper.className = 'chat-message ' + (sender || 'bot');
+                
+                const span = document.createElement('span');
+                span.textContent = text;
+                wrapper.appendChild(span);
+                
+                const time = document.createElement('span');
+                time.className = 'chat-message-time';
+                const now = new Date();
+                time.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                wrapper.appendChild(time);
+                
+                chatMessages.appendChild(wrapper);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            function generateReply(message) {
+                const msg = message.toLowerCase();
+                const msgAr = message;
+                const langIsArabic = document.documentElement.lang === 'ar';
+                
+                function has(keywords) {
+                    return keywords.some(k => msg.includes(k) || msgAr.includes(k));
+                }
+                
+                // Greetings
+                if (has(['hello', 'hi', 'hey', 'مرحبا', 'السلام', 'اهلا', 'هلا', 'صباح', 'مساء', 'كيفك', 'شخبارك', 'هاي'])) {
+                    return langIsArabic 
+                        ? 'أهلاً وسهلاً! 😊 أنا مساعد OneTrip الذكي. كيف أقدر أساعدك اليوم؟'
+                        : 'Hi there! 😊 I\'m the OneTrip Smart Assistant. How can I help?';
+                }
+                
+                // Pricing
+                if (has(['سعر', 'أسعار', 'تكلفة', 'ثمن', 'price', 'pricing', 'cost'])) {
+                    return langIsArabic
+                        ? '💰 أسعار خدمات OneTrip تختلف حسب نوع الخدمة والمسافة:\n\n• التوصيل داخل المدينة: أسعار تنافسية\n• التوصيل بين المدن: حسب المسافة\n• عقود التشغيل: أسعار مخصصة\n\n📞 للاستفسار عن الأسعار: 920032104\n📧 info@onetrip.sa'
+                        : '💰 OneTrip prices vary by service type and distance:\n\n• City delivery: Competitive rates\n• Inter-city: Based on distance\n• Operations contracts: Custom pricing\n\n📞 For pricing: 920032104\n📧 info@onetrip.sa';
+                }
+                
+                // Delivery time
+                if (has(['مدة', 'وقت', 'كم ساعة', 'كم يوم', 'delivery', 'time', 'when', 'متى'])) {
+                    return langIsArabic
+                        ? '⏱️ مدة التوصيل:\n\n• داخل المدينة: 30-60 دقيقة\n• بين المدن: حسب المسافة (يبدأ من ساعتين)\n• نضمن التوصيل في الوقت المحدد بنسبة 97%\n\n🚀 نوصّل أكثر من 10,000 طلب يومياً!'
+                        : '⏱️ Delivery Time:\n\n• Within city: 30-60 minutes\n• Inter-city: Based on distance (from 2 hours)\n• 97% on-time delivery guarantee\n\n🚀 We deliver 10,000+ orders daily!';
+                }
+                
+                // Branches
+                if (has(['فرع', 'فروع', 'مكان', 'موقع', 'branch', 'branches', 'location', 'locations'])) {
+                    return langIsArabic
+                        ? '🏢 فروع OneTrip Express (5 فروع):\n\n1. الرياض (الفرع الرئيسي)\n   📍 https://maps.app.goo.gl/GyT1zno8zeUyvJNP7\n\n2. الدمام\n   📍 https://maps.google.com/?cid=319296445866694874\n\n3. القصيم\n   📍 https://maps.app.goo.gl/xVCiq7yBMjZzVZjN6\n\n4. تبوك\n   📍 https://maps.app.goo.gl/CHSGVsEwLxaTfcF4A\n\n5. أبها (قريباً)'
+                        : '🏢 OneTrip Express Branches (5 branches):\n\n1. Riyadh (Head Office)\n   📍 https://maps.app.goo.gl/GyT1zno8zeUyvJNP7\n\n2. Dammam\n   📍 https://maps.google.com/?cid=319296445866694874\n\n3. Qassim\n   📍 https://maps.app.goo.gl/xVCiq7yBMjZzVZjN6\n\n4. Tabuk\n   📍 https://maps.app.goo.gl/CHSGVsEwLxaTfcF4A\n\n5. Abha (Coming soon)';
+                }
+                
+                // Contact
+                if (has(['اتصال', 'تواصل', 'رقم', 'هاتف', 'بريد', 'contact', 'phone', 'email', 'call'])) {
+                    return langIsArabic
+                        ? '📞 تواصل معنا:\n\n📞 الهاتف: 920032104\n📧 البريد: info@onetrip.sa\n💬 الواتساب: https://whatsapp.com/channel/0029Vb5zEdjIXnm0N94Kuo2y\n🌐 العنوان: https://maps.app.goo.gl/ga8NvdxSEWAso8B7A'
+                        : '📞 Contact Us:\n\n📞 Phone: 920032104\n📧 Email: info@onetrip.sa\n💬 WhatsApp: https://whatsapp.com/channel/0029Vb5zEdjIXnm0N94Kuo2y\n🌐 Address: https://maps.app.goo.gl/ga8NvdxSEWAso8B7A';
+                }
+                
+                // Default
+                return langIsArabic
+                    ? 'شكراً على سؤالك! 💬\n\nللحصول على معلومات محددة:\n📞 اتصل بنا: 920032104\n📧 البريد: info@onetrip.sa\n\nكيف أقدر أساعدك أكثر؟ 😊'
+                    : 'Thanks for your question! 💬\n\nFor specific information:\n📞 Call us: 920032104\n📧 Email: info@onetrip.sa\n\nHow can I help you more? 😊';
+            }
+            
+            function sendChatMessage() {
+                const input = document.getElementById('chatInput');
+                if (!input) return;
+                
+                const msg = input.value.trim();
+                if (!msg) return;
+                
+                input.value = '';
+                
+                // Add user message
+                appendMessageToChat(msg, 'user');
+                
+                // Generate and add bot reply
+                setTimeout(() => {
+                    const reply = generateReply(msg);
+                    appendMessageToChat(reply, 'bot');
+                }, 400);
+            }
+            
+            function initChatSystem() {
                 const form = document.getElementById('chatForm');
                 const input = document.getElementById('chatInput');
-                const sendBtn = form ? form.querySelector('.chat-send-btn') : null;
+                const sendBtn = document.getElementById('chatSendBtn');
                 
-                if (!form || !input) {
-                    setTimeout(initChatForm, 100);
+                if (!form || !input || !sendBtn) {
+                    setTimeout(initChatSystem, 100);
                     return;
                 }
                 
-                // Remove existing handlers
-                const newForm = form.cloneNode(true);
-                form.parentNode.replaceChild(newForm, form);
-                
-                const newInput = document.getElementById('chatInput');
-                const newBtn = newForm.querySelector('.chat-send-btn');
-                
-                // Form submit handler
-                newForm.addEventListener('submit', function(e) {
+                // Form submit
+                form.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    e.stopPropagation();
-                    
-                    const msg = newInput.value.trim();
-                    if (!msg) return false;
-                    
-                    newInput.value = '';
-                    
-                    // Use available functions
-                    if (window.handleUserMessage) {
-                        window.handleUserMessage(msg);
-                    } else if (window.appendMessage && window.generateBotReply) {
-                        // Fallback: use basic functions directly
-                        window.appendMessage(msg, 'user');
-                        setTimeout(() => {
-                            const reply = window.generateBotReply(msg);
-                            window.appendMessage(reply, 'bot');
-                        }, 400);
-                    } else {
-                        // Last resort: alert
-                        alert('جاري التحميل... يرجى المحاولة مرة أخرى.');
-                    }
-                    
-                    return false;
-                }, true);
+                    sendChatMessage();
+                });
                 
-                // Button click handler
-                if (newBtn) {
-                    newBtn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        newForm.dispatchEvent(new Event('submit', {cancelable: true, bubbles: true}));
-                        return false;
-                    }, true);
-                }
+                // Send button click
+                sendBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    sendChatMessage();
+                });
                 
-                // Enter key handler
-                newInput.addEventListener('keypress', function(e) {
+                // Enter key
+                input.addEventListener('keypress', function(e) {
                     if (e.key === 'Enter' && !e.shiftKey) {
                         e.preventDefault();
-                        newForm.dispatchEvent(new Event('submit', {cancelable: true, bubbles: true}));
+                        sendChatMessage();
                     }
                 });
                 
-                console.log('✅ Chat form initialized');
+                console.log('✅ Chat system initialized');
+                
+                // Make functions globally available for external scripts
+                window.appendMessageToChat = appendMessageToChat;
+                window.generateReply = generateReply;
+                window.sendChatMessage = sendChatMessage;
             }
             
-            // Initialize multiple times
+            // Initialize
             if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initChatForm);
+                document.addEventListener('DOMContentLoaded', initChatSystem);
             } else {
-                initChatForm();
+                initChatSystem();
             }
             
-            setTimeout(initChatForm, 100);
-            setTimeout(initChatForm, 500);
-            setTimeout(initChatForm, 1000);
-            
-            window.initChatForm = initChatForm;
+            setTimeout(initChatSystem, 100);
+            setTimeout(initChatSystem, 500);
         })();
         </script>
     </div>
