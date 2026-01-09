@@ -189,114 +189,114 @@ section, .section {
 }
 
 /* Logo Text Style - Matching Image Exactly */
+.nav-logo {
+    text-decoration: none;
+    display: block;
+}
+
 .nav-logo .logo-text {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
-    font-family: 'Inter', 'Tajawal', sans-serif;
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
     font-weight: 900;
-    line-height: 0.95;
-    position: relative;
+    line-height: 1.1;
+    color: #000;
 }
 
 .logo-line-1 {
     display: flex;
-    align-items: center;
-    gap: 2px;
-    margin-bottom: -4px;
-    position: relative;
+    align-items: baseline;
+    gap: 3px;
+    white-space: nowrap;
 }
 
 .logo-pin {
     color: #F7941D;
-    font-size: 2.5rem;
-    margin-right: 1px;
-    transform: rotate(-45deg);
-    display: inline-block;
-    position: relative;
-    z-index: 1;
+    font-size: 2.8rem;
     line-height: 1;
+    display: inline-block;
+    transform: rotate(-45deg);
+    margin-right: 1px;
+    vertical-align: middle;
 }
 
 .logo-ne {
-    color: #1a1f3a;
-    font-size: 1.95rem;
+    color: #0a0e27;
+    font-size: 2rem;
     font-weight: 900;
-    letter-spacing: -0.5px;
+    letter-spacing: -1px;
     line-height: 1;
-    margin-top: -2px;
+    vertical-align: baseline;
 }
 
 .logo-arrow {
     display: inline-flex;
     align-items: center;
-    margin-left: 6px;
-    margin-top: -2px;
-    gap: 2px;
+    margin-left: 8px;
+    gap: 3px;
+    vertical-align: baseline;
 }
 
 .arrow-bar {
-    width: 18px;
-    height: 3px;
+    width: 24px;
+    height: 4px;
     background: #F7941D;
     display: inline-block;
-    border-radius: 2px;
+    border-radius: 1px;
 }
 
 .arrow-icon {
-    color: #1a1f3a;
-    font-size: 0.9rem;
-    margin-left: 1px;
+    color: #0a0e27;
+    font-size: 1.1rem;
+    line-height: 1;
 }
 
 .logo-line-2 {
     display: flex;
-    align-items: flex-start;
+    align-items: baseline;
     gap: 0;
-    margin-top: -6px;
-    margin-left: 9px;
-    position: relative;
+    margin-top: -5px;
+    margin-left: 10px;
+    white-space: nowrap;
 }
 
 .logo-t {
     color: #F7941D;
-    font-size: 1.95rem;
+    font-size: 2rem;
     font-weight: 900;
-    letter-spacing: -0.5px;
+    letter-spacing: -1px;
     line-height: 1;
-    position: relative;
 }
 
 .logo-rip {
-    color: #1a1f3a;
-    font-size: 1.95rem;
+    color: #0a0e27;
+    font-size: 2rem;
     font-weight: 900;
-    letter-spacing: -0.5px;
+    letter-spacing: -1px;
     line-height: 1;
 }
 
 .logo-line-3 {
-    margin-top: -6px;
-    margin-left: 9px;
+    margin-top: -5px;
+    margin-left: 10px;
+    white-space: nowrap;
 }
 
 .logo-express {
     color: #F7941D;
-    font-size: 1.95rem;
+    font-size: 2rem;
     font-weight: 900;
-    letter-spacing: -0.5px;
+    letter-spacing: -1px;
     line-height: 1;
 }
 
 [dir="ltr"] .logo-text {
-    align-items: flex-end;
+    direction: ltr;
 }
 
 [dir="ltr"] .logo-line-2,
 [dir="ltr"] .logo-line-3 {
     margin-left: 0;
-    margin-right: 9px;
+    margin-right: 10px;
 }
 
 [dir="ltr"] .logo-pin {
@@ -306,7 +306,7 @@ section, .section {
 
 [dir="ltr"] .logo-arrow {
     margin-left: 0;
-    margin-right: 6px;
+    margin-right: 8px;
 }
 
 .nav-menu {
