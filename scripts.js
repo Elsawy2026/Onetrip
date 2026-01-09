@@ -442,12 +442,14 @@ function toggleChat() {
     console.log('Chat toggled, isOpening:', isOpening, 'has active class:', chatWidget.classList.contains('active'));
     
     if (isOpening) {
-        // عند الفتح أخفي البادج
+        // عند الفتح أخفي البادج وابدأ Session جديدة
         if (badge) badge.style.display = 'none';
+        chatSessionActive = true;
     } else {
-        // عند الإغلاق امسح المحادثة وارجع رسالة الترحيب فقط
+        // عند الإغلاق امسح المحادثة وارجع رسالة الترحيب فقط (Stateless)
         resetChatConversation();
         if (badge) badge.style.display = 'flex';
+        chatSessionActive = false;
     }
 }
 
@@ -529,6 +531,79 @@ function handleUserMessage(text) {
         appendMessage(reply, 'bot');
     }, 400);
 }
+
+// ===== STATELESS AI CHAT SYSTEM =====
+// System Prompt - يُرسل مع كل محادثة (Stateless Session)
+const AI_SYSTEM_PROMPT = window.AI_CHAT_CONFIG?.systemPrompt || `أنت مساعد ذكي رسمي لشركة One Trip Express وتعمل كموظف خدمة عملاء ومبيعات ودعم فني.
+
+يجب أن تفهم جميع محتويات الـ Landing Page الخاصة بالشركة، بما في ذلك:
+من نحن – الخدمات – الرؤية – الرسالة – القيم – الشركاء – الفروع – بيانات التواصل.
+
+نبذة الشركة:
+One Trip Express شركة سعودية تقدم خدمات توصيل داخل المدن وحلول لوجستية متكاملة للأفراد والشركات، وتعتمد على أنظمة تشغيل ذكية وتقنيات حديثة.
+
+الخدمات:
+• توصيل فوري داخل المدن
+• حلول لوجستية للمطاعم والمتاجر والمنصات الرقمية
+• إدارة وتشغيل أساطيل توصيل
+• عقود تشغيل مخصصة
+• تتبع مباشر، دعم متواصل، وتقارير أداء
+
+الشركاء:
+Jahez – Hunger Station – KEETA – The Chefz – Ninja – imile – شركات طرود محلية ودولية
+
+الفروع:
+• الرياض (الفرع الرئيسي): https://maps.app.goo.gl/GyT1zno8zeUyvJNP7
+• الدمام: https://maps.google.com/?cid=319296445866694874&entry=gps&g_st=aw
+• القصيم: https://maps.app.goo.gl/xVCiq7yBMjZzVZjN6?g_st=aw
+• تبوك: https://maps.app.goo.gl/CHSGVsEwLxaTfcF4A
+• أبها: (سيتم إضافتها قريباً)
+
+بيانات التواصل:
+📍 العنوان: https://maps.app.goo.gl/ga8NvdxSEWAso8B7A
+📞 الهاتف: 920032104
+📧 البريد الإلكتروني: info@onetrip.sa
+💬 قناة الواتساب: https://whatsapp.com/channel/0029Vb5zEdjIXnm0N94Kuo2y
+📱 LinkedIn: https://www.linkedin.com/company/one-trip-express/
+📘 Facebook: https://www.facebook.com/share/1G1qNJFAMJ/
+
+أسلوب الرد:
+رسمي – واضح – مختصر – ودود
+
+اللغة:
+العربية افتراضيًا
+الإنجليزية عند الطلب
+
+⚠️ ملاحظة تقنية مهمة:
+لا يتم استخدام LocalStorage أو Database أو Cookies لتخزين المحادثات.
+يتم إنشاء Session جديدة لكل مستخدم.
+لا تتذكر أي شيء من محادثات سابقة.
+أجب فقط بناءً على هذا المحتوى.`;
+
+// Stateless Chat Session - لا حفظ للمحادثات
+let chatSessionActive = false;
+
+// Reset Chat - حذف كل المحادثات عند الإغلاق
+function resetChatConversation() {
+    const chatMessages = document.getElementById('chatMessages');
+    if (chatMessages) {
+        chatMessages.innerHTML = `
+            <div class="chat-message bot">
+                <span data-ar="مرحباً! 👋 أنا مساعد OneTrip الذكي. اسألني عن الخدمات، الأسعار، مواعيد التوصيل أو أي استفسار يهمك." data-en="Hello! 👋 I'm the OneTrip smart assistant. Ask me about services, pricing, delivery times or anything you need.">
+                    مرحباً! 👋 أنا مساعد OneTrip الذكي. اسألني عن الخدمات، الأسعار، مواعيد التوصيل أو أي استفسار يهمك.
+                </span>
+                <span class="chat-message-time">Now</span>
+            </div>
+        `;
+    }
+    chatSessionActive = false;
+}
+
+// Clean up on page unload - حذف كل شيء عند إغلاق الصفحة
+window.addEventListener('beforeunload', function() {
+    resetChatConversation();
+    chatSessionActive = false;
+});
 
 function generateBotReply(message) {
     const langIsArabic = document.documentElement.lang === 'ar';
