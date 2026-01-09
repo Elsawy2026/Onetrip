@@ -848,6 +848,36 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="scripts.js?v=2026.01.09.32"></script>
     <script>
+        // DIRECT STATS COUNTER INITIALIZATION
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const statNumbers = document.querySelectorAll('.stat-number[data-count]');
+                statNumbers.forEach(function(counter, index) {
+                    setTimeout(function() {
+                        const countValue = counter.getAttribute('data-count');
+                        if (countValue && !isNaN(parseInt(countValue))) {
+                            const target = parseInt(countValue);
+                            const suffix = counter.getAttribute('data-suffix') || '';
+                            const finalSuffix = suffix === '%' ? '%' : suffix;
+                            
+                            let current = 0;
+                            const duration = 2000;
+                            const increment = target / (duration / 16);
+                            
+                            const timer = setInterval(function() {
+                                current += increment;
+                                if (current >= target) {
+                                    current = target;
+                                    clearInterval(timer);
+                                }
+                                counter.textContent = Math.floor(current).toLocaleString('en-US') + finalSuffix;
+                            }, 16);
+                        }
+                    }, 500 + (index * 300));
+                });
+            }, 800);
+        });
+        
         // Initialize AOS
         AOS.init({
             duration: 800,
