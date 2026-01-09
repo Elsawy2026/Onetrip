@@ -233,8 +233,14 @@ if (backTop) {
 
 // ===== COUNTER ANIMATIONS =====
 function animateCounter(element, target, suffix = '') {
+    if (!element || isNaN(target) || target <= 0) {
+        console.warn('Invalid counter element or target:', element, target);
+        return;
+    }
+    
     const duration = 2000;
     const startTime = performance.now();
+    const startValue = 0;
     
     function update(currentTime) {
         const elapsed = currentTime - startTime;
@@ -242,18 +248,23 @@ function animateCounter(element, target, suffix = '') {
         
         // Ease out cubic
         const easeProgress = 1 - Math.pow(1 - progress, 3);
-        const current = Math.floor(easeProgress * target);
+        const current = Math.floor(startValue + (easeProgress * (target - startValue)));
         
         // Format number with comma separators
         const formatted = current.toLocaleString('en-US');
-        element.textContent = formatted + suffix;
+        if (element) {
+            element.textContent = formatted + suffix;
+        }
         
         if (progress < 1) {
             requestAnimationFrame(update);
         } else {
             // Final value with formatting
             const finalFormatted = target.toLocaleString('en-US');
-            element.textContent = finalFormatted + suffix;
+            if (element) {
+                element.textContent = finalFormatted + suffix;
+                element.classList.remove('animating');
+            }
         }
     }
     
