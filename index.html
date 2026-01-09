@@ -812,7 +812,7 @@
                     <span class="chat-status"><i class="fas fa-circle"></i> <span data-ar="متصل الآن" data-en="Online">متصل الآن</span></span>
                 </div>
             </div>
-            <button class="chat-close" onclick="window.toggleChat && window.toggleChat(event)"><i class="fas fa-times"></i></button>
+            <button class="chat-close" onclick="const w=document.getElementById('chatWidget'); if(w)w.classList.remove('active'); const b=document.querySelector('.chat-badge'); if(b)b.style.display='flex'; return false;"><i class="fas fa-times"></i></button>
         </div>
         <div class="chat-body">
             <div class="chat-messages" id="chatMessages">
