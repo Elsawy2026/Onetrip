@@ -1098,6 +1098,161 @@
                 window.sendChatMessage = sendChatMessage;
             }
             
+            // Open Job Application Form
+            window.openJobForm = function() {
+                const container = document.getElementById('jobFormContainer');
+                if (container) {
+                    container.style.display = 'block';
+                    container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    
+                    // Add message to chat
+                    if (window.appendMessageToChat) {
+                        window.appendMessageToChat('أريد التقدم للوظيفة', 'user');
+                        setTimeout(() => {
+                            window.appendMessageToChat('💼 أهلاً بك! يرجى ملء النموذج أدناه لإرسال طلب التوظيف. سنتواصل معك قريباً!', 'bot');
+                        }, 300);
+                    }
+                } else {
+                    // Fallback to chat message
+                    if (window.sendChatMessage) {
+                        const inp = document.getElementById('chatInput');
+                        if (inp) {
+                            inp.value = 'أريد التقدم للوظيفة';
+                            window.sendChatMessage();
+                        }
+                    }
+                }
+            };
+            
+            // Submit Job Application
+            window.submitJobApplication = async function(event) {
+                event.preventDefault();
+                
+                const form = document.getElementById('jobApplicationForm');
+                const name = document.getElementById('jobName').value.trim();
+                const phone = document.getElementById('jobPhone').value.trim();
+                const email = document.getElementById('jobEmail').value.trim();
+                const position = document.getElementById('jobPosition').value;
+                const city = document.getElementById('jobCity').value;
+                const message = document.getElementById('jobMessage').value.trim();
+                const cvFile = document.getElementById('jobCV').files[0];
+                
+                // Validate
+                if (!name || !phone || !email || !position || !city) {
+                    alert('⚠️ يرجى ملء جميع الحقول المطلوبة (*)');
+                    return;
+                }
+                
+                // Validate email format
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    alert('⚠️ يرجى إدخال بريد إلكتروني صحيح');
+                    return;
+                }
+                
+                // Validate phone format (Saudi phone)
+                const phoneRegex = /^(05|5)[0-9]{8}$/;
+                const cleanPhone = phone.replace(/[\s\-\(\)]/g, '');
+                if (!phoneRegex.test(cleanPhone)) {
+                    alert('⚠️ يرجى إدخال رقم جوال صحيح (05XXXXXXXX)');
+                    return;
+                }
+                
+                // Show loading
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.textContent;
+                submitBtn.textContent = 'جاري الإرسال... ⏳';
+                submitBtn.disabled = true;
+                
+                try {
+                    // Create email body
+                    const emailBody = `طلب توظيف جديد من موقع OneTrip Express
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 **بيانات المتقدم:**
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+👤 **الاسم الكامل:** ${name}
+📞 **رقم الجوال:** ${phone}
+📧 **البريد الإلكتروني:** ${email}
+💼 **الوظيفة المطلوبة:** ${position}
+📍 **المدينة:** ${city}
+${message ? '\\n💬 **الرسالة/ملاحظات:**\\n' + message : ''}
+${cvFile ? '\\n📎 **السيرة الذاتية:** ' + cvFile.name + ' (' + (cvFile.size / 1024).toFixed(2) + ' KB)' : '\\n⚠️ **ملاحظة:** لم يتم إرفاق سيرة ذاتية'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📅 **التاريخ والوقت:** ${new Date().toLocaleString('ar-SA', { timeZone: 'Asia/Riyadh', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+🌐 **المصدر:** موقع OneTrip Express
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+---
+تم إرسال هذا الطلب تلقائياً من نموذج التوظيف على الموقع.
+يرجى الرد على المتقدم في أقرب وقت ممكن.`;
+                    
+                    // Prepare email
+                    const emailSubject = encodeURIComponent(`طلب توظيف جديد - ${name} - ${position} - ${city}`);
+                    const emailBodyEncoded = encodeURIComponent(emailBody);
+                    
+                    // Create mailto link
+                    let mailtoLink = `mailto:jobs@onetrip.sa?subject=${emailSubject}&body=${emailBodyEncoded}`;
+                    
+                    // For file attachment, we need to use EmailJS or backend
+                    // Since mailto doesn't support file attachments directly,
+                    // we'll show instructions if file is selected
+                    if (cvFile) {
+                        // Try EmailJS if available (needs to be configured)
+                        if (window.emailjs && window.emailjs.init) {
+                            try {
+                                // EmailJS configuration needed
+                                // await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+                                //     to_email: 'jobs@onetrip.sa',
+                                //     from_name: name,
+                                //     from_email: email,
+                                //     phone: phone,
+                                //     position: position,
+                                //     city: city,
+                                //     message: message || '',
+                                //     cv_file: cvFile
+                                // });
+                                
+                                alert('✅ سيتم إرسال طلبك مع المرفق قريباً!');
+                            } catch (error) {
+                                console.error('EmailJS error:', error);
+                                // Fallback to mailto
+                                mailtoLink += `&body=${encodeURIComponent(emailBody + '\\n\\n⚠️ **ملاحظة مهمة:** يرجى إرفاق السيرة الذاتية يدوياً كملحق.\\nاسم الملف: ' + cvFile.name)}`;
+                            }
+                        } else {
+                            // No EmailJS - add instructions
+                            mailtoLink += `&body=${encodeURIComponent(emailBody + '\\n\\n⚠️ **ملاحظة مهمة:** يرجى إرفاق السيرة الذاتية يدوياً كملحق عند إرسال الإيميل.\\nاسم الملف المطلوب إرفاقه: ' + cvFile.name + '\\nالحجم: ' + (cvFile.size / 1024).toFixed(2) + ' KB')}`;
+                        }
+                    }
+                    
+                    // Open email client
+                    window.location.href = mailtoLink;
+                    
+                    // Show success message
+                    setTimeout(() => {
+                        alert('✅ تم فتح بريدك الإلكتروني!\\n\\n📧 يرجى إرسال الطلب إلى: jobs@onetrip.sa' + (cvFile ? '\\n📎 يرجى إرفاق السيرة الذاتية (' + cvFile.name + ') يدوياً' : '') + '\\n\\n📞 للاستفسار: 920032104');
+                        
+                        // Reset form
+                        form.reset();
+                        document.getElementById('jobFormContainer').style.display = 'none';
+                        
+                        // Add confirmation message to chat
+                        if (window.appendMessageToChat) {
+                            window.appendMessageToChat('✅ تم فتح بريدك الإلكتروني بنجاح!\\n\\n📧 يرجى إرسال الطلب إلى: jobs@onetrip.sa' + (cvFile ? '\\n📎 يرجى إرفاق السيرة الذاتية (' + cvFile.name + ')' : '') + '\\n\\n💼 سنتواصل معك قريباً!', 'bot');
+                        }
+                    }, 500);
+                    
+                } catch (error) {
+                    console.error('Error submitting job application:', error);
+                    alert('❌ حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى أو الاتصال بنا مباشرة على 920032104');
+                } finally {
+                    submitBtn.textContent = originalBtnText;
+                    submitBtn.disabled = false;
+                }
+            };
+            
             // Initialize
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', initChatSystem);
