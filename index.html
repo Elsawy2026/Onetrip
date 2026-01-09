@@ -848,6 +848,7 @@
         // DIRECT STATS COUNTER INITIALIZATION
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
+                // Regular stat numbers
                 const statNumbers = document.querySelectorAll('.stat-number[data-count]');
                 statNumbers.forEach(function(counter, index) {
                     setTimeout(function() {
@@ -871,6 +872,32 @@
                             }, 16);
                         }
                     }, 500 + (index * 300));
+                });
+                
+                // Floating stat values
+                const floatingStats = document.querySelectorAll('.floating-stat-value[data-count]');
+                floatingStats.forEach(function(counter, index) {
+                    setTimeout(function() {
+                        const countValue = counter.getAttribute('data-count');
+                        if (countValue && !isNaN(parseInt(countValue))) {
+                            const target = parseInt(countValue);
+                            const suffix = counter.getAttribute('data-suffix') || '';
+                            const finalSuffix = suffix === '%' ? '%' : suffix;
+                            
+                            let current = 0;
+                            const duration = 2000;
+                            const increment = target / (duration / 16);
+                            
+                            const timer = setInterval(function() {
+                                current += increment;
+                                if (current >= target) {
+                                    current = target;
+                                    clearInterval(timer);
+                                }
+                                counter.textContent = Math.floor(current).toLocaleString('en-US') + finalSuffix;
+                            }, 16);
+                        }
+                    }, 800 + (index * 300));
                 });
             }, 800);
         });

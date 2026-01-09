@@ -240,9 +240,9 @@ section, .section {
 .lang-btn {
     padding: 10px 24px;
     background: transparent;
-    border: 1px solid var(--text-dark);
+    border: 1px solid var(--primary);
     border-radius: var(--radius-full);
-    color: var(--text-white);
+    color: var(--primary);
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
@@ -251,6 +251,7 @@ section, .section {
 .lang-btn:hover {
     background: var(--primary);
     border-color: var(--primary);
+    color: #FFFFFF;
 }
 
 .nav-toggle {
@@ -840,7 +841,7 @@ section, .section {
 }
 
 .floating-stat-card.stat-1 {
-    top: 20%;
+    top: 30%;
     right: -20px;
     animation-delay: 0s;
 }

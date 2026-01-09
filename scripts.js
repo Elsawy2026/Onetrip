@@ -127,7 +127,7 @@ function updateActiveNav() {
 }
 
 // ===== LANGUAGE TOGGLE =====
-function toggleLanguage() {
+window.toggleLanguage = function toggleLanguage() {
     const html = document.documentElement;
     const currentLang = html.getAttribute('lang');
     const newLang = currentLang === 'ar' ? 'en' : 'ar';
