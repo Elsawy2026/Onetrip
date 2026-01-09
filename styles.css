@@ -379,18 +379,21 @@ section, .section {
 .hero-title {
     font-size: clamp(2.5rem, 5vw, 3.5rem);
     font-weight: 800;
-    color: var(--text-white);
     line-height: 1.2;
     margin-bottom: 20px;
     animation: fadeInUp 1s ease forwards;
 }
 
+.hero-title span:not(.highlight) {
+    color: #FFFFFF;
+}
+
 .hero-title .highlight {
-    background: var(--gradient-icon);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: textGlow 3s ease-in-out infinite;
+    color: var(--primary);
+    background: none;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: #F7941D;
+    background-clip: unset;
 }
 
 @keyframes fadeInUp {
