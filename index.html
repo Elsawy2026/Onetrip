@@ -873,45 +873,126 @@
                     return keywords.some(k => msg.includes(k) || msgAr.includes(k));
                 }
                 
-                // Greetings
-                if (has(['hello', 'hi', 'hey', 'مرحبا', 'السلام', 'اهلا', 'هلا', 'صباح', 'مساء', 'كيفك', 'شخبارك', 'هاي'])) {
-                    return langIsArabic 
-                        ? 'أهلاً وسهلاً! 😊 أنا مساعد OneTrip الذكي. كيف أقدر أساعدك اليوم؟'
-                        : 'Hi there! 😊 I\'m the OneTrip Smart Assistant. How can I help?';
+                // Company data
+                const companyData = {
+                    drivers: 500,
+                    admins: 50,
+                    totalStaff: 550,
+                    cities: 25,
+                    dailyOrders: 10000,
+                    monthlyOrders: 300000,
+                    partners: 11,
+                    vehicles: 600,
+                    customerSatisfaction: 98.5,
+                    onTimeRate: 97,
+                    founded: 2020,
+                    headquarters: 'الرياض',
+                    branches: 5
+                };
+                
+                // ===== GREETINGS =====
+                if (has(['hello', 'hi', 'hey', 'مرحبا', 'السلام', 'اهلا', 'هلا', 'صباح', 'مساء', 'كيفك', 'شخبارك', 'هاي', 'السلام عليكم', 'وعليكم السلام'])) {
+                    const greetings = langIsArabic ? [
+                        'أهلاً وسهلاً! 😊 أنا مساعد OneTrip الذكي. كيف أقدر أساعدك اليوم؟',
+                        'هلا والله! نورت 🌟 معك فريق من ' + companyData.totalStaff + ' شخص جاهزين لخدمتك!',
+                        'مرحبا بك في OneTrip Express! 🚀 نوصّل أكثر من ' + companyData.dailyOrders.toLocaleString() + ' طلب يومياً، كيف نخدمك؟',
+                        'حياك الله! 💫 أنا هنا أساعدك على مدار الساعة. تفضل اسأل!',
+                        'مرحباً بك! 👋 أنا مساعد OneTrip. أسعدني أساعدك اليوم!'
+                    ] : [
+                        'Hi there! 😊 I\'m the OneTrip Smart Assistant. How can I help?',
+                        'Hello! Welcome to OneTrip Express 🚀 Serving ' + companyData.dailyOrders.toLocaleString() + '+ daily orders!',
+                        'Hey! Great to have you 💫 Ask me anything about our services!'
+                    ];
+                    return greetings[Math.floor(Math.random() * greetings.length)];
                 }
                 
-                // Pricing
-                if (has(['سعر', 'أسعار', 'تكلفة', 'ثمن', 'price', 'pricing', 'cost'])) {
+                // ===== PRICING =====
+                if (has(['سعر', 'أسعار', 'تكلفة', 'ثمن', 'كم يكلف', 'بكم', 'السعر', 'price', 'pricing', 'cost', 'how much', 'rate', 'rates'])) {
                     return langIsArabic
-                        ? '💰 أسعار خدمات OneTrip تختلف حسب نوع الخدمة والمسافة:\n\n• التوصيل داخل المدينة: أسعار تنافسية\n• التوصيل بين المدن: حسب المسافة\n• عقود التشغيل: أسعار مخصصة\n\n📞 للاستفسار عن الأسعار: 920032104\n📧 info@onetrip.sa'
-                        : '💰 OneTrip prices vary by service type and distance:\n\n• City delivery: Competitive rates\n• Inter-city: Based on distance\n• Operations contracts: Custom pricing\n\n📞 For pricing: 920032104\n📧 info@onetrip.sa';
+                        ? '💰 أسعار خدمات OneTrip Express:\n\n📦 **التوصيل داخل المدينة:**\n• أسعار تنافسية ومرنة\n• تعتمد على المسافة وحجم الطلب\n• بدءاً من أسعار اقتصادية\n\n🚚 **التوصيل بين المدن:**\n• حسب المسافة ونوع الشحنة\n• أسعار شفافة ومحددة مسبقاً\n\n🏢 **عقود التشغيل المخصصة:**\n• أسعار خاصة للشركات والمطاعم\n• تخفيضات للعقود طويلة الأمد\n• خطط مرنة تناسب احتياجاتك\n\n📊 **نسبة رضا العملاء:** ' + companyData.customerSatisfaction + '%\n📈 **نسبة التوصيل في الوقت:** ' + companyData.onTimeRate + '%\n\n💡 للحصول على سعر دقيق:\n📞 اتصل بنا: 920032104\n📧 البريد: info@onetrip.sa\n\n🎯 نضمن لك أفضل سعر مع أفضل خدمة!'
+                        : '💰 OneTrip Express Pricing:\n\n📦 **City Delivery:**\n• Competitive and flexible rates\n• Based on distance and order size\n• Starting from economical prices\n\n🚚 **Inter-City Delivery:**\n• Based on distance and shipment type\n• Transparent and pre-determined prices\n\n🏢 **Custom Operations Contracts:**\n• Special rates for companies and restaurants\n• Discounts for long-term contracts\n• Flexible plans tailored to your needs\n\n📊 **Customer Satisfaction:** ' + companyData.customerSatisfaction + '%\n📈 **On-Time Delivery Rate:** ' + companyData.onTimeRate + '%\n\n💡 For accurate pricing:\n📞 Call us: 920032104\n📧 Email: info@onetrip.sa\n\n🎯 We guarantee the best price with the best service!';
                 }
                 
-                // Delivery time
-                if (has(['مدة', 'وقت', 'كم ساعة', 'كم يوم', 'delivery', 'time', 'when', 'متى'])) {
+                // ===== DELIVERY TIME =====
+                if (has(['مدة', 'وقت', 'كم ساعة', 'كم يوم', 'متى', 'متى يصل', 'متى يوصل', 'delivery', 'time', 'when', 'how long', 'duration', 'speed', 'fast'])) {
                     return langIsArabic
-                        ? '⏱️ مدة التوصيل:\n\n• داخل المدينة: 30-60 دقيقة\n• بين المدن: حسب المسافة (يبدأ من ساعتين)\n• نضمن التوصيل في الوقت المحدد بنسبة 97%\n\n🚀 نوصّل أكثر من 10,000 طلب يومياً!'
-                        : '⏱️ Delivery Time:\n\n• Within city: 30-60 minutes\n• Inter-city: Based on distance (from 2 hours)\n• 97% on-time delivery guarantee\n\n🚀 We deliver 10,000+ orders daily!';
+                        ? '⏱️ **مدة التوصيل في OneTrip Express:**\n\n🏙️ **داخل المدينة:**\n• 30-60 دقيقة للطلبات العادية\n• توصيل سريع في 20-30 دقيقة (خدمة اكسبريس)\n• خدمة 24/7 على مدار الساعة\n\n🌍 **بين المدن:**\n• يبدأ من ساعتين حسب المسافة\n• توصيل سريع بين المدن الكبرى\n• نضمن الوصول في الوقت المحدد\n\n✅ **ضماناتنا:**\n• ' + companyData.onTimeRate + '% نسبة التوصيل في الوقت المحدد\n• تتبع مباشر لشحنتك لحظة بلحظة\n• إشعارات فورية عن حالة الطلب\n\n🚀 **إحصائياتنا:**\n• ' + companyData.dailyOrders.toLocaleString() + '+ طلب يومياً\n• ' + companyData.cities + ' مدينة نشطة\n• ' + companyData.vehicles + ' مركبة جاهزة\n\n📞 للاستفسار: 920032104'
+                        : '⏱️ **Delivery Time at OneTrip Express:**\n\n🏙️ **Within City:**\n• 30-60 minutes for regular orders\n• Express delivery in 20-30 minutes\n• 24/7 service available\n\n🌍 **Inter-City:**\n• Starting from 2 hours based on distance\n• Fast delivery between major cities\n• Guaranteed on-time arrival\n\n✅ **Our Guarantees:**\n• ' + companyData.onTimeRate + '% on-time delivery rate\n• Real-time tracking of your shipment\n• Instant notifications on order status\n\n🚀 **Our Statistics:**\n• ' + companyData.dailyOrders.toLocaleString() + '+ daily orders\n• ' + companyData.cities + ' active cities\n• ' + companyData.vehicles + ' ready vehicles\n\n📞 For inquiries: 920032104';
                 }
                 
-                // Branches
-                if (has(['فرع', 'فروع', 'مكان', 'موقع', 'branch', 'branches', 'location', 'locations'])) {
+                // ===== BRANCHES =====
+                if (has(['فرع', 'فروع', 'مكان', 'موقع', 'وين', 'عنوان', 'location', 'locations', 'branch', 'branches', 'where', 'address'])) {
                     return langIsArabic
-                        ? '🏢 فروع OneTrip Express (5 فروع):\n\n1. الرياض (الفرع الرئيسي)\n   📍 https://maps.app.goo.gl/GyT1zno8zeUyvJNP7\n\n2. الدمام\n   📍 https://maps.google.com/?cid=319296445866694874\n\n3. القصيم\n   📍 https://maps.app.goo.gl/xVCiq7yBMjZzVZjN6\n\n4. تبوك\n   📍 https://maps.app.goo.gl/CHSGVsEwLxaTfcF4A\n\n5. أبها (قريباً)'
-                        : '🏢 OneTrip Express Branches (5 branches):\n\n1. Riyadh (Head Office)\n   📍 https://maps.app.goo.gl/GyT1zno8zeUyvJNP7\n\n2. Dammam\n   📍 https://maps.google.com/?cid=319296445866694874\n\n3. Qassim\n   📍 https://maps.app.goo.gl/xVCiq7yBMjZzVZjN6\n\n4. Tabuk\n   📍 https://maps.app.goo.gl/CHSGVsEwLxaTfcF4A\n\n5. Abha (Coming soon)';
+                        ? '🏢 **فروع OneTrip Express (' + companyData.branches + ' فروع):**\n\n1️⃣ **الرياض (الفرع الرئيسي)**\n   📍 الخريطة: https://maps.app.goo.gl/GyT1zno8zeUyvJNP7\n   🏛️ المقر الرئيسي لإدارة وتشغيل العمليات\n\n2️⃣ **الدمام**\n   📍 الخريطة: https://maps.google.com/?cid=319296445866694874\n   🌊 يخدم المنطقة الشرقية (الدمام، الخبر، الظهران)\n\n3️⃣ **القصيم**\n   📍 الخريطة: https://maps.app.goo.gl/xVCiq7yBMjZzVZjN6\n   🏘️ يخدم منطقة القصيم والمدن المجاورة\n\n4️⃣ **تبوك**\n   📍 الخريطة: https://maps.app.goo.gl/CHSGVsEwLxaTfcF4A\n   🏔️ نقطة تشغيل رئيسية لمنطقة تبوك\n\n5️⃣ **أبها** (قريباً)\n   🏔️ قريباً في المنطقة الجنوبية\n\n💡 اضغط على أي رابط لفتح الموقع مباشرة على الخريطة!\n📞 للاستفسار: 920032104'
+                        : '🏢 **OneTrip Express Branches (' + companyData.branches + ' branches):**\n\n1️⃣ **Riyadh (Head Office)**\n   📍 Map: https://maps.app.goo.gl/GyT1zno8zeUyvJNP7\n   🏛️ Main hub for operations management\n\n2️⃣ **Dammam**\n   📍 Map: https://maps.google.com/?cid=319296445866694874\n   🌊 Serving Eastern Region (Dammam, Khobar, Dhahran)\n\n3️⃣ **Qassim**\n   📍 Map: https://maps.app.goo.gl/xVCiq7yBMjZzVZjN6\n   🏘️ Serving Qassim and nearby cities\n\n4️⃣ **Tabuk**\n   📍 Map: https://maps.app.goo.gl/CHSGVsEwLxaTfcF4A\n   🏔️ Main operations point for Tabuk region\n\n5️⃣ **Abha** (Coming soon)\n   🏔️ Soon in the Southern region\n\n💡 Click any link to open the location directly on the map!\n📞 For inquiries: 920032104';
                 }
                 
-                // Contact
-                if (has(['اتصال', 'تواصل', 'رقم', 'هاتف', 'بريد', 'contact', 'phone', 'email', 'call'])) {
+                // ===== TEAM / STAFF =====
+                if (has(['مندوب', 'مناديب', 'سائق', 'سائقين', 'فريق', 'موظف', 'موظفين', 'عدد', 'كم', 'driver', 'drivers', 'team', 'staff', 'employee', 'employees', 'how many'])) {
                     return langIsArabic
-                        ? '📞 تواصل معنا:\n\n📞 الهاتف: 920032104\n📧 البريد: info@onetrip.sa\n💬 الواتساب: https://whatsapp.com/channel/0029Vb5zEdjIXnm0N94Kuo2y\n🌐 العنوان: https://maps.app.goo.gl/ga8NvdxSEWAso8B7A'
-                        : '📞 Contact Us:\n\n📞 Phone: 920032104\n📧 Email: info@onetrip.sa\n💬 WhatsApp: https://whatsapp.com/channel/0029Vb5zEdjIXnm0N94Kuo2y\n🌐 Address: https://maps.app.goo.gl/ga8NvdxSEWAso8B7A';
+                        ? '👥 **فريق OneTrip Express القوي:**\n\n🚴 **' + companyData.drivers + ' مندوب توصيل محترف**\n   • مدربين على أعلى معايير الجودة والسلامة\n   • خبرة واسعة في التوصيل السريع\n   • متاحين على مدار الساعة\n\n👔 **' + companyData.admins + ' موظف إداري وتشغيلي**\n   • فريق دعم متكامل\n   • متابعة مستمرة للعمليات\n   • خدمة عملاء متميزة\n\n🚗 **' + companyData.vehicles + ' مركبة متنوعة**\n   • دراجات نارية للتوصيل السريع\n   • سيارات للشحنات المتوسطة\n   • فانات للشحنات الكبيرة\n\n📍 **نغطي:**\n• ' + companyData.cities + ' مدينة نشطة\n• ' + companyData.branches + ' فرع تشغيلي\n\n💪 **إجمالي الفريق:** ' + companyData.totalStaff + ' شخص جاهزون لخدمتك!'
+                        : '👥 **OneTrip Express Strong Team:**\n\n🚴 **' + companyData.drivers + ' Professional Drivers**\n   • Trained to highest quality and safety standards\n   • Extensive experience in fast delivery\n   • Available 24/7\n\n👔 **' + companyData.admins + ' Admin & Operations Staff**\n   • Integrated support team\n   • Continuous operations monitoring\n   • Excellent customer service\n\n🚗 **' + companyData.vehicles + ' Diverse Vehicles**\n   • Motorcycles for fast delivery\n   • Cars for medium shipments\n   • Vans for large shipments\n\n📍 **We Cover:**\n• ' + companyData.cities + ' active cities\n• ' + companyData.branches + ' operational branches\n\n💪 **Total Team:** ' + companyData.totalStaff + ' people ready to serve you!';
                 }
                 
-                // Default
-                return langIsArabic
-                    ? 'شكراً على سؤالك! 💬\n\nللحصول على معلومات محددة:\n📞 اتصل بنا: 920032104\n📧 البريد: info@onetrip.sa\n\nكيف أقدر أساعدك أكثر؟ 😊'
-                    : 'Thanks for your question! 💬\n\nFor specific information:\n📞 Call us: 920032104\n📧 Email: info@onetrip.sa\n\nHow can I help you more? 😊';
+                // ===== SERVICES =====
+                if (has(['خدمة', 'خدمات', 'ماذا تقدم', 'ماذا تعمل', 'service', 'services', 'what do you', 'what does', 'offer', 'provides'])) {
+                    return langIsArabic
+                        ? '🚀 **خدمات OneTrip Express الشاملة:**\n\n📦 **1. توصيل فوري داخل المدن**\n   • توصيل سريع وآمن\n   • متاح 24/7\n   • تتبع مباشر\n\n🏪 **2. حلول لوجستية للمطاعم والمتاجر**\n   • شراكة مع ' + companyData.partners + ' منصة رقمية\n   • Jahez, Hunger Station, KEETA وغيرها\n   • حلول مخصصة لكل عميل\n\n🚚 **3. إدارة وتشغيل أساطيل توصيل**\n   • إدارة كاملة لأساطيل الشركات\n   • تقارير أداء مفصلة\n   • تحسين العمليات\n\n📋 **4. عقود تشغيل مخصصة**\n   • عقود مرنة تناسب احتياجاتك\n   • أسعار خاصة للعقود الطويلة\n   • دعم متواصل\n\n📊 **5. تتبع مباشر وتقارير**\n   • تتبع لحظي لشحنتك\n   • تقارير أداء شاملة\n   • إشعارات فورية\n\n📞 للتسجيل أو الاستفسار: 920032104'
+                        : '🚀 **Comprehensive OneTrip Express Services:**\n\n📦 **1. Instant City Delivery**\n   • Fast and secure delivery\n   • Available 24/7\n   • Real-time tracking\n\n🏪 **2. Logistics Solutions for Restaurants & Stores**\n   • Partnership with ' + companyData.partners + ' digital platforms\n   • Jahez, Hunger Station, KEETA and more\n   • Customized solutions for each client\n\n🚚 **3. Fleet Management & Operations**\n   • Complete fleet management for companies\n   • Detailed performance reports\n   • Process optimization\n\n📋 **4. Custom Operations Contracts**\n   • Flexible contracts tailored to your needs\n   • Special rates for long-term contracts\n   • Continuous support\n\n📊 **5. Real-Time Tracking & Reports**\n   • Instant shipment tracking\n   • Comprehensive performance reports\n   • Instant notifications\n\n📞 To register or inquire: 920032104';
+                }
+                
+                // ===== PARTNERS =====
+                if (has(['شريك', 'شركاء', 'منصات', 'منصة', 'partner', 'partners', 'platform', 'platforms', 'jahez', 'hunger', 'mrsool', 'keeta'])) {
+                    return langIsArabic
+                        ? '🤝 **شركاؤنا في OneTrip Express:**\n\n✅ **' + companyData.partners + ' منصة رقمية كبرى:**\n\n• **Jahez** - التوصيل للمطاعم والمتاجر\n• **Hunger Station** - توصيل الطعام\n• **KEETA** - المنصات الرقمية\n• **Mrsool** - التوصيل السريع\n• **The Chefz** - الطعام الفاخر\n• **Ninja** - المنصات الرقمية\n• **imile** - الحلول اللوجستية\n\n➕ **شركات طرود محلية ودولية أخرى**\n\n🎯 **نفخر بشراكاتنا:**\n• خدمة ' + companyData.dailyOrders.toLocaleString() + '+ طلب يومياً\n• ' + companyData.customerSatisfaction + '% رضا عملاء\n• ' + companyData.onTimeRate + '% نسبة التوصيل في الوقت\n\n💼 **هل تريد أن تكون شريكنا؟**\n📞 اتصل بنا: 920032104\n📧 info@onetrip.sa'
+                        : '🤝 **Our Partners at OneTrip Express:**\n\n✅ **' + companyData.partners + ' Major Digital Platforms:**\n\n• **Jahez** - Restaurant & store delivery\n• **Hunger Station** - Food delivery\n• **KEETA** - Digital platforms\n• **Mrsool** - Fast delivery\n• **The Chefz** - Premium food\n• **Ninja** - Digital platforms\n• **imile** - Logistics solutions\n\n➕ **Other local and international shipping companies**\n\n🎯 **We Proud of Our Partnerships:**\n• Serving ' + companyData.dailyOrders.toLocaleString() + '+ daily orders\n• ' + companyData.customerSatisfaction + '% customer satisfaction\n• ' + companyData.onTimeRate + '% on-time delivery rate\n\n💼 **Want to Be Our Partner?**\n📞 Call us: 920032104\n📧 info@onetrip.sa';
+                }
+                
+                // ===== TRACKING =====
+                if (has(['تتبع', 'تتبع شحنة', 'تتبع طلب', 'track', 'tracking', 'where is', 'status', 'حالة'])) {
+                    return langIsArabic
+                        ? '📍 **تتبع شحنتك مع OneTrip Express:**\n\n✅ **خدمة التتبع المباشر:**\n• تتبع لحظي لشحنتك\n• معرفة موقع مندوب التوصيل\n• حالة الطلب في الوقت الفعلي\n\n📱 **كيف تتتبع:**\n• سيتم إرسال رقم التتبع لك بعد تأكيد الطلب\n• استخدم رقم التتبع في نظام التتبع\n• أو اتصل بنا على: 920032104\n\n🔔 **إشعارات تلقائية:**\n• عند استلام الطلب\n• عند بدء التوصيل\n• عند الوصول للوجهة\n• عند التسليم\n\n💡 **نصيحة:** احتفظ برقم تتبع طلبك لمتابعة شحنتك بسهولة!\n\n📞 للاستفسار: 920032104'
+                        : '📍 **Track Your Shipment with OneTrip Express:**\n\n✅ **Real-Time Tracking Service:**\n• Instant tracking of your shipment\n• Know your delivery driver\'s location\n• Order status in real-time\n\n📱 **How to Track:**\n• Tracking number will be sent after order confirmation\n• Use tracking number in tracking system\n• Or call us at: 920032104\n\n🔔 **Automatic Notifications:**\n• When order is received\n• When delivery starts\n• When arriving at destination\n• When delivered\n\n💡 **Tip:** Keep your order tracking number to easily follow your shipment!\n\n📞 For inquiries: 920032104';
+                }
+                
+                // ===== CONTACT =====
+                if (has(['اتصال', 'تواصل', 'رقم', 'هاتف', 'بريد', 'ايميل', 'email', 'contact', 'phone', 'call', 'call us', 'call me'])) {
+                    return langIsArabic
+                        ? '📞 **تواصل مع OneTrip Express:**\n\n📞 **الهاتف:**\n• 920032104\n• متاح على مدار الساعة\n\n📧 **البريد الإلكتروني:**\n• info@onetrip.sa\n• للاستفسارات والعروض\n\n💬 **واتساب:**\n• https://whatsapp.com/channel/0029Vb5zEdjIXnm0N94Kuo2y\n• تابعنا على قناة الواتساب\n\n📱 **LinkedIn:**\n• https://www.linkedin.com/company/one-trip-express/\n\n📘 **Facebook:**\n• https://www.facebook.com/share/1G1qNJFAMJ/\n\n🌐 **العنوان الرئيسي:**\n• https://maps.app.goo.gl/ga8NvdxSEWAso8B7A\n\n⏰ **ساعات العمل:**\n• 24/7 على مدار الساعة\n\n💼 **للشركات والعقود الكبيرة:**\n• نقدم استشارات مخصصة\n• خطط خاصة تناسب احتياجاتك'
+                        : '📞 **Contact OneTrip Express:**\n\n📞 **Phone:**\n• 920032104\n• Available 24/7\n\n📧 **Email:**\n• info@onetrip.sa\n• For inquiries and offers\n\n💬 **WhatsApp:**\n• https://whatsapp.com/channel/0029Vb5zEdjIXnm0N94Kuo2y\n• Follow us on WhatsApp channel\n\n📱 **LinkedIn:**\n• https://www.linkedin.com/company/one-trip-express/\n\n📘 **Facebook:**\n• https://www.facebook.com/share/1G1qNJFAMJ/\n\n🌐 **Main Address:**\n• https://maps.app.goo.gl/ga8NvdxSEWAso8B7A\n\n⏰ **Working Hours:**\n• 24/7 around the clock\n\n💼 **For Companies & Large Contracts:**\n• We provide customized consultations\n• Special plans tailored to your needs';
+                }
+                
+                // ===== ORDER / REQUEST SERVICE =====
+                if (has(['طلب', 'اطلب', 'اريد', 'أريد', 'عايز', 'طلب خدمة', 'order', 'request', 'want', 'need', 'book', 'place order'])) {
+                    return langIsArabic
+                        ? '🎯 **كيف تطلب خدمة من OneTrip Express:**\n\n**الطريقة الأولى - عبر الهاتف:**\n📞 اتصل بنا مباشرة: 920032104\n• نستقبل طلباتك على مدار الساعة\n• فريق خدمة عملاء جاهز للإجابة\n\n**الطريقة الثانية - عبر المنصات:**\n• اطلب عبر Jahez\n• اطلب عبر Hunger Station\n• اطلب عبر KEETA\n• أو أي منصة شريكة لنا\n\n**الطريقة الثالثة - للشركات:**\n📧 أرسل بريد إلكتروني: info@onetrip.sa\n• نقدم حلول مخصصة للشركات\n• عقود مرنة تناسب احتياجاتك\n\n✅ **بعد الطلب:**\n• سيتم تأكيد طلبك فوراً\n• تحصل على رقم تتبع\n• تتبع شحنتك لحظة بلحظة\n\n💡 **نصيحة:** للطلبات المستعجلة، اتصل بنا مباشرة على 920032104!'
+                        : '🎯 **How to Order from OneTrip Express:**\n\n**Method 1 - Via Phone:**\n📞 Call us directly: 920032104\n• We receive orders 24/7\n• Customer service team ready to help\n\n**Method 2 - Via Platforms:**\n• Order through Jahez\n• Order through Hunger Station\n• Order through KEETA\n• Or any of our partner platforms\n\n**Method 3 - For Companies:**\n📧 Send email: info@onetrip.sa\n• We provide customized solutions for companies\n• Flexible contracts tailored to your needs\n\n✅ **After Ordering:**\n• Your order will be confirmed immediately\n• You receive a tracking number\n• Track your shipment in real-time\n\n💡 **Tip:** For urgent orders, call us directly at 920032104!';
+                }
+                
+                // ===== STATISTICS / NUMBERS =====
+                if (has(['احصائيات', 'إحصائيات', 'ارقام', 'أرقام', 'statistics', 'stats', 'numbers', 'data', 'info', 'information'])) {
+                    return langIsArabic
+                        ? '📊 **إحصائيات OneTrip Express:**\n\n🚀 **الأداء:**\n• ' + companyData.dailyOrders.toLocaleString() + '+ طلب يومياً\n• ' + companyData.monthlyOrders.toLocaleString() + '+ طلب شهرياً\n• ' + companyData.onTimeRate + '% نسبة التوصيل في الوقت\n• ' + companyData.customerSatisfaction + '% رضا العملاء\n\n👥 **الفريق:**\n• ' + companyData.totalStaff + ' موظف\n• ' + companyData.drivers + ' مندوب توصيل\n• ' + companyData.admins + ' موظف إداري\n\n🚗 **الأسطول:**\n• ' + companyData.vehicles + ' مركبة متنوعة\n\n📍 **التغطية:**\n• ' + companyData.cities + ' مدينة نشطة\n• ' + companyData.branches + ' فرع تشغيلي\n\n🤝 **الشراكات:**\n• ' + companyData.partners + ' منصة رقمية شريكة\n\n🏆 **الجودة:**\n• تأسست عام ' + companyData.founded + '\n• خبرة ' + (2026 - companyData.founded) + ' سنوات في السوق\n• رضا عملاء مرتفع\n\n💪 **نفخر بأرقامنا ونستمر في النمو!**'
+                        : '📊 **OneTrip Express Statistics:**\n\n🚀 **Performance:**\n• ' + companyData.dailyOrders.toLocaleString() + '+ daily orders\n• ' + companyData.monthlyOrders.toLocaleString() + '+ monthly orders\n• ' + companyData.onTimeRate + '% on-time delivery rate\n• ' + companyData.customerSatisfaction + '% customer satisfaction\n\n👥 **Team:**\n• ' + companyData.totalStaff + ' employees\n• ' + companyData.drivers + ' delivery drivers\n• ' + companyData.admins + ' admin staff\n\n🚗 **Fleet:**\n• ' + companyData.vehicles + ' diverse vehicles\n\n📍 **Coverage:**\n• ' + companyData.cities + ' active cities\n• ' + companyData.branches + ' operational branches\n\n🤝 **Partnerships:**\n• ' + companyData.partners + ' partner digital platforms\n\n🏆 **Quality:**\n• Founded in ' + companyData.founded + '\n• ' + (2026 - companyData.founded) + ' years of market experience\n• High customer satisfaction\n\n💪 **We are proud of our numbers and continue to grow!**';
+                }
+                
+                // ===== GENERAL / DEFAULT (IMPROVED) =====
+                // Try to give helpful suggestions based on common words
+                let suggestions = [];
+                if (has(['سؤال', 'مساعدة', 'help', 'question', 'assistance'])) {
+                    suggestions = langIsArabic 
+                        ? ['💡 يمكنني مساعدتك في:\n\n• الأسعار والخدمات\n• الفروع والمواقع\n• التوصيل والأوقات\n• التتبع والحالات\n• التواصل والاتصال\n\n📞 أو اتصل بنا مباشرة: 920032104']
+                        : ['💡 I can help you with:\n\n• Pricing & Services\n• Branches & Locations\n• Delivery & Times\n• Tracking & Status\n• Contact & Communication\n\n📞 Or call us directly: 920032104'];
+                } else {
+                    suggestions = langIsArabic ? [
+                        'شكراً على سؤالك! 💬\n\nيمكنني مساعدتك في:\n\n✅ الأسعار والخدمات\n✅ الفروع والمواقع\n✅ مدة التوصيل\n✅ التتبع والحالات\n✅ التواصل والاتصال\n✅ الفريق والإحصائيات\n\n💡 **للحصول على معلومات محددة:**\n📞 اتصل بنا: 920032104\n📧 البريد: info@onetrip.sa\n\n🎯 **أو اسألني:**\n• ما هي الأسعار؟\n• أين فروعكم؟\n• كم مدة التوصيل؟\n• كيف أتتبع شحنتي؟\n\nكيف أقدر أساعدك أكثر؟ 😊',
+                        'شكراً على تواصلك معنا! 🌟\n\nأنا مساعد OneTrip الذكي، أقدر أساعدك في:\n\n📦 **الخدمات:** الأسعار، التوصيل، العقود\n📍 **الفروع:** 5 فروع في مختلف المدن\n⏱️ **الأوقات:** مدة التوصيل والتتبع\n📊 **المعلومات:** الفريق، الإحصائيات، الشركاء\n\n📞 **للمزيد من التفاصيل:**\nاتصل بنا: 920032104\nأو أرسل بريد: info@onetrip.sa\n\nما الذي تريد معرفته بالضبط؟ 😊',
+                        'مرحباً! 👋\n\nشكراً لسؤالك. OneTrip Express نقدم خدمات توصيل شاملة:\n\n🚀 **نوصّل أكثر من ' + companyData.dailyOrders.toLocaleString() + ' طلب يومياً**\n✅ **رضا عملاء ' + companyData.customerSatisfaction + '%**\n⏱️ **نسبة التوصيل في الوقت ' + companyData.onTimeRate + '%**\n\n💡 **كيف أستطيع مساعدتك؟**\n• اسأل عن الأسعار\n• اسأل عن الفروع\n• اسأل عن الخدمات\n• أو اتصل بنا مباشرة: 920032104\n\nكيف أقدر أساعدك؟ 😊'
+                    ] : [
+                        'Thanks for your question! 💬\n\nI can help you with:\n\n✅ Pricing & Services\n✅ Branches & Locations\n✅ Delivery Times\n✅ Tracking & Status\n✅ Contact & Communication\n✅ Team & Statistics\n\n💡 **For specific information:**\n📞 Call us: 920032104\n📧 Email: info@onetrip.sa\n\n🎯 **Or ask me:**\n• What are the prices?\n• Where are your branches?\n• What is the delivery time?\n• How can I track my shipment?\n\nHow can I help you more? 😊'
+                    ];
+                }
+                return suggestions[Math.floor(Math.random() * suggestions.length)];
             }
             
             function sendChatMessage() {
