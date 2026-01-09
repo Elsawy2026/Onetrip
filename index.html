@@ -824,10 +824,10 @@
                 </div>
             </div>
             <div class="quick-replies">
-                <button class="quick-reply" onclick="sendQuickReply('pricing')" data-ar="ما هي الأسعار؟" data-en="What are the prices?">ما هي الأسعار؟</button>
-                <button class="quick-reply" onclick="sendQuickReply('delivery')" data-ar="كم مدة التوصيل؟" data-en="Delivery time?">كم مدة التوصيل؟</button>
-                <button class="quick-reply" onclick="sendQuickReply('order')" data-ar="أريد طلب خدمة" data-en="Request service">أريد طلب خدمة</button>
-                <button class="quick-reply" onclick="sendQuickReply('track')" data-ar="تتبع شحنتي" data-en="Track shipment">تتبع شحنتي</button>
+                <button class="quick-reply" onclick="const inp=document.getElementById('chatInput');if(inp){inp.value='ما هي أسعار خدمات التوصيل؟';if(window.sendChatMessage){window.sendChatMessage();}else{alert('Chat system loading...');}}" data-ar="ما هي الأسعار؟" data-en="What are the prices?">ما هي الأسعار؟</button>
+                <button class="quick-reply" onclick="const inp=document.getElementById('chatInput');if(inp){inp.value='كم مدة التوصيل؟';if(window.sendChatMessage){window.sendChatMessage();}else{alert('Chat system loading...');}}" data-ar="كم مدة التوصيل؟" data-en="Delivery time?">كم مدة التوصيل؟</button>
+                <button class="quick-reply" onclick="const inp=document.getElementById('chatInput');if(inp){inp.value='أريد طلب خدمة';if(window.sendChatMessage){window.sendChatMessage();}else{alert('Chat system loading...');}}" data-ar="أريد طلب خدمة" data-en="Request service">أريد طلب خدمة</button>
+                <button class="quick-reply" onclick="const inp=document.getElementById('chatInput');if(inp){inp.value='كيف أقدر أتتبع شحنتي؟';if(window.sendChatMessage){window.sendChatMessage();}else{alert('Chat system loading...');}}" data-ar="تتبع شحنتي" data-en="Track shipment">تتبع شحنتي</button>
             </div>
         </div>
         <div class="chat-footer">
