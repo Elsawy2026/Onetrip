@@ -96,7 +96,7 @@
                 <a href="#contact" class="nav-link" data-ar="تواصل معنا" data-en="Contact">تواصل معنا</a>
             </div>
             <div class="nav-actions">
-                <button class="lang-btn" id="langBtn">English</button>
+                <button class="lang-btn" id="langBtn" type="button">English</button>
                 <button class="nav-toggle" onclick="toggleNav()">
                     <span></span><span></span><span></span>
                 </button>
@@ -845,6 +845,48 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="scripts.js?v=2026.01.09.42"></script>
     <script>
+        // FIX LANGUAGE BUTTON - DIRECT APPROACH
+        (function() {
+            function setupLangButton() {
+                const langBtn = document.getElementById('langBtn');
+                if (langBtn) {
+                    langBtn.onclick = function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (window.toggleLanguage) {
+                            window.toggleLanguage();
+                        } else {
+                            // Fallback direct toggle
+                            const html = document.documentElement;
+                            const currentLang = html.getAttribute('lang');
+                            const newLang = currentLang === 'ar' ? 'en' : 'ar';
+                            const newDir = newLang === 'ar' ? 'rtl' : 'ltr';
+                            html.setAttribute('lang', newLang);
+                            html.setAttribute('dir', newDir);
+                            localStorage.setItem('lang', newLang);
+                            localStorage.setItem('dir', newDir);
+                            document.querySelectorAll('[data-ar], [data-en]').forEach(el => {
+                                if (newLang === 'ar' && el.dataset.ar) {
+                                    el.innerHTML = el.dataset.ar;
+                                } else if (newLang === 'en' && el.dataset.en) {
+                                    el.innerHTML = el.dataset.en;
+                                }
+                            });
+                            const btn = document.getElementById('langBtn');
+                            if (btn) btn.textContent = newLang === 'ar' ? 'EN' : 'AR';
+                        }
+                    };
+                }
+            }
+            
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', setupLangButton);
+            } else {
+                setTimeout(setupLangButton, 100);
+            }
+            setupLangButton();
+        })();
+        
         // DIRECT STATS COUNTER INITIALIZATION
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {

@@ -188,6 +188,106 @@ section, .section {
     height: 50px;
 }
 
+/* Logo Text Style - Matching Image */
+.nav-logo .logo-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    font-family: 'Inter', 'Tajawal', sans-serif;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.logo-line-1 {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 0;
+}
+
+.logo-pin {
+    color: #F7941D;
+    font-size: 2.2rem;
+    margin-right: 2px;
+    transform: rotate(-45deg);
+}
+
+.logo-ne {
+    color: #1a1f3a;
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+}
+
+.logo-arrow {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 4px;
+}
+
+.arrow-bar {
+    width: 20px;
+    height: 4px;
+    background: #F7941D;
+    display: inline-block;
+    margin-right: 2px;
+}
+
+.arrow-icon {
+    color: #1a1f3a;
+    font-size: 1rem;
+}
+
+.logo-line-2 {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-top: -2px;
+}
+
+.logo-t {
+    color: #F7941D;
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    margin-left: 8px;
+}
+
+.logo-rip {
+    color: #1a1f3a;
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+}
+
+.logo-line-3 {
+    margin-top: -2px;
+}
+
+.logo-express {
+    color: #F7941D;
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    margin-left: 8px;
+}
+
+[dir="ltr"] .logo-text {
+    align-items: flex-end;
+}
+
+[dir="ltr"] .logo-t,
+[dir="ltr"] .logo-express {
+    margin-left: 0;
+    margin-right: 8px;
+}
+
+[dir="ltr"] .logo-pin {
+    margin-right: 0;
+    margin-left: 2px;
+}
+
 .nav-menu {
     display: flex;
     align-items: center;
