@@ -280,43 +280,81 @@ function startCounterAnimations() {
 }
 
 function initCounters(counters) {
+    if (!counters || counters.length === 0) {
+        console.warn('No counters found to initialize');
+        return;
+    }
+    
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const element = entry.target;
-                const target = parseInt(element.dataset.count);
-                const suffix = element.dataset.suffix || '';
+                const countValue = element.getAttribute('data-count');
                 
-                // Check if this is percentage
-                const isPercentage = element.textContent.includes('%') || suffix === '%';
-                const finalSuffix = isPercentage ? '%' : suffix;
+                if (!countValue || isNaN(parseInt(countValue))) {
+                    observer.unobserve(element);
+                    return;
+                }
                 
-                animateCounter(element, target, finalSuffix);
+                const target = parseInt(countValue);
+                const suffix = element.getAttribute('data-suffix') || '';
+                const finalSuffix = suffix === '%' ? '%' : suffix;
+                
+                if (!element.classList.contains('animating')) {
+                    element.classList.add('animating');
+                    animateCounter(element, target, finalSuffix);
+                }
                 observer.unobserve(element);
             }
         });
-    }, { threshold: 0.3 });
+    }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
     
     counters.forEach(counter => {
-        observer.observe(counter);
-        // Also trigger if already visible
+        if (!counter) return;
+        
+        // Check if already visible
         const rect = counter.getBoundingClientRect();
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-            const target = parseInt(counter.dataset.count);
-            const isPercentage = counter.textContent.includes('%') || counter.dataset.suffix === '%';
-            const suffix = isPercentage ? '%' : (counter.dataset.suffix || '');
-            animateCounter(counter, target, suffix);
-            observer.unobserve(counter);
+        const isVisible = rect.top < (window.innerHeight + 100) && rect.bottom > -100;
+        
+        if (isVisible) {
+            const countValue = counter.getAttribute('data-count');
+            if (countValue && !isNaN(parseInt(countValue))) {
+                const target = parseInt(countValue);
+                const suffix = counter.getAttribute('data-suffix') || '';
+                const finalSuffix = suffix === '%' ? '%' : suffix;
+                
+                if (!counter.classList.contains('animating')) {
+                    counter.classList.add('animating');
+                    setTimeout(() => {
+                        animateCounter(counter, target, finalSuffix);
+                    }, 100);
+                }
+            }
+        } else {
+            observer.observe(counter);
         }
     });
 }
 
 // Start counter animations on page load
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', startCounterAnimations);
-} else {
-    startCounterAnimations();
+function initCounterOnLoad() {
+    setTimeout(() => {
+        startCounterAnimations();
+    }, 200);
 }
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCounterOnLoad);
+} else {
+    initCounterOnLoad();
+}
+
+// Also start after window load for better reliability
+window.addEventListener('load', function() {
+    setTimeout(() => {
+        startCounterAnimations();
+    }, 300);
+});
 
 window.startCounterAnimations = startCounterAnimations;
 
