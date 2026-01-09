@@ -40,26 +40,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=2026.01.08.values4">
+    <link rel="stylesheet" href="styles.css?v=2026.01.09.24">
 </head>
 <body>
-    <!-- Inline Preloader Fallback -->
+    <!-- Inline script to hide preloader - runs immediately -->
     <script>
         (function() {
             function hidePreloader() {
-                var p = document.getElementById("preloader");
-                if (p) {
-                    p.style.opacity = "0";
-                    p.style.visibility = "hidden";
-                    p.style.pointerEvents = "none";
-                    p.classList.add("hidden");
-                    setTimeout(function() { p.style.display = "none"; }, 500);
+                var preloader = document.getElementById('preloader');
+                if (preloader) {
+                    preloader.classList.add('hidden');
                 }
             }
+            
+            // Hide after page loads
+            if (document.readyState === 'complete') {
+                setTimeout(hidePreloader, 500);
+            } else {
+                window.addEventListener('load', function() {
+                    setTimeout(hidePreloader, 800);
+                });
+            }
+            
+            // Fallback: Force hide after 2 seconds
             setTimeout(hidePreloader, 2000);
-            window.addEventListener("load", function() { setTimeout(hidePreloader, 500); });
         })();
     </script>
+    
     <!-- Scroll Progress Bar -->
     <div class="scroll-progress" id="scrollProgress"></div>
     
@@ -76,8 +83,7 @@
     <nav class="nav" id="nav">
         <div class="nav-container">
             <a href="#home" class="nav-logo">
-                <!-- Logo will be updated with new image -->
-                <img src="assets/logo.svg" alt="One Trip Express" id="companyLogo" style="max-height: 50px;">
+                <img src="assets/logo.svg" alt="One Trip Express">
             </a>
             <div class="nav-menu" id="navMenu">
                 <a href="#home" class="nav-link active" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
@@ -86,11 +92,11 @@
                 <a href="#why-us" class="nav-link" data-ar="لماذا نحن" data-en="Why Us">لماذا نحن</a>
                 <a href="#partners" class="nav-link" data-ar="شركاؤنا" data-en="Partners">شركاؤنا</a>
                 <a href="careers.html" class="nav-link" data-ar="الوظائف" data-en="Careers">الوظائف</a>
-                <a href="https://whatsapp.com/channel/0029Vb5zEdjIXnm0N94Kuo2y" class="nav-link" target="_blank" data-ar="قناة الواتساب" data-en="WhatsApp Channel">قناة الواتساب</a>
+                <a href="https://wa.me/966920032104" class="nav-link" target="_blank" data-ar="قناة الواتساب" data-en="WhatsApp">قناة الواتساب</a>
                 <a href="#contact" class="nav-link" data-ar="تواصل معنا" data-en="Contact">تواصل معنا</a>
             </div>
             <div class="nav-actions">
-                <button class="lang-btn" id="langBtn" type="button">English</button>
+                <button class="lang-btn" id="langBtn" onclick="toggleLanguage()">English</button>
                 <button class="nav-toggle" onclick="toggleNav()">
                     <span></span><span></span><span></span>
                 </button>
@@ -100,14 +106,19 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <!-- Animated Particles Background -->
-        <div class="hero-particles" id="heroParticles"></div>
-        <!-- Delivery Vehicles Animated Background -->
-        <div class="hero-vehicles" id="heroVehicles"></div>
         <div class="hero-bg">
             <div class="hero-grid"></div>
             <div class="hero-overlay"></div>
         </div>
+        
+        <!-- Hero Particles - Falling Orange Dots -->
+        <div class="hero-particles" id="heroParticles"></div>
+        
+        <!-- Delivery Vehicles Animated Background -->
+        <div class="hero-vehicles" id="heroVehicles"></div>
+        
+        <!-- Particles Canvas -->
+        <canvas id="particlesCanvas"></canvas>
         
         <div class="container">
             <div class="hero-container">
@@ -275,40 +286,36 @@
             <div class="values-grid">
                 <div class="value-card" data-aos="zoom-in-up" data-aos-delay="100">
                     <div class="value-card-image">
-                        <img src="./assets/values-reliability-handshake.jpg?v=2026.01.08" alt="الاعتمادية" onerror="console.error('Failed to load: values-reliability-handshake.jpg')">
+                        <img src="./assets/values-reliability-handshake.jpg" alt="الاعتمادية" onerror="this.style.display='none'">
                     </div>
                     <div class="value-card-content">
-                        <div class="value-icon"><i class="fas fa-shield-halved"></i></div>
                         <h3 data-ar="الاعتمادية" data-en="Reliability">الاعتمادية</h3>
                         <p data-ar="نفي بوعدنا ونعمل بثقة" data-en="We keep our promises and work with confidence">نفي بوعدنا ونعمل بثقة</p>
                     </div>
                 </div>
                 <div class="value-card" data-aos="zoom-in-up" data-aos-delay="200">
                     <div class="value-card-image">
-                        <img src="./assets/values-innovation-technology.jpg?v=2026.01.08" alt="الابتكار" onerror="console.error('Failed to load: values-innovation-technology.jpg')">
+                        <img src="./assets/values-innovation-technology.jpg" alt="الابتكار" onerror="this.style.display='none'">
                     </div>
                     <div class="value-card-content">
-                        <div class="value-icon"><i class="fas fa-lightbulb"></i></div>
                         <h3 data-ar="الابتكار" data-en="Innovation">الابتكار</h3>
                         <p data-ar="نبحث دائمًا عن طرق جديدة لتحسين خدماتنا" data-en="We are always looking for new ways to improve our services">نبحث دائمًا عن طرق جديدة لتحسين خدماتنا</p>
                     </div>
                 </div>
                 <div class="value-card" data-aos="zoom-in-up" data-aos-delay="300">
                     <div class="value-card-image">
-                        <img src="./assets/values-quality-clipboard.jpg?v=2026.01.08" alt="الجودة" onerror="console.error('Failed to load: values-quality-clipboard.jpg')">
+                        <img src="./assets/values-quality-clipboard.jpg" alt="الجودة" onerror="this.style.display='none'">
                     </div>
                     <div class="value-card-content">
-                        <div class="value-icon"><i class="fas fa-gem"></i></div>
                         <h3 data-ar="الجودة" data-en="Quality">الجودة</h3>
                         <p data-ar="نضع معايير عالية في كل عملية توصيل" data-en="We set high standards in every delivery operation">نضع معايير عالية في كل عملية توصيل</p>
                     </div>
                 </div>
                 <div class="value-card" data-aos="zoom-in-up" data-aos-delay="400">
                     <div class="value-card-image">
-                        <img src="./assets/values-professionalism-computer.jpg?v=2026.01.08" alt="الاحترافية" onerror="console.error('Failed to load: values-professionalism-computer.jpg')">
+                        <img src="./assets/values-professionalism-computer.jpg" alt="الاحترافية" onerror="this.style.display='none'">
                     </div>
                     <div class="value-card-content">
-                        <div class="value-icon"><i class="fas fa-award"></i></div>
                         <h3 data-ar="الاحترافية" data-en="Professionalism">الاحترافية</h3>
                         <p data-ar="نتعامل مع كل طلب بأعلى درجات الالتزام" data-en="We handle every order with the highest commitment">نتعامل مع كل طلب بأعلى درجات الالتزام</p>
                     </div>
@@ -331,12 +338,9 @@
             <div class="services-grid-new">
                 <div class="service-card-new" data-aos="fade-up" data-aos-delay="100">
                     <div class="service-image-wrapper">
-                        <img src="./assets/delivery-van-hero.jpg" alt="ONE TRIP EXPRESS Delivery Van" class="service-hero-image" onerror="this.style.display='none'">
+                        <img src="assets/delivery-van-hero.jpg" alt="ONE TRIP EXPRESS Delivery Van" class="service-hero-image" onerror="this.style.display='none'">
                     </div>
                     <div class="service-card-new-content">
-                        <div class="service-icon-wrapper">
-                            <div class="service-icon"><i class="fas fa-shipping-fast"></i></div>
-                        </div>
                         <h3 data-ar="توصيل سريع" data-en="Fast Delivery">توصيل سريع</h3>
                         <p data-ar="توصيل فوري داخل المدن خلال ساعات. نضمن وصول شحنتك بأمان وسرعة." data-en="Same-day delivery within cities. We guarantee safe and fast delivery.">توصيل فوري داخل المدن خلال ساعات. نضمن وصول شحنتك بأمان وسرعة.</p>
                         <a href="order.html" class="service-btn">
@@ -348,12 +352,9 @@
                 
                 <div class="service-card-new" data-aos="fade-up" data-aos-delay="200">
                     <div class="service-image-wrapper">
-                        <img src="./assets/shipping-loading.jpg" alt="شحن داخلي" class="service-hero-image" onerror="this.style.display='none'">
+                        <img src="assets/shipping-loading.jpg" alt="شحن داخلي" class="service-hero-image" onerror="this.style.display='none'">
                     </div>
                     <div class="service-card-new-content">
-                        <div class="service-icon-wrapper">
-                            <div class="service-icon"><i class="fas fa-box"></i></div>
-                        </div>
                         <h3 data-ar="شحن داخلي" data-en="Internal Shipping">شحن داخلي</h3>
                         <p data-ar="خدمات شحن بين المدن السعودية بأسعار تنافسية ومواعيد دقيقة." data-en="Inter-city shipping across Saudi Arabia with competitive prices and precise schedules.">خدمات شحن بين المدن السعودية بأسعار تنافسية ومواعيد دقيقة.</p>
                         <a href="order.html" class="service-btn">
@@ -365,12 +366,9 @@
                 
                 <div class="service-card-new" data-aos="fade-up" data-aos-delay="300">
                     <div class="service-image-wrapper">
-                        <img src="./assets/business-vehicles.jpg" alt="خدمات الشركات" class="service-hero-image" onerror="this.style.display='none'">
+                        <img src="assets/business-vehicles.jpg" alt="خدمات الشركات" class="service-hero-image" onerror="this.style.display='none'">
                     </div>
                     <div class="service-card-new-content">
-                        <div class="service-icon-wrapper">
-                            <div class="service-icon"><i class="fas fa-building"></i></div>
-                        </div>
                         <h3 data-ar="خدمات الشركات" data-en="Business Solutions">خدمات الشركات</h3>
                         <p data-ar="حلول لوجستية مخصصة للشركات والمتاجر والمطاعم بعقود مرنة." data-en="Custom logistics solutions for businesses, stores, and restaurants with flexible contracts.">حلول لوجستية مخصصة للشركات والمتاجر والمطاعم بعقود مرنة.</p>
                         <a href="order.html" class="service-btn">
@@ -382,12 +380,9 @@
                 
                 <div class="service-card-new" data-aos="fade-up" data-aos-delay="400">
                     <div class="service-image-wrapper">
-                        <img src="./assets/fleet-technology.jpg" alt="إدارة المناديب" class="service-hero-image" onerror="this.style.display='none'">
+                        <img src="assets/fleet-technology.jpg" alt="إدارة المناديب" class="service-hero-image" onerror="this.style.display='none'">
                     </div>
                     <div class="service-card-new-content">
-                        <div class="service-icon-wrapper">
-                            <div class="service-icon"><i class="fas fa-motorcycle"></i></div>
-                        </div>
                         <h3 data-ar="إدارة المناديب" data-en="Fleet Management">إدارة المناديب</h3>
                         <p data-ar="إدارة وتشغيل أساطيل التوصيل الخاصة بك مع تتبع لحظي وتقارير مفصلة." data-en="Manage your delivery fleet with real-time tracking and detailed reports.">إدارة وتشغيل أساطيل التوصيل الخاصة بك مع تتبع لحظي وتقارير مفصلة.</p>
                         <a href="order.html" class="service-btn">
@@ -411,7 +406,7 @@
                 </div>
                 <div class="stat-item">
                     <div class="stat-icon"><i class="fas fa-users"></i></div>
-                    <div class="stat-number" data-count="500">0</div>
+                    <div class="stat-number" data-count="5000">0</div>
                     <div class="stat-label" data-ar="عميل سعيد" data-en="Happy Clients">عميل سعيد</div>
                 </div>
                 <div class="stat-item">
@@ -421,7 +416,7 @@
                 </div>
                 <div class="stat-item">
                     <div class="stat-icon"><i class="fas fa-heart"></i></div>
-                    <div class="stat-number" data-count="98">0</div>
+                    <div class="stat-number" data-count="98" data-suffix="%">0</div>
                     <div class="stat-label" data-ar="% رضا العملاء" data-en="% Customer Satisfaction">% رضا العملاء</div>
                 </div>
             </div>
@@ -522,9 +517,9 @@
                 فريقنا جاهز لمساعدتك على مدار الساعة. تواصل معنا الآن!
             </p>
             <div class="cta-buttons">
-                <a href="https://whatsapp.com/channel/0029Vb5zEdjIXnm0N94Kuo2y" class="btn btn-white" target="_blank">
+                <a href="https://wa.me/966920032104" class="btn btn-white" target="_blank">
                     <i class="fab fa-whatsapp"></i>
-                    <span data-ar="قناة الواتساب" data-en="WhatsApp Channel">قناة الواتساب</span>
+                    <span data-ar="واتساب" data-en="WhatsApp">واتساب</span>
                 </a>
                 <a href="tel:920032104" class="btn btn-outline">
                     <i class="fas fa-phone"></i>
@@ -633,9 +628,10 @@
                     </div>
                     
                     <div class="social-links">
-                        <a href="https://www.facebook.com/share/1D2zV5Kh6t/" class="social-link" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.linkedin.com/company/one-trip-express/" class="social-link" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://whatsapp.com/channel/0029Vb5zEdjIXnm0N94Kuo2y" class="social-link" target="_blank" title="WhatsApp Channel"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://wa.me/966920032104" class="social-link" target="_blank"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
                 
@@ -664,6 +660,78 @@
                     </form>
                 </div>
             </div>
+            
+            <!-- Branches Section within Contact -->
+            <div class="branches-section-in-contact">
+                <h3 class="branches-title" data-ar="<span class='highlight'>فروعنا</span> في المملكة" data-en="Our <span class='highlight'>Branches</span> Across the Kingdom" data-aos="fade-up">
+                    <span class="highlight">فروعنا</span> في المملكة
+                </h3>
+                <p class="branches-desc" data-ar="انقر على أي فرع لرؤية موقعه على الخريطة" data-en="Click on any branch to see its location on the map" data-aos="fade-up" data-aos-delay="100">
+                    انقر على أي فرع لرؤية موقعه على الخريطة
+                </p>
+                
+                <div class="branches-grid-in-contact">
+                    <a href="https://maps.google.com/?cid=319296445866694874&entry=gps&g_st=aw" target="_blank" class="branch-card-in-contact" data-aos="fade-up" data-aos-delay="100">
+                        <div class="branch-icon-in-contact">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h4 data-ar="فرع الدمام" data-en="Dammam Branch">فرع الدمام</h4>
+                        <p data-ar="نخدم عملائنا في الدمام والمنطقة الشرقية" data-en="Serving our clients in Dammam and the Eastern Region">نخدم عملائنا في الدمام والمنطقة الشرقية</p>
+                        <span class="branch-link-in-contact">
+                            <span data-ar="عرض الموقع" data-en="View Location">عرض الموقع</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </span>
+                    </a>
+                    
+                    <a href="https://maps.app.goo.gl/xVCiq7yBMjZzVZjN6?g_st=aw" target="_blank" class="branch-card-in-contact" data-aos="fade-up" data-aos-delay="200">
+                        <div class="branch-icon-in-contact">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h4 data-ar="فرع القصيم" data-en="Qassim Branch">فرع القصيم</h4>
+                        <p data-ar="نوفر خدماتنا في منطقة القصيم" data-en="Providing our services in Qassim Region">نوفر خدماتنا في منطقة القصيم</p>
+                        <span class="branch-link-in-contact">
+                            <span data-ar="عرض الموقع" data-en="View Location">عرض الموقع</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </span>
+                    </a>
+                    
+                    <a href="https://maps.app.goo.gl/CHSGVsEwLxaTfcF4A" target="_blank" class="branch-card-in-contact" data-aos="fade-up" data-aos-delay="300">
+                        <div class="branch-icon-in-contact">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h4 data-ar="فرع تبوك" data-en="Tabuk Branch">فرع تبوك</h4>
+                        <p data-ar="خدمات موثوقة في منطقة تبوك" data-en="Reliable services in Tabuk Region">خدمات موثوقة في منطقة تبوك</p>
+                        <span class="branch-link-in-contact">
+                            <span data-ar="عرض الموقع" data-en="View Location">عرض الموقع</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </span>
+                    </a>
+                    
+                    <a href="https://maps.app.goo.gl/GyT1zno8zeUyvJNP7?g_st=awb" target="_blank" class="branch-card-in-contact" data-aos="fade-up" data-aos-delay="400">
+                        <div class="branch-icon-in-contact">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h4 data-ar="فرع الرياض" data-en="Riyadh Branch">فرع الرياض</h4>
+                        <p data-ar="الفرع الرئيسي في العاصمة الرياض" data-en="Main branch in the capital Riyadh">الفرع الرئيسي في العاصمة الرياض</p>
+                        <span class="branch-link-in-contact">
+                            <span data-ar="عرض الموقع" data-en="View Location">عرض الموقع</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </span>
+                    </a>
+                    
+                    <a href="#" class="branch-card-in-contact" data-aos="fade-up" data-aos-delay="500" onclick="alert('سيتم إضافة رابط فرع أبها قريباً'); return false;">
+                        <div class="branch-icon-in-contact">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h4 data-ar="فرع أبها" data-en="Abha Branch">فرع أبها</h4>
+                        <p data-ar="خدماتنا في منطقة عسير" data-en="Our services in Asir Region">خدماتنا في منطقة عسير</p>
+                        <span class="branch-link-in-contact">
+                            <span data-ar="عرض الموقع" data-en="View Location">عرض الموقع</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -677,9 +745,9 @@
                     </a>
                     <p data-ar="التوصيل كما ينبغي أن يكون" data-en="Delivery as it should be">التوصيل كما ينبغي أن يكون</p>
                     <div class="footer-social">
-                        <a href="https://www.facebook.com/share/1D2zV5Kh6t/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.linkedin.com/company/one-trip-express/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://whatsapp.com/channel/0029Vb5zEdjIXnm0N94Kuo2y" target="_blank" title="WhatsApp Channel"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
                 
@@ -759,13 +827,13 @@
     </div>
     
     <!-- Chat Toggle Button -->
-    <button class="chat-toggle" id="chatToggle" type="button" style="position: fixed !important; bottom: 30px !important; left: 100px !important; width: 60px !important; height: 60px !important; background: linear-gradient(135deg, #F7941D 0%, #FFAA40 100%) !important; border: none !important; border-radius: 50% !important; color: white !important; font-size: 1.5rem !important; cursor: pointer !important; box-shadow: 0 5px 25px rgba(247, 148, 29, 0.4) !important; z-index: 9998 !important; display: flex !important; align-items: center !important; justify-content: center !important; visibility: visible !important; opacity: 1 !important;">
+    <button class="chat-toggle" id="chatToggle" onclick="toggleChat()">
         <i class="fas fa-comments"></i>
         <span class="chat-badge">1</span>
     </button>
     
-    <!-- WhatsApp Channel Button -->
-    <a href="https://whatsapp.com/channel/0029Vb5zEdjIXnm0N94Kuo2y" class="whatsapp-btn" target="_blank" title="قناة الواتساب | WhatsApp Channel">
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/966920032104" class="whatsapp-btn" target="_blank">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -774,25 +842,9 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <!-- Background Animated Elements -->
-    <div class="bg-animations">
-        <div class="bg-blob blob-1"></div>
-        <div class="bg-blob blob-2"></div>
-        <div class="bg-blob blob-3"></div>
-        <div class="bg-blob blob-4"></div>
-        <!-- Animated Particles/Stars -->
-        <canvas id="particlesCanvas"></canvas>
-    </div>
-
-    <!-- Cursor Follower -->
-    <div class="cursor-follower" id="cursorFollower">
-        <div class="cursor-dot"></div>
-        <div class="cursor-ring"></div>
-    </div>
-
     <!-- AOS Animation Library -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="scripts.js?v=2026.01.08.rain"></script>
+    <script src="scripts.js?v=2026.01.07.8"></script>
     <script>
         // Initialize AOS
         AOS.init({
@@ -802,345 +854,6 @@
             offset: 50,
             delay: 100
         });
-        
-        // ===== COMPLETE INLINE FIX - EVERYTHING WORKS =====
-        (function() {
-            console.log('🚀 ONETRIP INITIALIZATION STARTED');
-            
-            // Language Toggle Function (Inline)
-            function toggleLang() {
-                const html = document.documentElement;
-                const currentLang = html.getAttribute('lang') || 'ar';
-                const newLang = currentLang === 'ar' ? 'en' : 'ar';
-                const newDir = newLang === 'ar' ? 'rtl' : 'ltr';
-                
-                html.setAttribute('lang', newLang);
-                html.setAttribute('dir', newDir);
-                localStorage.setItem('lang', newLang);
-                
-                document.querySelectorAll('[data-ar], [data-en]').forEach(el => {
-                    if (newLang === 'ar' && el.dataset.ar) {
-                        el.innerHTML = el.dataset.ar;
-                    } else if (newLang === 'en' && el.dataset.en) {
-                        el.innerHTML = el.dataset.en;
-                    }
-                });
-                
-                const langBtn = document.getElementById('langBtn');
-                if (langBtn) langBtn.textContent = newLang === 'ar' ? 'English' : 'العربية';
-                console.log('✅ Language changed to:', newLang);
-            }
-            
-            // Chat Toggle Function (Inline)
-            function toggleChatWidget() {
-                const chatWidget = document.getElementById('chatWidget');
-                const badge = document.querySelector('.chat-badge');
-                
-                if (chatWidget) {
-                    chatWidget.classList.toggle('active');
-                    if (badge) badge.style.display = chatWidget.classList.contains('active') ? 'none' : 'flex';
-                    console.log('✅ Chat toggled');
-                }
-            }
-            
-            // Make functions globally accessible
-            window.toggleLanguage = toggleLang;
-            window.toggleChat = toggleChatWidget;
-            
-            function initEverything() {
-                console.log('🔧 Initializing all features...');
-                
-                // 1. Language Button
-                const langBtn = document.getElementById('langBtn');
-                if (langBtn) {
-                    langBtn.onclick = function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        toggleLang();
-                    };
-                    console.log('✅ Language button ready');
-                }
-                
-                // 2. Chat Toggle Button
-                const chatToggle = document.getElementById('chatToggle');
-                if (chatToggle) {
-                    chatToggle.onclick = function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        toggleChatWidget();
-                    };
-                    console.log('✅ Chat toggle ready');
-                }
-                
-                // 3. Counter Animations
-                function animateCounters() {
-                    const counters = document.querySelectorAll('[data-count]');
-                    counters.forEach(counter => {
-                        const target = parseInt(counter.dataset.count);
-                        const duration = 2000;
-                        let start = null;
-                        
-                        function step(timestamp) {
-                            if (!start) start = timestamp;
-                            const progress = Math.min((timestamp - start) / duration, 1);
-                            const current = Math.floor(progress * target);
-                            counter.textContent = current;
-                            if (progress < 1) requestAnimationFrame(step);
-                        }
-                        requestAnimationFrame(step);
-                    });
-                    console.log('✅ Counters animating');
-                }
-                setTimeout(animateCounters, 500);
-                
-                // 4. Cursor Follower
-                const cursorFollower = document.getElementById('cursorFollower');
-                if (cursorFollower) {
-                    const dot = cursorFollower.querySelector('.cursor-dot');
-                    const ring = cursorFollower.querySelector('.cursor-ring');
-                    
-                    if (dot && ring) {
-                        let mx = 0, my = 0, rx = 0, ry = 0;
-                        
-                        document.addEventListener('mousemove', (e) => {
-                            mx = e.clientX;
-                            my = e.clientY;
-                            dot.style.left = mx + 'px';
-                            dot.style.top = my + 'px';
-                            cursorFollower.style.opacity = '1';
-                            
-                            function animate() {
-                                rx += (mx - rx) * 0.2;
-                                ry += (my - ry) * 0.2;
-                                ring.style.left = rx + 'px';
-                                ring.style.top = ry + 'px';
-                                requestAnimationFrame(animate);
-                            }
-                            animate();
-                        });
-                        console.log('✅ Cursor follower ready');
-                    }
-                }
-                
-                // 5. Particles Animation (Background Canvas)
-                const canvas = document.getElementById('particlesCanvas');
-                if (canvas) {
-                    const ctx = canvas.getContext('2d');
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
-                    
-                    window.addEventListener('resize', () => {
-                        canvas.width = window.innerWidth;
-                        canvas.height = window.innerHeight;
-                    });
-                    
-                    const particles = [];
-                    for (let i = 0; i < 50; i++) {
-                        particles.push({
-                            x: Math.random() * canvas.width,
-                            y: Math.random() * canvas.height,
-                            speed: Math.random() * 2 + 1,
-                            size: Math.random() * 2 + 1,
-                            opacity: Math.random() * 0.5 + 0.2
-                        });
-                    }
-                    
-                    function animateParticles() {
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        particles.forEach(p => {
-                            p.y += p.speed;
-                            if (p.y > canvas.height) {
-                                p.y = -10;
-                                p.x = Math.random() * canvas.width;
-                            }
-                            ctx.beginPath();
-                            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                            ctx.fillStyle = `rgba(247, 148, 29, ${p.opacity})`;
-                            ctx.fill();
-                        });
-                        requestAnimationFrame(animateParticles);
-                    }
-                    animateParticles();
-                    console.log('✅ Particles animation started');
-                }
-                
-                // 6. Hero Particles - Falling Orange Dots (Like Rain)
-                function initHeroParticlesInline() {
-                    const heroParticles = document.getElementById('heroParticles');
-                    if (!heroParticles) {
-                        console.error('heroParticles not found');
-                        return;
-                    }
-                    
-                    // Reduced particle count - less crowded
-                    const particleCount = 35;
-                    
-                    function createParticle() {
-                        const particle = document.createElement('div');
-                        particle.className = 'hero-particle';
-                        
-                        const startX = Math.random() * 100;
-                        // Faster falling speed (like rain)
-                        const duration = 8 + Math.random() * 10;
-                        const delay = Math.random() * 2;
-                        // Smaller size (1-2px)
-                        const size = 1 + Math.random() * 1;
-                        
-                        particle.style.left = startX + '%';
-                        particle.style.width = size + 'px';
-                        particle.style.height = size + 'px';
-                        particle.style.animationDuration = duration + 's';
-                        particle.style.animationDelay = delay + 's';
-                        
-                        heroParticles.appendChild(particle);
-                        
-                        setTimeout(() => {
-                            if (particle.parentNode) {
-                                particle.remove();
-                            }
-                            createParticle();
-                        }, (duration + delay) * 1000);
-                    }
-                    
-                    // Create initial particles with more spacing
-                    for (let i = 0; i < particleCount; i++) {
-                        setTimeout(() => createParticle(), i * 150);
-                    }
-                    
-                    console.log('✅ Hero particles (falling orange dots like rain) started');
-                }
-                
-                // Initialize hero particles
-                setTimeout(initHeroParticlesInline, 200);
-                
-                // 7. Hero Delivery Vehicles Animation
-                function initHeroVehicles() {
-                    const heroVehicles = document.getElementById('heroVehicles');
-                    if (!heroVehicles) {
-                        console.error('heroVehicles not found');
-                        return;
-                    }
-                    
-                    // Vehicle types with professional SVG paths (inspired by dash-cord design)
-                    const vehicleTypes = [
-                        { 
-                            class: 'vehicle-car', 
-                            svg: '<path d="M5 12h14a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1z" fill="currentColor" opacity="0.95"/><path d="M7 9h10a1 1 0 0 1 1 1v3H6v-3a1 1 0 0 1 1-1z" fill="currentColor" opacity="0.9"/><circle cx="9" cy="18" r="1.8" fill="#1E293B" opacity="0.8"/><circle cx="15" cy="18" r="1.8" fill="#1E293B" opacity="0.8"/><rect x="8" y="11" width="8" height="1.5" fill="#1E293B" opacity="0.2" rx="0.5"/>'
-                        },
-                        { 
-                            class: 'vehicle-van', 
-                            svg: '<path d="M4 12h16a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1z" fill="currentColor" opacity="0.95"/><path d="M6 8h12a1 1 0 0 1 1 1v4H5V9a1 1 0 0 1 1-1z" fill="currentColor" opacity="0.9"/><rect x="7" y="10" width="10" height="2" fill="#1E293B" opacity="0.25" rx="0.5"/><circle cx="9" cy="18" r="1.8" fill="#1E293B" opacity="0.8"/><circle cx="15" cy="18" r="1.8" fill="#1E293B" opacity="0.8"/><rect x="8" y="11" width="6" height="1.5" fill="#1E293B" opacity="0.2" rx="0.5"/>'
-                        },
-                        { 
-                            class: 'vehicle-truck', 
-                            svg: '<path d="M3 12h18a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1z" fill="currentColor" opacity="0.95"/><path d="M5 8h9a1 1 0 0 1 1 1v4H4V9a1 1 0 0 1 1-1z" fill="currentColor" opacity="0.9"/><path d="M14 9h5a1 1 0 0 1 1 1v5h-6V9z" fill="currentColor" opacity="0.85"/><circle cx="8" cy="18" r="1.8" fill="#1E293B" opacity="0.8"/><circle cx="17" cy="18" r="1.8" fill="#1E293B" opacity="0.8"/><rect x="6" y="11" width="6" height="1.5" fill="#1E293B" opacity="0.2" rx="0.5"/><rect x="15" y="11" width="4" height="1.5" fill="#1E293B" opacity="0.2" rx="0.5"/>'
-                        }
-                    ];
-                    
-                    const animations = [
-                        'vehicleMove',
-                        'vehicleMoveVertical',
-                        'vehicleMoveDiagonal1',
-                        'vehicleMoveDiagonal2'
-                    ];
-                    
-                    const vehicleCount = 4; // Less vehicles for cleaner look
-                    
-                    function createVehicle() {
-                        const vehicle = document.createElement('div');
-                        vehicle.className = 'delivery-vehicle';
-                        
-                        const vehicleType = vehicleTypes[Math.floor(Math.random() * vehicleTypes.length)];
-                        const animationType = animations[Math.floor(Math.random() * animations.length)];
-                        const duration = 50 + Math.random() * 40; // 50-90 seconds - very slow, smooth movement
-                        const delay = Math.random() * 8;
-                        
-                        // Random starting position based on animation type with natural variation
-                        let startX = 0, startY = 0, offset = 0;
-                        if (animationType === 'vehicleMove') {
-                            startY = 20 + Math.random() * 60; // Random vertical position (20-80%)
-                            offset = (Math.random() - 0.5) * 30; // Small vertical offset for curved path
-                        } else if (animationType === 'vehicleMoveVertical') {
-                            startX = 20 + Math.random() * 60; // Random horizontal position (20-80%)
-                            offset = (Math.random() - 0.5) * 30; // Small horizontal offset
-                        } else if (animationType === 'vehicleMoveDiagonal1') {
-                            startX = Math.random() * 25;
-                            startY = Math.random() * 25;
-                        } else {
-                            startX = 75 + Math.random() * 25;
-                            startY = Math.random() * 25;
-                        }
-                        
-                        vehicle.className += ' ' + vehicleType.class;
-                        vehicle.style.left = startX + '%';
-                        vehicle.style.top = startY + '%';
-                        vehicle.style.setProperty('--offset', offset + 'px');
-                        vehicle.style.animationName = animationType;
-                        vehicle.style.animationDuration = duration + 's';
-                        vehicle.style.animationDelay = delay + 's';
-                        vehicle.style.animationTimingFunction = 'cubic-bezier(0.4, 0, 0.2, 1)'; // Smooth easing
-                        vehicle.style.animationIterationCount = 'infinite';
-                        
-                        // Create SVG for vehicle (professional, minimal design)
-                        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                        svg.setAttribute('viewBox', '0 0 24 24');
-                        svg.setAttribute('fill', 'none');
-                        svg.setAttribute('stroke', 'none');
-                        svg.innerHTML = vehicleType.svg;
-                        
-                        vehicle.appendChild(svg);
-                        heroVehicles.appendChild(vehicle);
-                        
-                        // Remove and recreate after animation completes
-                        setTimeout(() => {
-                            if (vehicle.parentNode) {
-                                vehicle.remove();
-                                createVehicle();
-                            }
-                        }, (duration + delay) * 1000);
-                    }
-                    
-                    // Create initial vehicles with more spacing
-                    for (let i = 0; i < vehicleCount; i++) {
-                        setTimeout(() => createVehicle(), i * 4000);
-                    }
-                    
-                    console.log('✅ Hero delivery vehicles animation started');
-                }
-                
-                // Initialize hero vehicles - multiple attempts to ensure it works
-                if (document.readyState === 'loading') {
-                    document.addEventListener('DOMContentLoaded', () => {
-                        setTimeout(initHeroVehicles, 300);
-                    });
-                } else {
-                    setTimeout(initHeroVehicles, 300);
-                }
-                
-                // Also try after page fully loaded
-                window.addEventListener('load', () => {
-                    setTimeout(() => {
-                        if (!document.querySelector('.delivery-vehicle')) {
-                            console.log('Retrying vehicles initialization...');
-                            initHeroVehicles();
-                        }
-                    }, 1000);
-                });
-            }
-            
-            // Run immediately
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initEverything);
-            } else {
-                initEverything();
-            }
-            
-            window.addEventListener('load', function() {
-                setTimeout(initEverything, 100);
-            });
-            
-            console.log('✅ All initialization complete!');
-        })();
     </script>
 </body>
 </html>
