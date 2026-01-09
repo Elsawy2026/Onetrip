@@ -645,22 +645,24 @@ window.sendChatMessage = function sendChatMessage(event) {
 
 // Handle User Message - Stateless AI Chat
 async function handleUserMessage(text) {
-    appendMessage(text, 'user');
+    if (window.appendMessage) window.appendMessage(text, 'user');
     
     // Show typing indicator
-    const typingId = showTypingIndicator();
+    const typingId = window.showTypingIndicator ? window.showTypingIndicator() : null;
     
     try {
         // Call AI API with Stateless Session
-        const reply = await callAIChatAPI(text);
-        removeTypingIndicator(typingId);
-        appendMessage(reply, 'bot');
+        const reply = window.callAIChatAPI ? await window.callAIChatAPI(text) : null;
+        if (typingId && window.removeTypingIndicator) window.removeTypingIndicator(typingId);
+        if (window.appendMessage) window.appendMessage(reply, 'bot');
     } catch (error) {
         console.error('AI Chat Error:', error);
         removeTypingIndicator(typingId);
         // Fallback to rule-based reply
-        const fallbackReply = generateBotReply(text);
-        appendMessage(fallbackReply, 'bot');
+        if (window.generateBotReply) {
+            const fallbackReply = window.generateBotReply(text);
+            if (window.appendMessage) window.appendMessage(fallbackReply, 'bot');
+        }
     }
 }
 
@@ -737,7 +739,8 @@ window.addEventListener('beforeunload', function() {
     chatSessionActive = false;
 });
 
-function generateBotReply(message) {
+// Make generateBotReply globally accessible
+window.generateBotReply = function generateBotReply(message) {
     const langIsArabic = document.documentElement.lang === 'ar';
     const msg = message.toLowerCase();
     const msgAr = message;
