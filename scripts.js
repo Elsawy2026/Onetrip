@@ -193,13 +193,42 @@ if (typeof window.toggleLanguage === 'undefined') {
     };
 }
 
-// Load saved language preference
+// Load saved language preference and setup button
 window.addEventListener('DOMContentLoaded', () => {
+    // Setup language button click handler
+    const langBtn = document.getElementById('langBtn');
+    if (langBtn && !langBtn.hasAttribute('data-listener-added')) {
+        langBtn.setAttribute('data-listener-added', 'true');
+        langBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (window.toggleLanguage) {
+                window.toggleLanguage();
+            }
+        });
+    }
+    
+    // Load saved language preference
     const savedLang = localStorage.getItem('lang');
     if (savedLang && savedLang !== document.documentElement.getAttribute('lang')) {
         window.toggleLanguage();
     }
 });
+
+// Also setup immediately if DOM is ready
+if (document.readyState !== 'loading') {
+    const langBtn = document.getElementById('langBtn');
+    if (langBtn && !langBtn.hasAttribute('data-listener-added')) {
+        langBtn.setAttribute('data-listener-added', 'true');
+        langBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (window.toggleLanguage) {
+                window.toggleLanguage();
+            }
+        });
+    }
+}
 
 // ===== SMOOTH SCROLLING =====
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
