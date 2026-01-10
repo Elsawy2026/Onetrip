@@ -1419,13 +1419,27 @@ if (contactForm) {
         const formData = new FormData(contactForm);
         const data = Object.fromEntries(formData);
         
-        // Show success modal
-        showSuccessModal();
+        // Create email body
+        const emailSubject = encodeURIComponent('طلب جديد من موقع OneTrip Express');
+        const emailBody = encodeURIComponent(
+            `طلب جديد من موقع OneTrip Express\n\n` +
+            `الاسم: ${data.name}\n` +
+            `رقم التليفون: ${data.phone}\n` +
+            `البريد الإلكتروني: ${data.email}\n\n` +
+            `مضمون الطلب:\n${data.message}`
+        );
         
-        // Reset form
-        contactForm.reset();
+        // Open email client with mailto link
+        const mailtoLink = `mailto:info@onetrip.sa?subject=${emailSubject}&body=${emailBody}`;
+        window.location.href = mailtoLink;
         
-        console.log('Form submitted:', data);
+        // Show success message
+        setTimeout(() => {
+            alert('✅ تم فتح بريدك الإلكتروني!\n\n📧 يرجى إرسال الطلب إلى: info@onetrip.sa\n\n📞 للاستفسار: 920032104');
+            contactForm.reset();
+        }, 500);
+        
+        console.log('Contact form submitted:', data);
     });
 }
 
@@ -1663,12 +1677,31 @@ function addMagneticEffect() {
 function addParallaxEffect() {
     const hero = document.querySelector('.hero');
     const heroIllustration = document.querySelector('.hero-main-illustration');
+    const scrollIndicator = document.querySelector('.scroll-indicator');
     
     if (hero && heroIllustration) {
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
+            const heroHeight = hero.offsetHeight;
+            
+            // Parallax for illustration
             if (scrolled < window.innerHeight) {
                 heroIllustration.style.transform = `translateY(${scrolled * 0.15}px)`;
+            }
+            
+            // Move scroll indicator with scroll
+            if (scrollIndicator) {
+                if (scrolled < heroHeight) {
+                    // Move indicator down as user scrolls
+                    const moveDistance = Math.min(scrolled * 0.5, heroHeight * 0.3);
+                    scrollIndicator.style.transform = `translateX(-50%) translateY(${moveDistance}px)`;
+                    // Fade out as scrolling
+                    const opacity = Math.max(1 - (scrolled / heroHeight), 0);
+                    scrollIndicator.style.opacity = opacity;
+                } else {
+                    // Hide when scrolled past hero
+                    scrollIndicator.style.opacity = '0';
+                }
             }
         });
     }
