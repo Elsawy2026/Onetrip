@@ -372,7 +372,8 @@ function initCounters(counters) {
 function initStatsCounters() {
     // Force start immediately
     setTimeout(() => {
-        const counters = document.querySelectorAll('.stat-number[data-count]');
+        // Handle both stat-number and hero-stat-value counters
+        const counters = document.querySelectorAll('.stat-number[data-count], .hero-stat-value[data-count]');
         counters.forEach((counter, index) => {
             setTimeout(() => {
                 const countValue = counter.getAttribute('data-count');
@@ -407,7 +408,7 @@ window.addEventListener('load', () => {
 let scrollCounterTriggered = false;
 window.addEventListener('scroll', function() {
     if (!scrollCounterTriggered) {
-        const counters = document.querySelectorAll('.stat-number[data-count]');
+        const counters = document.querySelectorAll('.stat-number[data-count], .hero-stat-value[data-count]');
         counters.forEach(counter => {
             const countValue = counter.getAttribute('data-count');
             if (countValue && !isNaN(parseInt(countValue)) && (counter.textContent === '0' || counter.textContent.trim() === '0')) {
@@ -569,6 +570,159 @@ window.sendQuickReply = function sendQuickReply(type) {
 const chatMessagesEl = document.getElementById('chatMessages');
 const chatInputEl = document.getElementById('chatInput');
 
+// ===== CHAT SAVING SYSTEM =====
+// Storage key for chat history
+const CHAT_STORAGE_KEY = 'onetrip_chat_history';
+const CHAT_MAX_MESSAGES = 1000; // Maximum messages to store
+
+// Save message to localStorage
+function saveChatMessage(text, sender, timestamp) {
+    try {
+        let chatHistory = JSON.parse(localStorage.getItem(CHAT_STORAGE_KEY) || '[]');
+        
+        // Add new message
+        chatHistory.push({
+            text: text,
+            sender: sender,
+            timestamp: timestamp || new Date().toISOString(),
+            date: new Date().toLocaleDateString('ar-SA'),
+            time: new Date().toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' })
+        });
+        
+        // Keep only last N messages
+        if (chatHistory.length > CHAT_MAX_MESSAGES) {
+            chatHistory = chatHistory.slice(-CHAT_MAX_MESSAGES);
+        }
+        
+        localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(chatHistory));
+        console.log('✅ Message saved to chat history');
+    } catch (error) {
+        console.error('❌ Error saving chat message:', error);
+    }
+}
+
+// Get all saved chat messages
+window.getChatHistory = function getChatHistory() {
+    try {
+        return JSON.parse(localStorage.getItem(CHAT_STORAGE_KEY) || '[]');
+    } catch (error) {
+        console.error('❌ Error loading chat history:', error);
+        return [];
+    }
+};
+
+// Clear saved chat history
+window.clearChatHistory = function clearChatHistory() {
+    try {
+        localStorage.removeItem(CHAT_STORAGE_KEY);
+        console.log('✅ Chat history cleared');
+        return true;
+    } catch (error) {
+        console.error('❌ Error clearing chat history:', error);
+        return false;
+    }
+};
+
+// Export chat history as JSON file
+window.exportChatAsJSON = function exportChatAsJSON() {
+    try {
+        const chatHistory = window.getChatHistory();
+        const isArabic = document.documentElement.lang === 'ar';
+        
+        if (chatHistory.length === 0) {
+            alert(isArabic ? 'لا توجد محادثات محفوظة للتصدير' : 'No saved chats to export');
+            return;
+        }
+        
+        const dataStr = JSON.stringify(chatHistory, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(dataBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `onetrip_chat_${new Date().toISOString().split('T')[0]}.json`;
+        link.click();
+        URL.revokeObjectURL(url);
+        
+        console.log('✅ Chat exported as JSON');
+    } catch (error) {
+        console.error('❌ Error exporting chat:', error);
+        const isArabic = document.documentElement.lang === 'ar';
+        alert(isArabic ? 'حدث خطأ أثناء تصدير المحادثة' : 'Error exporting chat');
+    }
+};
+
+// Export chat history as text file
+window.exportChatAsText = function exportChatAsText() {
+    try {
+        const chatHistory = window.getChatHistory();
+        if (chatHistory.length === 0) {
+            const isArabic = document.documentElement.lang === 'ar';
+            alert(isArabic ? 'لا توجد محادثات محفوظة للتصدير' : 'No saved chats to export');
+            return;
+        }
+        
+        const isArabic = document.documentElement.lang === 'ar';
+        let textContent = isArabic ? '=== تاريخ محادثة OneTrip ===\n' : '=== OneTrip Chat History ===\n';
+        textContent += (isArabic ? 'تاريخ التصدير: ' : 'Export Date: ') + new Date().toLocaleString('ar-SA') + '\n';
+        textContent += (isArabic ? 'عدد الرسائل: ' : 'Number of Messages: ') + chatHistory.length + '\n';
+        textContent += '='.repeat(50) + '\n\n';
+        
+        chatHistory.forEach((msg, index) => {
+            const senderLabel = msg.sender === 'user' 
+                ? (isArabic ? 'المستخدم' : 'User')
+                : (isArabic ? 'المساعد' : 'Assistant');
+            textContent += `[${index + 1}] ${senderLabel} (${msg.date} ${msg.time})\n`;
+            textContent += `${msg.text}\n`;
+            textContent += '-'.repeat(50) + '\n\n';
+        });
+        
+        const dataBlob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(dataBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `onetrip_chat_${new Date().toISOString().split('T')[0]}.txt`;
+        link.click();
+        URL.revokeObjectURL(url);
+        
+        console.log('✅ Chat exported as text');
+    } catch (error) {
+        console.error('❌ Error exporting chat:', error);
+        const isArabic = document.documentElement.lang === 'ar';
+        alert(isArabic ? 'حدث خطأ أثناء تصدير المحادثة' : 'Error exporting chat');
+    }
+};
+
+// Show chat save menu
+window.showChatSaveMenu = function showChatSaveMenu(event) {
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    
+    const menu = document.getElementById('chatSaveMenu');
+    if (menu) {
+        menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+    }
+    
+    // Close menu when clicking outside
+    setTimeout(() => {
+        document.addEventListener('click', function closeMenu(e) {
+            if (menu && !menu.contains(e.target) && !e.target.closest('.chat-save-btn')) {
+                menu.style.display = 'none';
+                document.removeEventListener('click', closeMenu);
+            }
+        });
+    }, 100);
+};
+
+// Hide chat save menu
+window.hideChatSaveMenu = function hideChatSaveMenu() {
+    const menu = document.getElementById('chatSaveMenu');
+    if (menu) {
+        menu.style.display = 'none';
+    }
+};
+
 // Make appendMessage globally accessible
 window.appendMessage = function appendMessage(text, sender = 'bot') {
     const chatMessagesEl = document.getElementById('chatMessages');
@@ -595,13 +749,20 @@ window.appendMessage = function appendMessage(text, sender = 'bot') {
     const time = document.createElement('span');
     time.className = 'chat-message-time';
     const now = new Date();
-    time.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    time.textContent = timeString;
     wrapper.appendChild(time);
     
     chatMessagesEl.appendChild(wrapper);
     chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
     
-    console.log('✅ Message appended');
+    // Save message to localStorage (skip welcome message)
+    if (text !== 'مرحباً! 👋 أنا مساعد OneTrip الذكي. اسألني عن الخدمات، الأسعار، مواعيد التوصيل أو أي استفسار يهمك.' &&
+        text !== 'Hello! 👋 I\'m the OneTrip smart assistant. Ask me about services, pricing, delivery times or anything you need.') {
+        saveChatMessage(text, sender, now.toISOString());
+    }
+    
+    console.log('✅ Message appended and saved');
 };
 
 // Make sendChatMessage globally accessible
@@ -747,7 +908,7 @@ Jahez – Hunger Station – KEETA – The Chefz – Ninja – imile – شرك�
 • الدمام: https://maps.google.com/?cid=319296445866694874&entry=gps&g_st=aw
 • القصيم: https://maps.app.goo.gl/xVCiq7yBMjZzVZjN6?g_st=aw
 • تبوك: https://maps.app.goo.gl/CHSGVsEwLxaTfcF4A
-• أبها: (سيتم إضافتها قريباً)
+• أبها: https://goo.gl/maps/ZHEcKZWNQskicyXe6?g_st=aw
 
 بيانات التواصل:
 📍 العنوان: https://maps.app.goo.gl/ga8NvdxSEWAso8B7A
@@ -773,7 +934,7 @@ Jahez – Hunger Station – KEETA – The Chefz – Ninja – imile – شرك�
 // Stateless Chat Session - لا حفظ للمحادثات
 let chatSessionActive = false;
 
-// Reset Chat - حذف كل المحادثات عند الإغلاق
+// Reset Chat - حذف كل المحادثات عند الإغلاق (يُبقي على المحفوظات)
 function resetChatConversation() {
     const chatMessages = document.getElementById('chatMessages');
     if (chatMessages) {
@@ -787,6 +948,7 @@ function resetChatConversation() {
         `;
     }
     chatSessionActive = false;
+    // Note: Saved chat history in localStorage is preserved even when clearing the display
 }
 
 // Clean up on page unload - حذف كل شيء عند إغلاق الصفحة
@@ -854,7 +1016,7 @@ window.generateBotReply = function generateBotReply(message) {
                 cityAr: 'أبها',
                 titleAr: 'فرع أبها',
                 descriptionAr: 'يخدم المنطقة الجنوبية مع تركيز على المدن السياحية والمناطق الجبلية.',
-                mapsUrl: 'https://maps.google.com', // placeholder
+                mapsUrl: 'https://goo.gl/maps/ZHEcKZWNQskicyXe6?g_st=aw',
                 titleEn: 'Abha Branch',
                 descriptionEn: 'Serving the Southern region with focus on tourist and mountain areas.'
             },
@@ -917,12 +1079,14 @@ window.generateBotReply = function generateBotReply(message) {
               listAr +
               '\n\n📍 الدمام (الخريطة): ' + companyData.branchesDetail.find(b => b.key === 'dammam').mapsUrl +
               '\n📍 القصيم (الخريطة): ' + companyData.branchesDetail.find(b => b.key === 'qassim').mapsUrl +
+              '\n📍 أبها (الخريطة): ' + companyData.branchesDetail.find(b => b.key === 'abha').mapsUrl +
               '\n📍 تبوك (الخريطة): ' + companyData.branchesDetail.find(b => b.key === 'tabuk').mapsUrl +
               '\n\nاسألني عن أي فرع بالتحديد وأعطيك التفاصيل كاملة 😉'
             : '🏢 OneTrip Express Branches (' + companyData.branches + ' branches):\n\n' +
               listEn +
               '\n\n📍 Dammam map: ' + companyData.branchesDetail.find(b => b.key === 'dammam').mapsUrl +
               '\n📍 Qassim map: ' + companyData.branchesDetail.find(b => b.key === 'qassim').mapsUrl +
+              '\n📍 Abha map: ' + companyData.branchesDetail.find(b => b.key === 'abha').mapsUrl +
               '\n📍 Tabuk map: ' + companyData.branchesDetail.find(b => b.key === 'tabuk').mapsUrl +
               '\n\nAsk me about any specific branch for more details 😉';
     }
@@ -956,6 +1120,19 @@ window.generateBotReply = function generateBotReply(message) {
     // ===== فرع القصيم =====
     if (has(['فرع القصيم', 'القصيم', 'qassim'])) {
         const b = companyData.branchesDetail.find(x => x.key === 'qassim');
+        return langIsArabic
+            ? '📍 ' + b.titleAr + ':\n\n' +
+              b.descriptionAr +
+              '\n\n🌍 رابط الخريطة (Google Maps):\n' + b.mapsUrl +
+              '\n\nتقدر تستخدم الرابط للوصول للفرع مباشرة 🚗'
+            : '📍 ' + b.titleEn + ':\n\n' +
+              b.descriptionEn +
+              '\n\n🌍 Google Maps link:\n' + b.mapsUrl;
+    }
+    
+    // ===== فرع أبها =====
+    if (has(['فرع أبها', 'أبها', 'abha'])) {
+        const b = companyData.branchesDetail.find(x => x.key === 'abha');
         return langIsArabic
             ? '📍 ' + b.titleAr + ':\n\n' +
               b.descriptionAr +
@@ -1816,3 +1993,258 @@ document.querySelectorAll('.section').forEach(section => {
 console.log('%c🚀 OneTrip Express v2026.01.07', 'font-size: 24px; font-weight: bold; color: #F7941D;');
 console.log('%cشريكك اللوجستي الموثوق - AI Chat Enabled', 'font-size: 14px; color: #00D9A5;');
 console.log('%cDeveloped with ❤️ for excellence', 'font-size: 12px; color: #64748B;');
+
+// ===== HERO PARTICLES ANIMATION (Falling Orange Dots) =====
+function initHeroParticles() {
+    const heroParticles = document.getElementById('heroParticles');
+    if (!heroParticles) {
+        console.error('heroParticles not found');
+        setTimeout(initHeroParticles, 500);
+        return;
+    }
+    
+    // Clear any existing particles
+    heroParticles.innerHTML = '';
+    
+    const particleCount = 50; // Increased for more visible effect
+    
+    function createParticle() {
+        const particle = document.createElement('div');
+        particle.className = 'hero-particle';
+        
+        const startX = Math.random() * 100;
+        const duration = 5 + Math.random() * 8; // Faster falling
+        const delay = Math.random() * 1;
+        const size = 2 + Math.random() * 2; // Bigger particles
+        
+        particle.style.position = 'absolute';
+        particle.style.left = startX + '%';
+        particle.style.top = '-10px';
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+        particle.style.background = '#F7941D';
+        particle.style.borderRadius = '50%';
+        particle.style.boxShadow = '0 0 8px rgba(247, 148, 29, 0.9), 0 0 16px rgba(247, 148, 29, 0.6)';
+        particle.style.animation = `particleFall ${duration}s linear ${delay}s infinite`;
+        particle.style.pointerEvents = 'none';
+        particle.style.zIndex = '1';
+        
+        heroParticles.appendChild(particle);
+        
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.remove();
+            }
+            createParticle();
+        }, (duration + delay) * 1000);
+    }
+    
+    // Create initial particles with spacing
+    for (let i = 0; i < particleCount; i++) {
+        setTimeout(() => {
+            createParticle();
+        }, i * 80);
+    }
+    
+    // Also create particles continuously
+    setInterval(() => {
+        if (heroParticles.children.length < particleCount) {
+            createParticle();
+        }
+    }, 2000);
+    
+    console.log('✨ Hero particles (falling orange dots like rain) started - ' + particleCount + ' particles');
+    console.log('Hero particles container:', heroParticles);
+}
+
+// ===== HERO DELIVERY VEHICLES ANIMATION =====
+function initHeroVehicles() {
+    const heroVehicles = document.getElementById('heroVehicles');
+    if (!heroVehicles) {
+        console.error('heroVehicles not found');
+        return;
+    }
+    
+    // Vehicle types with professional SVG paths
+    const vehicleTypes = [
+        { 
+            class: 'vehicle-car', 
+            svg: '<path d="M5 12h14a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1z" fill="currentColor" opacity="0.95"/><path d="M7 9h10a1 1 0 0 1 1 1v3H6v-3a1 1 0 0 1 1-1z" fill="currentColor" opacity="0.9"/><circle cx="9" cy="18" r="1.8" fill="#1E293B" opacity="0.8"/><circle cx="15" cy="18" r="1.8" fill="#1E293B" opacity="0.8"/><rect x="8" y="11" width="8" height="1.5" fill="#1E293B" opacity="0.2" rx="0.5"/>'
+        },
+        { 
+            class: 'vehicle-van', 
+            svg: '<path d="M4 12h16a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1z" fill="currentColor" opacity="0.95"/><path d="M6 8h12a1 1 0 0 1 1 1v4H5V9a1 1 0 0 1 1-1z" fill="currentColor" opacity="0.9"/><rect x="7" y="10" width="10" height="2" fill="#1E293B" opacity="0.25" rx="0.5"/><circle cx="9" cy="18" r="1.8" fill="#1E293B" opacity="0.8"/><circle cx="15" cy="18" r="1.8" fill="#1E293B" opacity="0.8"/><rect x="8" y="11" width="6" height="1.5" fill="#1E293B" opacity="0.2" rx="0.5"/>'
+        },
+        { 
+            class: 'vehicle-truck', 
+            svg: '<path d="M3 12h18a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1z" fill="currentColor" opacity="0.95"/><path d="M5 8h9a1 1 0 0 1 1 1v4H4V9a1 1 0 0 1 1-1z" fill="currentColor" opacity="0.9"/><path d="M14 9h5a1 1 0 0 1 1 1v5h-6V9z" fill="currentColor" opacity="0.85"/><circle cx="8" cy="18" r="1.8" fill="#1E293B" opacity="0.8"/><circle cx="17" cy="18" r="1.8" fill="#1E293B" opacity="0.8"/><rect x="6" y="11" width="6" height="1.5" fill="#1E293B" opacity="0.2" rx="0.5"/><rect x="15" y="11" width="4" height="1.5" fill="#1E293B" opacity="0.2" rx="0.5"/>'
+        }
+    ];
+    
+    const animations = [
+        'vehicleMove',
+        'vehicleMoveVertical',
+        'vehicleMoveDiagonal1',
+        'vehicleMoveDiagonal2'
+    ];
+    
+    const vehicleCount = 6; // More vehicles
+    
+    function createVehicle() {
+        const vehicle = document.createElement('div');
+        vehicle.className = 'delivery-vehicle';
+        
+        const vehicleType = vehicleTypes[Math.floor(Math.random() * vehicleTypes.length)];
+        const animationType = animations[Math.floor(Math.random() * animations.length)];
+        const duration = 25 + Math.random() * 20; // Faster movement
+        const delay = Math.random() * 5;
+        
+        let startX = 0, startY = 0, offset = 0;
+        if (animationType === 'vehicleMove') {
+            startY = 20 + Math.random() * 60;
+            offset = (Math.random() - 0.5) * 30;
+        } else if (animationType === 'vehicleMoveVertical') {
+            startX = 20 + Math.random() * 60;
+            offset = (Math.random() - 0.5) * 30;
+        } else if (animationType === 'vehicleMoveDiagonal1') {
+            startX = Math.random() * 25;
+            startY = Math.random() * 25;
+        } else {
+            startX = 75 + Math.random() * 25;
+            startY = Math.random() * 25;
+        }
+        
+        vehicle.className += ' ' + vehicleType.class;
+        vehicle.style.position = 'absolute';
+        vehicle.style.left = startX + '%';
+        vehicle.style.top = startY + '%';
+        vehicle.style.width = '32px'; // Bigger vehicles
+        vehicle.style.height = '32px';
+        vehicle.style.color = '#F7941D';
+        vehicle.style.opacity = '0.8';
+        vehicle.style.filter = 'drop-shadow(0 4px 12px rgba(247, 148, 29, 0.6))';
+        vehicle.style.pointerEvents = 'none';
+        vehicle.style.zIndex = '1';
+        vehicle.style.setProperty('--offset', offset + 'px');
+        vehicle.style.animation = `${animationType} ${duration}s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s infinite`;
+        
+        // Create SVG for vehicle
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', '0 0 24 24');
+        svg.setAttribute('fill', 'none');
+        svg.setAttribute('stroke', 'none');
+        svg.setAttribute('width', '100%');
+        svg.setAttribute('height', '100%');
+        svg.innerHTML = vehicleType.svg;
+        
+        vehicle.appendChild(svg);
+        heroVehicles.appendChild(vehicle);
+        
+        // Remove and recreate after animation completes
+        setTimeout(() => {
+            if (vehicle.parentNode) {
+                vehicle.remove();
+            }
+            createVehicle();
+        }, (duration + delay) * 1000);
+    }
+    
+    // Create initial vehicles with spacing
+    for (let i = 0; i < vehicleCount; i++) {
+        setTimeout(() => {
+            createVehicle();
+        }, i * 1500);
+    }
+    
+    // Also create vehicles continuously
+    setInterval(() => {
+        if (heroVehicles.children.length < vehicleCount) {
+            createVehicle();
+        }
+    }, 8000);
+    
+    console.log('🚚 Hero delivery vehicles animation started - ' + vehicleCount + ' vehicles');
+    console.log('Hero vehicles container:', heroVehicles);
+}
+
+// Initialize hero particles and vehicles - Multiple attempts to ensure it works
+function initializeHeroAnimations() {
+    // Try to initialize particles
+    const particlesInit = () => {
+        const heroParticles = document.getElementById('heroParticles');
+        if (heroParticles && heroParticles.children.length === 0) {
+            initHeroParticles();
+        } else if (!heroParticles) {
+            setTimeout(particlesInit, 500);
+        }
+    };
+    
+    // Try to initialize vehicles
+    const vehiclesInit = () => {
+        const heroVehicles = document.getElementById('heroVehicles');
+        if (heroVehicles && heroVehicles.children.length === 0) {
+            initHeroVehicles();
+        } else if (!heroVehicles) {
+            setTimeout(vehiclesInit, 500);
+        }
+    };
+    
+    particlesInit();
+    vehiclesInit();
+}
+
+// Initialize on DOM ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(initializeHeroAnimations, 300);
+    });
+} else {
+    setTimeout(initializeHeroAnimations, 300);
+}
+
+// Also try after page fully loaded
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        const hasParticles = document.querySelector('.hero-particle');
+        const hasVehicles = document.querySelector('.delivery-vehicle');
+        
+        if (!hasParticles) {
+            console.log('Retrying particles initialization...');
+            initHeroParticles();
+        }
+        if (!hasVehicles) {
+            console.log('Retrying vehicles initialization...');
+            initHeroVehicles();
+        }
+    }, 1500);
+});
+
+// Force initialization after 2 seconds as last resort
+setTimeout(() => {
+    const hasParticles = document.querySelector('.hero-particle');
+    const hasVehicles = document.querySelector('.delivery-vehicle');
+    const particlesContainer = document.getElementById('heroParticles');
+    const vehiclesContainer = document.getElementById('heroVehicles');
+    
+    console.log('=== HERO ANIMATIONS CHECK ===');
+    console.log('Particles container exists:', !!particlesContainer);
+    console.log('Vehicles container exists:', !!vehiclesContainer);
+    console.log('Particles found:', !!hasParticles, hasParticles ? hasParticles.length : 0);
+    console.log('Vehicles found:', !!hasVehicles, hasVehicles ? hasVehicles.length : 0);
+    
+    if (!hasParticles && particlesContainer) {
+        console.log('Force initializing particles...');
+        initHeroParticles();
+    }
+    if (!hasVehicles && vehiclesContainer) {
+        console.log('Force initializing vehicles...');
+        initHeroVehicles();
+    }
+    
+    // Verify after a short delay
+    setTimeout(() => {
+        const particlesAfter = document.querySelectorAll('.hero-particle');
+        const vehiclesAfter = document.querySelectorAll('.delivery-vehicle');
+        console.log('After initialization - Particles:', particlesAfter.length, 'Vehicles:', vehiclesAfter.length);
+    }, 1000);
+}, 2000);

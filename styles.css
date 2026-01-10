@@ -411,7 +411,8 @@ section, .section {
     display: flex;
     align-items: center;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: visible;
     background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1629 100%);
 }
 
@@ -420,6 +421,7 @@ section, .section {
     inset: 0;
     overflow: hidden;
     pointer-events: none;
+    z-index: 0;
 }
 
 .hero-bg::before {
@@ -459,6 +461,161 @@ section, .section {
     mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 20%, transparent 100%);
 }
 
+/* Hero Particles (Falling Orange Dots) */
+.hero-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.hero-particle {
+    position: absolute;
+    top: -10px;
+    width: 4px;
+    height: 4px;
+    background: #F7941D;
+    border-radius: 50%;
+    box-shadow: 
+        0 0 8px rgba(247, 148, 29, 0.9),
+        0 0 16px rgba(247, 148, 29, 0.6),
+        0 0 24px rgba(247, 148, 29, 0.3);
+    animation: particleFall linear infinite;
+    will-change: transform, opacity;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+@keyframes particleFall {
+    0% {
+        transform: translateY(-20px) translateX(0) scale(1);
+        opacity: 0;
+    }
+    3% {
+        opacity: 1;
+    }
+    97% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(calc(100vh + 50px)) translateX(40px) scale(0.3);
+        opacity: 0;
+    }
+}
+
+/* Hero Delivery Vehicles */
+.hero-vehicles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.delivery-vehicle {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    color: #F7941D;
+    opacity: 0.8;
+    filter: drop-shadow(0 4px 12px rgba(247, 148, 29, 0.6));
+    will-change: transform, opacity;
+    display: block !important;
+    visibility: visible !important;
+}
+
+.delivery-vehicle svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.delivery-vehicle:hover {
+    opacity: 1;
+    filter: drop-shadow(0 6px 20px rgba(247, 148, 29, 0.8));
+}
+
+/* Vehicle Animations */
+@keyframes vehicleMove {
+    0% {
+        transform: translateX(-150px) translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    5% {
+        opacity: 0.8;
+    }
+    95% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateX(calc(100vw + 150px)) translateY(var(--offset, 0)) rotate(0deg);
+        opacity: 0;
+    }
+}
+
+@keyframes vehicleMoveVertical {
+    0% {
+        transform: translateX(0) translateY(-150px) rotate(90deg);
+        opacity: 0;
+    }
+    5% {
+        opacity: 0.8;
+    }
+    95% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateX(var(--offset, 0)) translateY(calc(100vh + 150px)) rotate(90deg);
+        opacity: 0;
+    }
+}
+
+@keyframes vehicleMoveDiagonal1 {
+    0% {
+        transform: translateX(-150px) translateY(-150px) rotate(-45deg);
+        opacity: 0;
+    }
+    5% {
+        opacity: 0.8;
+    }
+    95% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateX(calc(100vw + 150px)) translateY(calc(100vh + 150px)) rotate(-45deg);
+        opacity: 0;
+    }
+}
+
+@keyframes vehicleMoveDiagonal2 {
+    0% {
+        transform: translateX(calc(100vw + 150px)) translateY(-150px) rotate(45deg);
+        opacity: 0;
+    }
+    5% {
+        opacity: 0.8;
+    }
+    95% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateX(-150px) translateY(calc(100vh + 150px)) rotate(45deg);
+        opacity: 0;
+    }
+}
+
 .hero-container {
     display: grid;
     grid-template-columns: 1fr 1.1fr;
@@ -466,11 +623,13 @@ section, .section {
     align-items: center;
     padding: 100px 0 60px;
     position: relative;
-    z-index: 2;
+    z-index: 3;
 }
 
 .hero-content {
     max-width: 580px;
+    position: relative;
+    z-index: 3;
 }
 
 .hero-badge {
@@ -1081,6 +1240,8 @@ section, .section {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    z-index: 3;
 }
 
 .hero-illustration-wrapper {
@@ -3725,6 +3886,7 @@ section, .section {
     align-items: center;
     justify-content: space-between;
     color: white;
+    position: relative;
 }
 
 .chat-header-info {
@@ -3763,6 +3925,73 @@ section, .section {
     color: #4ADE80;
 }
 
+.chat-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chat-save-btn {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+}
+
+.chat-save-btn:hover {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.05);
+}
+
+.chat-save-menu {
+    position: absolute;
+    top: 65px;
+    left: 20px;
+    right: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    padding: 8px;
+    z-index: 10001;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.chat-save-menu button {
+    width: 100%;
+    padding: 12px 16px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    transition: all 0.2s ease;
+    text-align: right;
+    font-family: inherit;
+}
+
+.chat-save-menu button:hover {
+    background: #F8FAFC;
+    color: var(--primary);
+}
+
+.chat-save-menu button i {
+    width: 20px;
+    text-align: center;
+    font-size: 1rem;
+}
+
 .chat-close {
     background: rgba(255,255,255,0.2);
     border: none;
@@ -3776,6 +4005,15 @@ section, .section {
 
 .chat-close:hover {
     background: rgba(255,255,255,0.3);
+}
+
+[dir="ltr"] .chat-save-menu {
+    left: 20px;
+    right: 20px;
+}
+
+[dir="ltr"] .chat-save-menu button {
+    text-align: left;
 }
 
 .chat-body {

@@ -1,0 +1,34 @@
+========================================
+  ONETRIP REPOSITORY LOCATION
+========================================
+
+Full Path:
+C:\Users\User\Onetrip
+
+Windows Explorer:
+1. Open File Explorer (Windows + E)
+2. Navigate to: C:\Users\User\Onetrip
+3. Or copy and paste this path in the address bar:
+   C:\Users\User\Onetrip
+
+Quick Access:
+- Right-click on this file > "Open File Location"
+- Or open PowerShell and type: cd C:\Users\User\Onetrip
+
+Main Files:
+- index.html (Main landing page)
+- styles.css (All styles)
+- scripts.js (JavaScript with chat saving feature)
+- careers.html (Job application page)
+- order.html (Order page)
+- CHAT-SAVING-GUIDE.md (Guide for chat saving feature)
+- README.md (Project documentation)
+
+Folders:
+- admin/ (Admin dashboard)
+- assets/ (Images, logos, etc.)
+- .git/ (Git repository data)
+
+========================================
+Last Updated: January 10, 2026
+========================================
