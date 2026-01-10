@@ -435,12 +435,88 @@
             document.getElementById('navMenu').classList.toggle('active');
         }
         
-        // Form Submit
+        // Form Submit - Send to info@onetrip.sa
         document.getElementById('orderForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            const form = e.target;
             const isArabic = document.documentElement.lang === 'ar';
-            alert(isArabic ? 'تم إرسال طلبك بنجاح! سيتم التواصل معك قريباً.' : 'Your request has been submitted! We will contact you soon.');
-            this.reset();
+            
+            // Get form data
+            const formData = new FormData(form);
+            const serviceType = formData.get('serviceType');
+            const date = formData.get('date');
+            const name = formData.get('name');
+            const phone = formData.get('phone');
+            const email = formData.get('email') || '';
+            const notes = formData.get('notes') || '';
+            
+            // Validate required fields
+            if (!serviceType || !date || !name || !phone) {
+                alert(isArabic ? '⚠️ يرجى ملء جميع الحقول المطلوبة (*)' : '⚠️ Please fill in all required fields (*)');
+                return;
+            }
+            
+            // Validate phone format (Saudi phone)
+            const phoneRegex = /^(05|5)[0-9]{8}$/;
+            const cleanPhone = phone.replace(/[\s\-\(\)]/g, '');
+            if (!phoneRegex.test(cleanPhone)) {
+                alert(isArabic ? '⚠️ يرجى إدخال رقم جوال صحيح (05XXXXXXXX)' : '⚠️ Please enter a valid Saudi phone number (05XXXXXXXX)');
+                return;
+            }
+            
+            // Get service type text
+            const serviceTypeText = form.querySelector(`select[name="serviceType"] option[value="${serviceType}"]`).textContent;
+            
+            // Create email body
+            const emailBody = `طلب خدمة جديد من موقع OneTrip Express
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 **بيانات العميل:**
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+👤 **الاسم الكامل:** ${name}
+📞 **رقم الجوال:** ${phone}
+${email ? '📧 **البريد الإلكتروني:** ' + email + '\\n' : ''}
+🚚 **نوع الخدمة:** ${serviceTypeText}
+📅 **التاريخ المطلوب:** ${new Date(date).toLocaleDateString('ar-SA', { year: 'numeric', month: 'long', day: 'numeric' })}
+${notes ? '\\n💬 **ملاحظات إضافية:**\\n' + notes + '\\n' : ''}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📅 **تاريخ ووقت الطلب:** ${new Date().toLocaleString('ar-SA', { timeZone: 'Asia/Riyadh', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+🌐 **المصدر:** نموذج طلب الخدمة - موقع OneTrip Express
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+---
+تم إرسال هذا الطلب تلقائياً من نموذج طلب الخدمة على الموقع.
+يرجى التواصل مع العميل في أقرب وقت ممكن.`;
+            
+            // Prepare email
+            const emailSubject = encodeURIComponent(`طلب خدمة جديد - ${name} - ${serviceTypeText}`);
+            const emailBodyEncoded = encodeURIComponent(emailBody);
+            
+            // Create mailto link
+            const mailtoLink = `mailto:info@onetrip.sa?subject=${emailSubject}&body=${emailBodyEncoded}`;
+            
+            // Show loading
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = isArabic ? '<span>جاري الإرسال...</span> <i class="fas fa-spinner fa-spin"></i>' : '<span>Sending...</span> <i class="fas fa-spinner fa-spin"></i>';
+            submitBtn.disabled = true;
+            
+            // Open email client
+            window.location.href = mailtoLink;
+            
+            // Show success message
+            setTimeout(() => {
+                alert(isArabic 
+                    ? '✅ تم فتح بريدك الإلكتروني!\n\n📧 سيتم إرسال الطلب إلى: info@onetrip.sa\n\n📞 للاستفسار: 920032104'
+                    : '✅ Email client opened!\n\n📧 Request will be sent to: info@onetrip.sa\n\n📞 For inquiries: 920032104');
+                
+                // Reset form
+                form.reset();
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+            }, 500);
         });
     </script>
 </body>
