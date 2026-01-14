@@ -342,16 +342,12 @@
                                     <option value="" data-ar="اختر الخدمة" data-en="Select Service">اختر الخدمة</option>
                                     <option value="fast" data-ar="توصيل سريع (داخل المدينة)" data-en="Fast Delivery (Same City)">توصيل سريع (داخل المدينة)</option>
                                     <option value="shipping" data-ar="شحن داخلي (بين المدن)" data-en="Internal Shipping (Between Cities)">شحن داخلي (بين المدن)</option>
-                                    <option value="business" data-ar="خدمات شركات" data-en="Business Solutions">خدمات شركات</option>
-                                    <option value="fleet" data-ar="إدارة أساطيل" data-en="Fleet Management">إدارة أساطيل</option>
+                                    <option value="storage" data-ar="خدمة التخزين والتغليف" data-en="Storage and Packaging Service">خدمة التخزين والتغليف</option>
+                                    <option value="customs" data-ar="خدمة التخليص الجمركي" data-en="Customs Clearance Service">خدمة التخليص الجمركي</option>
+                                    <option value="fleet" data-ar="خدمة إدارة الأسطول" data-en="Fleet Management Service">خدمة إدارة الأسطول</option>
+                                    <option value="international" data-ar="خدمة الشحن الدولي" data-en="International Shipping Service">خدمة الشحن الدولي</option>
+                                    <option value="other" data-ar="خدمات أخرى" data-en="Other Services">خدمات أخرى</option>
                                 </select>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label data-ar="التاريخ" data-en="Date">التاريخ</label>
-                                <input type="date" name="date" required>
                             </div>
                         </div>
                         
@@ -376,7 +372,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label data-ar="ملاحظات إضافية" data-en="Additional Notes">ملاحظات إضافية</label>
-                                <textarea name="notes" rows="4" placeholder="أي تفاصيل إضافية عن الشحنة..."></textarea>
+                                <textarea name="notes" rows="4" placeholder="ملاحظات إضافية..."></textarea>
                             </div>
                         </div>
                         
@@ -444,14 +440,13 @@
             // Get form data
             const formData = new FormData(form);
             const serviceType = formData.get('serviceType');
-            const date = formData.get('date');
             const name = formData.get('name');
             const phone = formData.get('phone');
             const email = formData.get('email') || '';
             const notes = formData.get('notes') || '';
             
             // Validate required fields
-            if (!serviceType || !date || !name || !phone) {
+            if (!serviceType || !name || !phone) {
                 alert(isArabic ? '⚠️ يرجى ملء جميع الحقول المطلوبة (*)' : '⚠️ Please fill in all required fields (*)');
                 return;
             }
@@ -478,7 +473,6 @@
 📞 **رقم الجوال:** ${phone}
 ${email ? '📧 **البريد الإلكتروني:** ' + email + '\\n' : ''}
 🚚 **نوع الخدمة:** ${serviceTypeText}
-📅 **التاريخ المطلوب:** ${new Date(date).toLocaleDateString('ar-SA', { year: 'numeric', month: 'long', day: 'numeric' })}
 ${notes ? '\\n💬 **ملاحظات إضافية:**\\n' + notes + '\\n' : ''}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
