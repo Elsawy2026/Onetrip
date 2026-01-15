@@ -41,6 +41,46 @@
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css?v=2026.01.09.49">
+    
+    <!-- Force hide scrollbar - inline CSS for maximum priority -->
+    <style>
+        /* Hide scrollbar for ALL browsers - Highest priority */
+        html, body, * {
+            scrollbar-width: none !important; /* Firefox */
+            -ms-overflow-style: none !important; /* IE and Edge */
+        }
+        
+        html::-webkit-scrollbar,
+        body::-webkit-scrollbar,
+        *::-webkit-scrollbar {
+            width: 0px !important;
+            height: 0px !important;
+            display: none !important;
+            background: transparent !important;
+            -webkit-appearance: none !important;
+        }
+        
+        html::-webkit-scrollbar-track,
+        body::-webkit-scrollbar-track,
+        *::-webkit-scrollbar-track {
+            display: none !important;
+            background: transparent !important;
+        }
+        
+        html::-webkit-scrollbar-thumb,
+        body::-webkit-scrollbar-thumb,
+        *::-webkit-scrollbar-thumb {
+            display: none !important;
+            background: transparent !important;
+        }
+        
+        html::-webkit-scrollbar-corner,
+        body::-webkit-scrollbar-corner,
+        *::-webkit-scrollbar-corner {
+            display: none !important;
+            background: transparent !important;
+        }
+    </style>
 </head>
 <body>
     <!-- Inline script to hide preloader - runs immediately -->
@@ -168,7 +208,7 @@
                         <span data-ar="موثوق من قبل:" data-en="Trusted by:">موثوق من قبل:</span>
                         <div class="hero-trust-logos">
                             <img src="assets/partners/جاهز.jpg" alt="Jahez">
-                            <img src="assets/partners/هنقر (2).png" alt="HungerStation">
+                            <img src="assets/partners/hung.jpg" alt="HungerStation">
                             <img src="assets/partners/مرسول.png" alt="Mrsool">
                             <img src="assets/partners/كيتا.png" alt="KEETA">
                         </div>
@@ -209,7 +249,7 @@
             <div class="marquee-track">
                 <div class="marquee-content">
                     <img src="assets/partners/جاهز.jpg" alt="Jahez" class="partner-logo" loading="eager">
-                    <img src="assets/partners/هنقر (2).png" alt="HungerStation" class="partner-logo" loading="eager">
+                    <img src="assets/partners/hung.jpg" alt="HungerStation" class="partner-logo" loading="eager">
                     <img src="assets/partners/كيتا.png" alt="KEETA" class="partner-logo" loading="eager">
                     <img src="assets/partners/مرسول.png" alt="Mrsool" class="partner-logo" loading="eager">
                     <img src="assets/partners/شيفيز.png" alt="The Chefs" class="partner-logo" loading="eager">
@@ -220,7 +260,7 @@
                 </div>
                 <div class="marquee-content" aria-hidden="true">
                     <img src="assets/partners/جاهز.jpg" alt="Jahez" class="partner-logo" loading="eager">
-                    <img src="assets/partners/هنقر (2).png" alt="HungerStation" class="partner-logo" loading="eager">
+                    <img src="assets/partners/hung.jpg" alt="HungerStation" class="partner-logo" loading="eager">
                     <img src="assets/partners/كيتا.png" alt="KEETA" class="partner-logo" loading="eager">
                     <img src="assets/partners/مرسول.png" alt="Mrsool" class="partner-logo" loading="eager">
                     <img src="assets/partners/شيفيز.png" alt="The Chefs" class="partner-logo" loading="eager">
@@ -554,7 +594,7 @@
                     <p data-ar="نقدم لها عمليات توصيل دقيقة تلبي توقعات ملايين المستخدمين." data-en="We provide precise delivery operations that meet the expectations of millions of users.">نقدم لها عمليات توصيل دقيقة تلبي توقعات ملايين المستخدمين.</p>
                 </div>
                 <div class="partner-card" data-aos="fade-up" data-aos-delay="150">
-                    <img src="assets/partners/هنقر (2).png" alt="هنقرستيشن">
+                    <img src="assets/partners/hung.jpg" alt="هنقرستيشن">
                     <h4 data-ar="هنقرستيشن | HungerStation" data-en="HungerStation">هنقرستيشن | HungerStation</h4>
                     <p data-ar="نشاركهم في تقديم خدمة لوجستية موثوقة وعالية الجودة." data-en="We partner with them to provide reliable and high-quality logistics services.">نشاركهم في تقديم خدمة لوجستية موثوقة وعالية الجودة.</p>
                 </div>
