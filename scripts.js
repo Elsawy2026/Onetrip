@@ -47,12 +47,40 @@ if (document.readyState === 'loading') {
 }
 
 // ===== NAVIGATION =====
-const nav = document.getElementById('nav');
-const navLinks = document.querySelectorAll('.nav-link');
-const navMenu = document.getElementById('navMenu');
+let nav, navLinks, navMenu, scrollProgress;
 
-// Scroll Effect with Progress Bar
-const scrollProgress = document.getElementById('scrollProgress');
+// Initialize navigation elements when DOM is ready
+function initNavigation() {
+    nav = document.getElementById('nav');
+    navMenu = document.getElementById('navMenu');
+    navLinks = document.querySelectorAll('.nav-link');
+    scrollProgress = document.getElementById('scrollProgress');
+    
+    // Setup mobile menu close on link click
+    if (navLinks && navLinks.length > 0) {
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                // Close mobile menu when link is clicked
+                if (navMenu && navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                }
+                // Close overlay
+                const overlay = document.getElementById('navMenuOverlay');
+                if (overlay) {
+                    overlay.classList.remove('active');
+                }
+                // Allow default link behavior for all links (hash links, external links, etc.)
+            }, true); // Use capture phase to ensure it fires
+        });
+    }
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNavigation);
+} else {
+    initNavigation();
+}
 
 // Ensure all elements are visible on load
 window.addEventListener('DOMContentLoaded', () => {
@@ -74,10 +102,13 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 50) {
-        nav.classList.add('scrolled');
-    } else {
-        nav.classList.remove('scrolled');
+    if (!nav) nav = document.getElementById('nav');
+    if (nav) {
+        if (window.pageYOffset > 50) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
     }
     
     updateActiveNav();
@@ -97,15 +128,41 @@ function updateScrollProgress() {
 
 // Toggle Mobile Navigation
 function toggleNav() {
-    navMenu.classList.toggle('active');
+    if (!navMenu) {
+        navMenu = document.getElementById('navMenu');
+    }
+    const overlay = document.getElementById('navMenuOverlay');
+    
+    if (navMenu) {
+        const isActive = navMenu.classList.contains('active');
+        navMenu.classList.toggle('active');
+        
+        // Toggle overlay
+        if (overlay) {
+            if (isActive) {
+                overlay.classList.remove('active');
+            } else {
+                overlay.classList.add('active');
+            }
+        }
+    }
 }
 
-// Close nav on link click (mobile)
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-    });
+// Close menu when clicking overlay
+document.addEventListener('DOMContentLoaded', () => {
+    const overlay = document.getElementById('navMenuOverlay');
+    if (overlay) {
+        overlay.addEventListener('click', () => {
+            if (navMenu && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+        });
+    }
 });
+
+// Make toggleNav globally accessible
+window.toggleNav = toggleNav;
 
 // Update Active Navigation
 function updateActiveNav() {
