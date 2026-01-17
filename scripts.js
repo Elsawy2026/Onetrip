@@ -49,30 +49,71 @@ if (document.readyState === 'loading') {
 // ===== NAVIGATION =====
 let nav, navLinks, navMenu, scrollProgress;
 
+// Define toggleNav function - SIMPLE AND DIRECT
+function toggleNav(e) {
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    
+    const menu = document.getElementById('navMenu');
+    const overlay = document.getElementById('navMenuOverlay');
+    
+    if (!menu) {
+        console.error('❌ navMenu element not found!');
+        return false;
+    }
+    
+    // Toggle menu
+    menu.classList.toggle('active');
+    
+    // Toggle overlay based on current menu state
+    if (overlay) {
+        if (menu.classList.contains('active')) {
+            overlay.classList.add('active');
+        } else {
+            overlay.classList.remove('active');
+        }
+    }
+    
+    return false;
+}
+
+// Make it globally available
+window.toggleNav = toggleNav;
+
 // Initialize navigation elements when DOM is ready
 function initNavigation() {
     nav = document.getElementById('nav');
     navMenu = document.getElementById('navMenu');
-    navLinks = document.querySelectorAll('.nav-link');
     scrollProgress = document.getElementById('scrollProgress');
     
-    // Setup mobile menu close on link click
-    if (navLinks && navLinks.length > 0) {
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                // Close mobile menu when link is clicked
-                if (navMenu && navMenu.classList.contains('active')) {
-                    navMenu.classList.remove('active');
-                }
-                // Close overlay
-                const overlay = document.getElementById('navMenuOverlay');
-                if (overlay) {
-                    overlay.classList.remove('active');
-                }
-                // Allow default link behavior for all links (hash links, external links, etc.)
-            }, true); // Use capture phase to ensure it fires
-        });
+    // Setup mobile menu close on link click - use event delegation
+    if (navMenu) {
+        navMenu.addEventListener('click', function(e) {
+            const link = e.target.closest('.nav-link');
+            if (link) {
+                console.log('Navigation link clicked:', link.href);
+                
+                // Close mobile menu after a short delay
+                setTimeout(() => {
+                    if (navMenu && navMenu.classList.contains('active')) {
+                        navMenu.classList.remove('active');
+                    }
+                    // Close overlay
+                    const overlay = document.getElementById('navMenuOverlay');
+                    if (overlay) {
+                        overlay.classList.remove('active');
+                    }
+                }, 150);
+                
+                // Allow default link behavior
+            }
+        }, true); // Use capture phase
     }
+    
+    // Also get navLinks for other uses
+    navLinks = document.querySelectorAll('.nav-link');
 }
 
 // Initialize when DOM is ready
@@ -126,27 +167,7 @@ function updateScrollProgress() {
     }
 }
 
-// Toggle Mobile Navigation
-function toggleNav() {
-    if (!navMenu) {
-        navMenu = document.getElementById('navMenu');
-    }
-    const overlay = document.getElementById('navMenuOverlay');
-    
-    if (navMenu) {
-        const isActive = navMenu.classList.contains('active');
-        navMenu.classList.toggle('active');
-        
-        // Toggle overlay
-        if (overlay) {
-            if (isActive) {
-                overlay.classList.remove('active');
-            } else {
-                overlay.classList.add('active');
-            }
-        }
-    }
-}
+// toggleNav is already defined above at the top of the file
 
 // Close menu when clicking overlay
 document.addEventListener('DOMContentLoaded', () => {
@@ -161,8 +182,74 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Make toggleNav globally accessible
+// Make toggleNav globally accessible - Multiple ways to ensure it works
 window.toggleNav = toggleNav;
+if (typeof toggleNav === 'undefined') {
+    window.toggleNav = toggleNav;
+}
+
+// Setup button click handler when DOM is ready
+// DON'T clone the button - just add event listener to existing button
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔵 DOM Content Loaded - Setting up nav toggle');
+    
+    const navToggleBtn = document.querySelector('.nav-toggle');
+    const navToggleBtnById = document.getElementById('navToggle');
+    
+    const btn = navToggleBtn || navToggleBtnById;
+    
+    if (btn) {
+        console.log('✅ Nav toggle button FOUND:', btn);
+        
+        // Add click handler directly - SIMPLE AND DIRECT
+        btn.addEventListener('click', function(e) {
+            console.log('🔵 BUTTON CLICKED!');
+            e.preventDefault();
+            e.stopPropagation();
+            
+            if (window.toggleNav) {
+                window.toggleNav(e);
+            } else {
+                console.error('❌ toggleNav function not available!');
+                // Fallback - direct toggle
+                const menu = document.getElementById('navMenu');
+                const overlay = document.getElementById('navMenuOverlay');
+                if (menu) {
+                    menu.classList.toggle('active');
+                    if (overlay) {
+                        overlay.classList.toggle('active');
+                    }
+                }
+            }
+            
+            return false;
+        }, { capture: true, passive: false });
+        
+        // Also ensure onclick works as fallback
+        btn.onclick = function(e) {
+            console.log('🔵 BUTTON ONCLICK!');
+            e.preventDefault();
+            e.stopPropagation();
+            if (window.toggleNav) {
+                window.toggleNav(e);
+            }
+            return false;
+        };
+        
+        // Make absolutely sure button is clickable
+        btn.style.pointerEvents = 'auto';
+        btn.style.cursor = 'pointer';
+        btn.style.zIndex = '10001';
+        btn.style.position = 'relative';
+        
+        console.log('✅ Button handlers attached');
+    } else {
+        console.error('❌ Nav toggle button NOT FOUND!');
+    }
+    
+    // Also ensure toggleNav is available
+    window.toggleNav = toggleNav;
+});
 
 // Update Active Navigation
 function updateActiveNav() {

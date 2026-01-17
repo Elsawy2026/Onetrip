@@ -81,6 +81,39 @@
             background: transparent !important;
         }
     </style>
+    
+    <!-- Inline script for nav toggle - immediate availability -->
+    <script>
+        // Simple toggle function available immediately - WORKS ON MOBILE
+        window.toggleNav = function(e) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            var menu = document.getElementById('navMenu');
+            var overlay = document.getElementById('navMenuOverlay');
+            
+            if (!menu) {
+                console.error('Menu not found');
+                return false;
+            }
+            
+            // Toggle menu
+            menu.classList.toggle('active');
+            
+            // Toggle overlay
+            if (overlay) {
+                if (menu.classList.contains('active')) {
+                    overlay.classList.add('active');
+                } else {
+                    overlay.classList.remove('active');
+                }
+            }
+            
+            return false;
+        };
+    </script>
 </head>
 <body>
     <!-- Inline script to hide preloader - runs immediately -->
@@ -138,7 +171,7 @@
             </div>
             <div class="nav-actions">
                 <button class="lang-btn" id="langBtn" type="button">English</button>
-                <button class="nav-toggle" onclick="toggleNav()">
+                <button class="nav-toggle" id="navToggle" type="button" onclick="if(window.toggleNav){window.toggleNav(event);}return false;">
                     <span></span><span></span><span></span>
                 </button>
             </div>
