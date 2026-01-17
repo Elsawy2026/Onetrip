@@ -1551,33 +1551,52 @@ section,
     position: relative;
     width: 100%;
     max-width: 100vw;
+    direction: ltr !important; /* Force LTR for consistent animation */
 }
 
 .marquee-track {
     display: flex;
     width: max-content;
-    animation: marqueeScroll 20s linear infinite;
+    animation: marqueeScroll 30s linear infinite;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    direction: ltr !important; /* Force LTR for consistent animation direction */
 }
 
 .marquee-content {
     display: flex;
     flex-shrink: 0;
     gap: 40px;
+    direction: ltr !important; /* Force LTR for consistent animation */
 }
 
-/* RTL Support for Marquee - reverse direction for Arabic */
+/* RTL Support for Marquee - EXACTLY the same as LTR */
+[dir="rtl"] .marquee-wrapper {
+    direction: ltr !important; /* Force LTR for consistent animation */
+}
+
 [dir="rtl"] .marquee-track {
-    animation: marqueeScrollRTL 20s linear infinite;
+    animation: marqueeScroll 30s linear infinite !important;
+    will-change: transform !important;
+    transform: translateZ(0) !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+    direction: ltr !important; /* Force LTR for consistent animation direction */
 }
 
-@keyframes marqueeScrollRTL {
-    0% { transform: translateX(-50%); }
-    100% { transform: translateX(0); }
+[dir="rtl"] .marquee-content {
+    direction: ltr !important; /* Force LTR for consistent animation */
 }
 
 @keyframes marqueeScroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    from { 
+        transform: translate3d(0, 0, 0); 
+    }
+    to { 
+        transform: translate3d(-50%, 0, 0); 
+    }
 }
 
 .partner-logo {
@@ -4633,6 +4652,12 @@ section,
         transform: scale(0.85);
     }
     
+    .floating-stat-icon {
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 0.95rem !important;
+    }
+    
     .hero-trust {
         flex-direction: column;
         text-align: center;
@@ -4696,13 +4721,39 @@ section,
         max-width: 100vw !important;
     }
     
-    /* Fix Marquee Animation on Mobile */
+    /* Fix Marquee Animation on Mobile - EXACTLY same as desktop */
+    .marquee-wrapper {
+        direction: ltr !important;
+    }
+    
     .marquee-track {
-        animation: marqueeScroll 25s linear infinite !important;
+        animation: marqueeScroll 30s linear infinite !important;
+        direction: ltr !important; /* Force LTR for consistent animation */
+        will-change: transform !important;
+        transform: translateZ(0) !important;
+        backface-visibility: hidden !important;
+        -webkit-backface-visibility: hidden !important;
+    }
+    
+    .marquee-content {
+        direction: ltr !important;
+    }
+    
+    [dir="rtl"] .marquee-wrapper {
+        direction: ltr !important;
     }
     
     [dir="rtl"] .marquee-track {
-        animation: marqueeScrollRTL 25s linear infinite !important;
+        animation: marqueeScroll 30s linear infinite !important;
+        direction: ltr !important; /* Force LTR for consistent animation */
+        will-change: transform !important;
+        transform: translateZ(0) !important;
+        backface-visibility: hidden !important;
+        -webkit-backface-visibility: hidden !important;
+    }
+    
+    [dir="rtl"] .marquee-content {
+        direction: ltr !important;
     }
     
     .marquee-content {
@@ -4835,6 +4886,12 @@ section,
         display: flex !important;
         transform: scale(0.7);
         font-size: 0.85rem;
+    }
+    
+    .floating-stat-icon {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 0.85rem !important;
     }
     
     .hero-trust {
