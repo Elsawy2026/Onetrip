@@ -4649,6 +4649,8 @@ section,
     
     .floating-stat-card {
         display: flex;
+        padding: 12px 16px !important;
+        gap: 10px !important;
         transform: scale(0.85);
     }
     
@@ -4656,6 +4658,15 @@ section,
         width: 36px !important;
         height: 36px !important;
         font-size: 0.95rem !important;
+        flex-shrink: 0;
+    }
+    
+    .floating-stat-value {
+        font-size: 1.1rem !important;
+    }
+    
+    .floating-stat-label {
+        font-size: 0.7rem !important;
     }
     
     .hero-trust {
@@ -4884,14 +4895,43 @@ section,
     
     .floating-stat-card {
         display: flex !important;
-        transform: scale(0.7);
-        font-size: 0.85rem;
+        padding: 10px 12px !important;
+        gap: 8px !important;
+        transform: scale(0.75);
+        max-width: 140px;
+    }
+    
+    .floating-stat-card.stat-1 {
+        top: 20% !important;
+        right: -5px !important;
+    }
+    
+    .floating-stat-card.stat-2 {
+        bottom: 20% !important;
+        left: -5px !important;
     }
     
     .floating-stat-icon {
-        width: 32px !important;
-        height: 32px !important;
-        font-size: 0.85rem !important;
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 0.75rem !important;
+        flex-shrink: 0;
+    }
+    
+    .floating-stat-value {
+        font-size: 0.95rem !important;
+        font-weight: 800;
+        line-height: 1.2;
+    }
+    
+    .floating-stat-label {
+        font-size: 0.65rem !important;
+        line-height: 1.2;
+    }
+    
+    .floating-stat-content {
+        gap: 2px;
+        min-width: 0;
     }
     
     .hero-trust {
