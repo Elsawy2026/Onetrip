@@ -487,11 +487,18 @@
                     <h3 data-ar="تقديم طلب توظيف" data-en="Submit Job Application">تقديم طلب توظيف</h3>
                     <p class="form-subtitle" data-ar="املأ النموذج أدناه وسنتواصل معك قريباً" data-en="Fill out the form below and we'll contact you soon">املأ النموذج أدناه وسنتواصل معك قريباً</p>
                     
-                    <form id="careersForm">
+                    <form id="careersForm" action="https://formsubmit.co/jobs@onetrip.sa" method="POST" enctype="multipart/form-data">
+                        <!-- FormSubmit Configuration -->
+                        <input type="hidden" name="_subject" value="طلب توظيف جديد من موقع OneTrip Express">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_autoresponse" value="شكراً لتقديمك لطلب التوظيف! سنراجع طلبك وسنتواصل معك قريباً.">
+                        <input type="hidden" name="_next" value="">
+                        
                         <div class="form-row">
                             <div class="form-group">
                                 <label data-ar="الاسم الكامل *" data-en="Full Name *">الاسم الكامل *</label>
-                                <input type="text" name="fullName" required placeholder="أدخل اسمك الكامل">
+                                <input type="text" name="الاسم الكامل / Full Name" required placeholder="أدخل اسمك الكامل">
                             </div>
                         </div>
                         
@@ -502,25 +509,25 @@
                             </div>
                             <div class="form-group">
                                 <label data-ar="رقم الهاتف *" data-en="Phone *">رقم الهاتف *</label>
-                                <input type="tel" name="phone" required placeholder="05XXXXXXXX">
+                                <input type="tel" name="رقم الهاتف / Phone" required placeholder="05XXXXXXXX">
                             </div>
                         </div>
                         
                         <div class="form-row two-cols">
                             <div class="form-group">
                                 <label data-ar="الوظيفة المطلوبة *" data-en="Desired Position *">الوظيفة المطلوبة *</label>
-                                <select name="position" required>
+                                <select name="الوظيفة المطلوبة / Position" required>
                                     <option value="" data-ar="اختر الوظيفة" data-en="Select Position">اختر الوظيفة</option>
-                                    <option value="driver" data-ar="سائق توصيل" data-en="Delivery Driver">سائق توصيل</option>
-                                    <option value="customer-service" data-ar="خدمة عملاء" data-en="Customer Service">خدمة عملاء</option>
-                                    <option value="operations" data-ar="مشرف عمليات" data-en="Operations Supervisor">مشرف عمليات</option>
-                                    <option value="field-supervisor" data-ar="مشرف ميداني" data-en="Field Supervisor">مشرف ميداني</option>
-                                    <option value="other" data-ar="أخرى" data-en="Other">أخرى</option>
+                                    <option value="سائق توصيل / Delivery Driver" data-ar="سائق توصيل" data-en="Delivery Driver">سائق توصيل</option>
+                                    <option value="خدمة عملاء / Customer Service" data-ar="خدمة عملاء" data-en="Customer Service">خدمة عملاء</option>
+                                    <option value="مشرف عمليات / Operations Supervisor" data-ar="مشرف عمليات" data-en="Operations Supervisor">مشرف عمليات</option>
+                                    <option value="مشرف ميداني / Field Supervisor" data-ar="مشرف ميداني" data-en="Field Supervisor">مشرف ميداني</option>
+                                    <option value="أخرى / Other" data-ar="أخرى" data-en="Other">أخرى</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label data-ar="المدينة *" data-en="City *">المدينة *</label>
-                                <input type="text" name="city" required placeholder="المدينة">
+                                <input type="text" name="المدينة / City" required placeholder="المدينة">
                             </div>
                         </div>
                         
@@ -530,7 +537,7 @@
                                 <label class="file-upload" for="resumeFile">
                                     <i class="fas fa-cloud-upload-alt"></i>
                                     <p data-ar="اضغط لرفع السيرة الذاتية (PDF/DOC)" data-en="Click to upload resume (PDF/DOC)">اضغط لرفع السيرة الذاتية (PDF/DOC)</p>
-                                    <input type="file" id="resumeFile" name="resume" accept=".pdf,.doc,.docx" required>
+                                    <input type="file" id="resumeFile" name="attachment" accept=".pdf,.doc,.docx" required>
                                 </label>
                                 <span id="fileName" style="color: #64748B; font-size: 0.85rem; margin-top: 8px; display: block;"></span>
                             </div>
@@ -539,14 +546,14 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label data-ar="الخبرات السابقة *" data-en="Previous Experience *">الخبرات السابقة *</label>
-                                <textarea name="experience" rows="4" required placeholder="اكتب خبراتك السابقة..."></textarea>
+                                <textarea name="الخبرات السابقة / Experience" rows="4" required placeholder="اكتب خبراتك السابقة..."></textarea>
                             </div>
                         </div>
                         
                         <div class="form-row">
                             <div class="form-group">
                                 <label data-ar="رسالة التقديم (اختياري)" data-en="Cover Letter (Optional)">رسالة التقديم (اختياري)</label>
-                                <textarea name="coverLetter" rows="4" placeholder="أخبرنا عن نفسك ولماذا تريد الانضمام إلينا..."></textarea>
+                                <textarea name="رسالة التقديم / Cover Letter" rows="4" placeholder="أخبرنا عن نفسك ولماذا تريد الانضمام إلينا..."></textarea>
                             </div>
                         </div>
                         
@@ -606,19 +613,83 @@
         }
         
         // File Upload
-        document.getElementById('resumeFile').addEventListener('change', function() {
-            const fileName = this.files[0] ? this.files[0].name : '';
-            document.getElementById('fileName').textContent = fileName;
-        });
+        const resumeFile = document.getElementById('resumeFile');
+        const fileName = document.getElementById('fileName');
         
-        // Form Submit
-        document.getElementById('careersForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const isArabic = document.documentElement.lang === 'ar';
-            alert(isArabic ? 'تم إرسال طلبك بنجاح! سيتم التواصل معك قريباً.' : 'Your application has been submitted! We will contact you soon.');
-            this.reset();
-            document.getElementById('fileName').textContent = '';
-        });
+        if (resumeFile && fileName) {
+            resumeFile.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const isArabic = document.documentElement.lang === 'ar';
+                    fileName.textContent = isArabic ? `تم اختيار: ${file.name}` : `Selected: ${file.name}`;
+                    fileName.style.color = '#64748B';
+                } else {
+                    fileName.textContent = '';
+                }
+            });
+        }
+        
+        // Form Submit Handler - Send directly to jobs@onetrip.sa
+        const careersForm = document.getElementById('careersForm');
+        if (careersForm) {
+            careersForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const isArabic = document.documentElement.lang === 'ar';
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalBtnHTML = submitBtn.innerHTML;
+                const form = this;
+                
+                // Show loading state
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = isArabic 
+                    ? '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...' 
+                    : '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                
+                try {
+                    // Get form data
+                    const formData = new FormData(form);
+                    
+                    // Send to FormSubmit which will forward to jobs@onetrip.sa
+                    const response = await fetch('https://formsubmit.co/ajax/jobs@onetrip.sa', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        // Show success message
+                        alert(isArabic 
+                            ? '✅ تم إرسال طلبك بنجاح!\n\n📧 تم إرسال طلب التوظيف إلى: jobs@onetrip.sa\n\nشكراً لتقديمك! سنراجع طلبك وسنتواصل معك قريباً.\n\n📞 للاستفسار: 920032104'
+                            : '✅ Your application has been sent successfully!\n\n📧 Job application sent to: jobs@onetrip.sa\n\nThank you for applying! We will review your application and contact you soon.\n\n📞 For inquiries: 920032104');
+                        
+                        // Reset form
+                        form.reset();
+                        if (fileName) {
+                            fileName.textContent = '';
+                        }
+                    } else {
+                        throw new Error('Submission failed');
+                    }
+                } catch (error) {
+                    console.error('Error submitting form:', error);
+                    
+                    // Fallback: try submitting normally
+                    alert(isArabic 
+                        ? '⚠️ جاري إرسال الطلب...\n\n📧 سيتم إرسال الطلب إلى: jobs@onetrip.sa'
+                        : '⚠️ Sending application...\n\n📧 Application will be sent to: jobs@onetrip.sa');
+                    
+                    // Submit form normally (will redirect to FormSubmit page)
+                    form.submit();
+                    return;
+                } finally {
+                    // Re-enable button (only if AJAX worked)
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnHTML;
+                }
+            });
+        }
     </script>
 </body>
 </html>
