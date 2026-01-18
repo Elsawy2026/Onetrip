@@ -334,19 +334,27 @@
                     <h3 data-ar="نموذج طلب الخدمة" data-en="Service Request Form">نموذج طلب الخدمة</h3>
                     <p class="form-subtitle" data-ar="جميع الحقول مطلوبة *" data-en="All fields are required *">جميع الحقول مطلوبة *</p>
                     
-                    <form id="orderForm">
+                    <form id="orderForm" action="https://formsubmit.co/info@onetrip.sa" method="POST">
+                        <!-- FormSubmit Configuration -->
+                        <input type="hidden" name="_subject" value="طلب خدمة جديد من موقع OneTrip Express">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_autoresponse" value="شكراً لطلبك! سيتواصل معك فريقنا خلال دقائق.">
+                        <input type="hidden" name="_next" id="orderSuccessPage" value="">
+                        <input type="hidden" name="_format" value="plain">
+                        
                         <div class="form-row">
                             <div class="form-group">
                                 <label data-ar="نوع الخدمة" data-en="Service Type">نوع الخدمة</label>
-                                <select name="serviceType" required>
+                                <select name="نوع الخدمة / Service Type" required>
                                     <option value="" data-ar="اختر الخدمة" data-en="Select Service">اختر الخدمة</option>
-                                    <option value="fast" data-ar="توصيل سريع (داخل المدينة)" data-en="Fast Delivery (Same City)">توصيل سريع (داخل المدينة)</option>
-                                    <option value="shipping" data-ar="شحن داخلي (بين المدن)" data-en="Internal Shipping (Between Cities)">شحن داخلي (بين المدن)</option>
-                                    <option value="storage" data-ar="خدمة التخزين والتغليف" data-en="Storage and Packaging Service">خدمة التخزين والتغليف</option>
-                                    <option value="customs" data-ar="خدمة التخليص الجمركي" data-en="Customs Clearance Service">خدمة التخليص الجمركي</option>
-                                    <option value="fleet" data-ar="خدمة إدارة الأسطول" data-en="Fleet Management Service">خدمة إدارة الأسطول</option>
-                                    <option value="international" data-ar="خدمة الشحن الدولي" data-en="International Shipping Service">خدمة الشحن الدولي</option>
-                                    <option value="other" data-ar="خدمات أخرى" data-en="Other Services">خدمات أخرى</option>
+                                    <option value="توصيل سريع (داخل المدينة) / Fast Delivery (Same City)" data-ar="توصيل سريع (داخل المدينة)" data-en="Fast Delivery (Same City)">توصيل سريع (داخل المدينة)</option>
+                                    <option value="شحن داخلي (بين المدن) / Internal Shipping (Between Cities)" data-ar="شحن داخلي (بين المدن)" data-en="Internal Shipping (Between Cities)">شحن داخلي (بين المدن)</option>
+                                    <option value="خدمة التخزين والتغليف / Storage and Packaging Service" data-ar="خدمة التخزين والتغليف" data-en="Storage and Packaging Service">خدمة التخزين والتغليف</option>
+                                    <option value="خدمة التخليص الجمركي / Customs Clearance Service" data-ar="خدمة التخليص الجمركي" data-en="Customs Clearance Service">خدمة التخليص الجمركي</option>
+                                    <option value="خدمة إدارة الأسطول / Fleet Management Service" data-ar="خدمة إدارة الأسطول" data-en="Fleet Management Service">خدمة إدارة الأسطول</option>
+                                    <option value="خدمة الشحن الدولي / International Shipping Service" data-ar="خدمة الشحن الدولي" data-en="International Shipping Service">خدمة الشحن الدولي</option>
+                                    <option value="خدمات أخرى / Other Services" data-ar="خدمات أخرى" data-en="Other Services">خدمات أخرى</option>
                                 </select>
                             </div>
                         </div>
@@ -354,11 +362,11 @@
                         <div class="form-row two-cols">
                             <div class="form-group">
                                 <label data-ar="الاسم الكامل" data-en="Full Name">الاسم الكامل</label>
-                                <input type="text" name="name" required placeholder="أدخل اسمك الكامل">
+                                <input type="text" name="الاسم الكامل / Full Name" required placeholder="أدخل اسمك الكامل">
                             </div>
                             <div class="form-group">
                                 <label data-ar="رقم الجوال" data-en="Phone Number">رقم الجوال</label>
-                                <input type="tel" name="phone" required placeholder="05XXXXXXXX">
+                                <input type="tel" name="رقم الجوال / Phone Number" required placeholder="05XXXXXXXX">
                             </div>
                         </div>
                         
@@ -372,7 +380,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label data-ar="ملاحظات إضافية" data-en="Additional Notes">ملاحظات إضافية</label>
-                                <textarea name="notes" rows="4" placeholder="ملاحظات إضافية..."></textarea>
+                                <textarea name="ملاحظات إضافية / Additional Notes" rows="4" placeholder="ملاحظات إضافية..."></textarea>
                             </div>
                         </div>
                         
@@ -431,87 +439,59 @@
             document.getElementById('navMenu').classList.toggle('active');
         }
         
-        // Form Submit - Send to info@onetrip.sa
-        document.getElementById('orderForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const form = e.target;
-            const isArabic = document.documentElement.lang === 'ar';
-            
-            // Get form data
-            const formData = new FormData(form);
-            const serviceType = formData.get('serviceType');
-            const name = formData.get('name');
-            const phone = formData.get('phone');
-            const email = formData.get('email') || '';
-            const notes = formData.get('notes') || '';
-            
-            // Validate required fields
-            if (!serviceType || !name || !phone) {
-                alert(isArabic ? '⚠️ يرجى ملء جميع الحقول المطلوبة (*)' : '⚠️ Please fill in all required fields (*)');
-                return;
+        // Form Submit - Send to info@onetrip.sa via FormSubmit
+        const orderForm = document.getElementById('orderForm');
+        if (orderForm) {
+            // Set success page URL
+            const currentUrl = window.location.href.split('?')[0];
+            const successUrl = currentUrl + '?success=true';
+            const successPageInput = document.getElementById('orderSuccessPage');
+            if (successPageInput) {
+                successPageInput.value = successUrl;
             }
             
-            // Validate phone format (Saudi phone)
-            const phoneRegex = /^(05|5)[0-9]{8}$/;
-            const cleanPhone = phone.replace(/[\s\-\(\)]/g, '');
-            if (!phoneRegex.test(cleanPhone)) {
-                alert(isArabic ? '⚠️ يرجى إدخال رقم جوال صحيح (05XXXXXXXX)' : '⚠️ Please enter a valid Saudi phone number (05XXXXXXXX)');
-                return;
-            }
+            orderForm.addEventListener('submit', function(e) {
+                const isArabic = document.documentElement.lang === 'ar';
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const form = this;
+                
+                // Validate phone format (Saudi phone)
+                const phoneInput = form.querySelector('input[name="رقم الجوال / Phone Number"]');
+                if (phoneInput && phoneInput.value) {
+                    const phoneRegex = /^(05|5)[0-9]{8}$/;
+                    const cleanPhone = phoneInput.value.replace(/[\s\-\(\)]/g, '');
+                    if (!phoneRegex.test(cleanPhone)) {
+                        e.preventDefault();
+                        alert(isArabic ? '⚠️ يرجى إدخال رقم جوال صحيح (05XXXXXXXX)' : '⚠️ Please enter a valid Saudi phone number (05XXXXXXXX)');
+                        return;
+                    }
+                }
+                
+                // Show loading state
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = isArabic 
+                    ? '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...' 
+                    : '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                
+                // Form will submit normally to FormSubmit
+                console.log('Submitting order form to info@onetrip.sa');
+            });
             
-            // Get service type text
-            const serviceTypeText = form.querySelector(`select[name="serviceType"] option[value="${serviceType}"]`).textContent;
-            
-            // Create email body
-            const emailBody = `طلب خدمة جديد من موقع OneTrip Express
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📋 **بيانات العميل:**
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-👤 **الاسم الكامل:** ${name}
-📞 **رقم الجوال:** ${phone}
-${email ? '📧 **البريد الإلكتروني:** ' + email + '\\n' : ''}
-🚚 **نوع الخدمة:** ${serviceTypeText}
-${notes ? '\\n💬 **ملاحظات إضافية:**\\n' + notes + '\\n' : ''}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📅 **تاريخ ووقت الطلب:** ${new Date().toLocaleString('ar-SA', { timeZone: 'Asia/Riyadh', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
-🌐 **المصدر:** نموذج طلب الخدمة - موقع OneTrip Express
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
----
-تم إرسال هذا الطلب تلقائياً من نموذج طلب الخدمة على الموقع.
-يرجى التواصل مع العميل في أقرب وقت ممكن.`;
-            
-            // Prepare email
-            const emailSubject = encodeURIComponent(`طلب خدمة جديد - ${name} - ${serviceTypeText}`);
-            const emailBodyEncoded = encodeURIComponent(emailBody);
-            
-            // Create mailto link
-            const mailtoLink = `mailto:info@onetrip.sa?subject=${emailSubject}&body=${emailBodyEncoded}`;
-            
-            // Show loading
-            const submitBtn = form.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.innerHTML;
-            submitBtn.innerHTML = isArabic ? '<span>جاري الإرسال...</span> <i class="fas fa-spinner fa-spin"></i>' : '<span>Sending...</span> <i class="fas fa-spinner fa-spin"></i>';
-            submitBtn.disabled = true;
-            
-            // Open email client
-            window.location.href = mailtoLink;
-            
-            // Show success message
-            setTimeout(() => {
+            // Check if we're returning from successful submission
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('success') === 'true') {
+                const isArabic = document.documentElement.lang === 'ar';
                 alert(isArabic 
-                    ? '✅ تم فتح بريدك الإلكتروني!\n\n📧 سيتم إرسال الطلب إلى: info@onetrip.sa\n\n📞 للاستفسار: 920032104'
-                    : '✅ Email client opened!\n\n📧 Request will be sent to: info@onetrip.sa\n\n📞 For inquiries: 920032104');
+                    ? '✅ تم إرسال طلبك بنجاح!\n\n📧 تم إرسال طلب الخدمة إلى: info@onetrip.sa\n\nسيتواصل معك فريقنا خلال دقائق.\n\n📞 للاستفسار: 920032104'
+                    : '✅ Your request has been sent successfully!\n\n📧 Service request sent to: info@onetrip.sa\n\nOur team will contact you within minutes.\n\n📞 For inquiries: 920032104');
                 
                 // Reset form
-                form.reset();
-                submitBtn.innerHTML = originalBtnText;
-                submitBtn.disabled = false;
-            }, 500);
-        });
+                orderForm.reset();
+                
+                // Clean URL
+                window.history.replaceState({}, document.title, currentUrl);
+            }
+        }
     </script>
 </body>
 </html>

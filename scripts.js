@@ -1557,34 +1557,59 @@ if (orderForm) {
 const contactForm = document.getElementById('contactForm');
 
 if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+    // Set success page URL
+    const currentUrl = window.location.href.split('?')[0];
+    const successUrl = currentUrl + '#contact?success=true';
+    const successPageInput = document.getElementById('contactSuccessPage');
+    if (successPageInput) {
+        successPageInput.value = successUrl;
+    }
+    
+    contactForm.addEventListener('submit', function(e) {
+        const isArabic = document.documentElement.lang === 'ar';
+        const form = this;
+        const submitBtn = form.querySelector('button[type="submit"]');
         
-        const formData = new FormData(contactForm);
-        const data = Object.fromEntries(formData);
+        // Validate phone format (Saudi phone) if provided
+        const phoneInput = form.querySelector('input[name="رقم التليفون / Phone Number"]');
+        if (phoneInput && phoneInput.value) {
+            const phoneRegex = /^(05|5)[0-9]{8}$/;
+            const cleanPhone = phoneInput.value.replace(/[\s\-\(\)]/g, '');
+            if (!phoneRegex.test(cleanPhone)) {
+                e.preventDefault();
+                alert(isArabic ? '⚠️ يرجى إدخال رقم جوال صحيح (05XXXXXXXX)' : '⚠️ Please enter a valid Saudi phone number (05XXXXXXXX)');
+                return;
+            }
+        }
         
-        // Create email body
-        const emailSubject = encodeURIComponent('طلب جديد من موقع OneTrip Express');
-        const emailBody = encodeURIComponent(
-            `طلب جديد من موقع OneTrip Express\n\n` +
-            `الاسم: ${data.name}\n` +
-            `رقم التليفون: ${data.phone}\n` +
-            `البريد الإلكتروني: ${data.email}\n\n` +
-            `مضمون الطلب:\n${data.message}`
+        // Show loading state
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = isArabic 
+                ? '<span>جاري الإرسال...</span> <i class="fas fa-spinner fa-spin"></i>'
+                : '<span>Sending...</span> <i class="fas fa-spinner fa-spin"></i>';
+        }
+        
+        // Form will submit normally to FormSubmit
+        console.log('Submitting contact form to info@onetrip.sa');
+    });
+    
+    // Check if we're returning from successful submission
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === 'true') {
+        const isArabic = document.documentElement.lang === 'ar';
+        showSuccessModal(
+            isArabic ? 'شكراً لتواصلك معنا!' : 'Thank You for Contacting Us!',
+            isArabic ? 'تم إرسال رسالتك بنجاح' : 'Your message has been sent successfully',
+            isArabic ? 'تم إرسال رسالتك إلى: info@onetrip.sa\nسنراجع رسالتك وسنتواصل معك قريباً.\n\n📞 للاستفسار: 920032104' : 'Your message has been sent to: info@onetrip.sa\nWe will review your message and contact you soon.\n\n📞 For inquiries: 920032104'
         );
         
-        // Open email client with mailto link
-        const mailtoLink = `mailto:info@onetrip.sa?subject=${emailSubject}&body=${emailBody}`;
-        window.location.href = mailtoLink;
+        // Reset form
+        contactForm.reset();
         
-        // Show success message
-        setTimeout(() => {
-            alert('✅ تم فتح بريدك الإلكتروني!\n\n📧 يرجى إرسال الطلب إلى: info@onetrip.sa\n\n📞 للاستفسار: 920032104');
-            contactForm.reset();
-        }, 500);
-        
-        console.log('Contact form submitted:', data);
-    });
+        // Clean URL
+        window.history.replaceState({}, document.title, currentUrl + '#contact');
+    }
 }
 
 // ===== CAREERS FORM =====

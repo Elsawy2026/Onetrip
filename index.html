@@ -718,14 +718,22 @@
                 </div>
                 
                 <div class="contact-form">
-                    <form id="contactForm">
+                    <form id="contactForm" action="https://formsubmit.co/info@onetrip.sa" method="POST">
+                        <!-- FormSubmit Configuration -->
+                        <input type="hidden" name="_subject" value="طلب جديد من موقع OneTrip Express">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_autoresponse" value="شكراً لتواصلك معنا! سنراجع رسالتك وسنتواصل معك قريباً.">
+                        <input type="hidden" name="_next" id="contactSuccessPage" value="">
+                        <input type="hidden" name="_format" value="plain">
+                        
                         <div class="form-group">
                             <label data-ar="الإسم" data-en="Name">الإسم</label>
-                            <input type="text" name="name" required placeholder="الإسم">
+                            <input type="text" name="الاسم / Name" required placeholder="الإسم">
                         </div>
                         <div class="form-group">
                             <label data-ar="رقم التليفون" data-en="Phone Number">رقم التليفون</label>
-                            <input type="tel" name="phone" required placeholder="رقم التليفون">
+                            <input type="tel" name="رقم التليفون / Phone Number" required placeholder="رقم التليفون">
                         </div>
                         <div class="form-group">
                             <label data-ar="البريد الإلكترونى" data-en="Email">البريد الإلكترونى</label>
@@ -733,7 +741,7 @@
                         </div>
                         <div class="form-group">
                             <label data-ar="مضمون الطلب" data-en="Message">مضمون الطلب</label>
-                            <textarea name="message" required placeholder="مضمون الطلب"></textarea>
+                            <textarea name="مضمون الطلب / Message" required placeholder="مضمون الطلب"></textarea>
                         </div>
                         <button type="submit" class="submit-btn">
                             <span data-ar="إرسال الطلب" data-en="Send Request">إرسال الطلب</span>
