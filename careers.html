@@ -495,8 +495,7 @@
                         <input type="hidden" name="_autoresponse" value="شكراً لتقديمك لطلب التوظيف! سنراجع طلبك وسنتواصل معك قريباً.">
                         <input type="hidden" name="_next" id="successPage" value="">
                         <input type="hidden" name="_format" value="plain">
-                        <input type="hidden" name="_cc" value="">
-                        <input type="hidden" name="_bcc" value="">
+                        <input type="hidden" name="_append" value="no">
                         
                         <div class="form-row">
                             <div class="form-group">
@@ -669,18 +668,27 @@
                     return;
                 }
                 
+                // Add file information as hidden fields (backup in case attachment doesn't work)
+                const fileNameInput = document.createElement('input');
+                fileNameInput.type = 'hidden';
+                fileNameInput.name = '_file_info';
+                fileNameInput.value = `اسم الملف: ${file.name} | الحجم: ${(file.size / 1024).toFixed(2)} KB | النوع: ${file.type}`;
+                form.appendChild(fileNameInput);
+                
                 // Show loading state
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = isArabic 
                     ? '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...' 
                     : '<i class="fas fa-spinner fa-spin"></i> Sending...';
                 
-                // Don't prevent default - let form submit normally to FormSubmit
-                // This ensures file attachments work properly with multipart/form-data
-                console.log('Submitting form to jobs@onetrip.sa');
-                console.log('Attachment:', file.name, 'Size:', (file.size / 1024).toFixed(2) + 'KB');
+                // Don't prevent default - let form submit normally
+                // FormSubmit handles multipart/form-data correctly with normal form submission
+                // This is the most reliable way to send file attachments
+                console.log('Submitting form to jobs@onetrip.sa with file attachment');
+                console.log('File:', file.name, 'Size:', (file.size / 1024).toFixed(2) + 'KB', 'Type:', file.type);
                 
-                // Form will submit normally, FormSubmit will handle it and redirect back
+                // Form will submit normally - FormSubmit will receive the file as attachment
+                // The form has enctype="multipart/form-data" which is required for file uploads
             });
             
             // Check if we're returning from successful submission
