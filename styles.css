@@ -4007,7 +4007,7 @@ section,
 }
 
 .privacy-title {
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     font-size: clamp(2.2rem, 5vw, 4rem);
     font-weight: 900;
     margin: 18px 0;
@@ -4016,9 +4016,14 @@ section,
 
 .privacy-intro {
     max-width: 900px;
-    color: rgba(255, 255, 255, 0.78);
+    color: #FFFFFF !important;
     font-size: 1.08rem;
     line-height: 2;
+}
+
+.privacy-hero .privacy-title,
+.privacy-hero .privacy-intro {
+    color: #FFFFFF !important;
 }
 
 .privacy-content-section {
