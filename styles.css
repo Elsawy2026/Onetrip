@@ -3959,7 +3959,7 @@ section,
 
 /* ===== PRIVACY POLICY PAGE ===== */
 .privacy-page {
-    background: var(--dark);
+    background: #F8FAFC;
     min-height: 100vh;
 }
 
@@ -3979,8 +3979,35 @@ section,
     background: linear-gradient(90deg, transparent, rgba(247, 148, 29, 0.35), transparent);
 }
 
+.privacy-hero .back-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: max-content;
+    margin-bottom: 22px;
+    padding: 10px 16px;
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: var(--transition);
+}
+
+.privacy-hero .back-link:hover {
+    color: #FFFFFF;
+    background: rgba(247, 148, 29, 0.22);
+    border-color: rgba(247, 148, 29, 0.5);
+    transform: translateY(-2px);
+}
+
+.privacy-hero .section-badge {
+    display: table;
+}
+
 .privacy-title {
-    color: var(--text-white);
+    color: #FFFFFF;
     font-size: clamp(2.2rem, 5vw, 4rem);
     font-weight: 900;
     margin: 18px 0;
@@ -3989,7 +4016,7 @@ section,
 
 .privacy-intro {
     max-width: 900px;
-    color: var(--text-light);
+    color: rgba(255, 255, 255, 0.78);
     font-size: 1.08rem;
     line-height: 2;
 }
@@ -4006,14 +4033,15 @@ section,
 }
 
 .privacy-block {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
     border-radius: 8px;
     padding: 28px;
+    box-shadow: 0 10px 35px rgba(15, 23, 42, 0.06);
 }
 
 .privacy-block h2 {
-    color: var(--text-white);
+    color: #1E293B;
     font-size: 1.35rem;
     line-height: 1.5;
     margin-bottom: 14px;
@@ -4021,7 +4049,7 @@ section,
 
 .privacy-block p,
 .privacy-block li {
-    color: var(--text-light);
+    color: #475569;
     line-height: 1.9;
     font-size: 1rem;
 }
@@ -4050,7 +4078,7 @@ section,
     background: rgba(247, 148, 29, 0.12);
     border: 1px solid rgba(247, 148, 29, 0.26);
     border-radius: 8px;
-    color: var(--text-white);
+    color: #1E293B;
     text-decoration: none;
     transition: var(--transition);
 }
@@ -4073,7 +4101,7 @@ section,
 }
 
 .faq-page {
-    background: var(--dark);
+    background: #F8FAFC;
     min-height: 100vh;
 }
 
@@ -4086,11 +4114,12 @@ section,
 
 .faq-item {
     position: relative;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
     border-radius: 8px;
     padding: 24px 26px;
     overflow: hidden;
+    box-shadow: 0 10px 35px rgba(15, 23, 42, 0.06);
 }
 
 .faq-item::before {
@@ -4104,14 +4133,14 @@ section,
 }
 
 .faq-item h2 {
-    color: var(--text-white);
+    color: #1E293B;
     font-size: 1.18rem;
     line-height: 1.5;
     margin-bottom: 10px;
 }
 
 .faq-item p {
-    color: var(--text-light);
+    color: #475569;
     line-height: 1.9;
     font-size: 1rem;
 }
