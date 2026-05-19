@@ -4026,6 +4026,11 @@ section,
     color: #FFFFFF !important;
 }
 
+.faq-hero .privacy-title,
+.faq-hero .privacy-intro {
+    color: #FFFFFF !important;
+}
+
 .privacy-content-section {
     padding: 70px 0 90px;
 }
